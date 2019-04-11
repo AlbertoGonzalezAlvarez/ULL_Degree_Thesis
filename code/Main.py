@@ -10,4 +10,4 @@ train_data = {
 data_parse = DataParser(train_data)
 data_parse.vectorizeData()
 
-print(data_parse.getParsedData('talk.politics.guns')[0])
+print(data_parse.getVocabulary(1))
