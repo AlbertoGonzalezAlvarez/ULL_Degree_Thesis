@@ -1,5 +1,8 @@
 from sklearn.datasets import fetch_20newsgroups
-from Parser import DataParser
+from Parser import DataVectorizer
+from Email import Email
+import random
+import Config
 
 train_data = {
     'soc.religion.christian': fetch_20newsgroups(subset='train', categories=['soc.religion.christian']).data,
@@ -7,7 +10,19 @@ train_data = {
     'talk.politics.mideast': fetch_20newsgroups(subset='train', categories=['talk.politics.mideast']).data
 }
 
-data_parse = DataParser(train_data)
-data_parse.vectorizeData()
+corpus = []
 
-print(data_parse.getVocabulary(1))
+for category in train_data:
+    corpus = corpus + train_data[category]
+    
+email = []
+for document in corpus:
+    email.append(Email(document))
+    
+#email = Email(train_data['soc.religion.christian'][random.randint(0, len(train_data['soc.religion.christian']))])
+# data_parse = DataVectorizer(train_data)
+# data_parse.vectorizeData()
+# 
+# print(train_data['soc.religion.christian'][162])
+# 
+# print(data_parse.getOriginalDocumentFromParsed(data_parse.getParsedDocumentAt(2)))
