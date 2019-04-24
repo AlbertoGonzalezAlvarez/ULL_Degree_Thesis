@@ -3,7 +3,7 @@ import logging
 import itertools
 import Config
 from LoggerHandler import LoggerHandler
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import defaultdict
 
 class DataVectorizer:
@@ -19,7 +19,7 @@ class DataVectorizer:
         LoggerHandler.log('Data loaded')
     
     def vectorizeData(self, stopWordsLang = Config.CORPUS_LANGUAGE, token_pattern = Config.TOKENS_PATTERN, ngrams = (1, 1)):
-        self.vectorizer = CountVectorizer(
+        self.vectorizer = TfidfVectorizer(
             encoding='utf-8',
             decode_error='replace',
             strip_accents='ascii',

@@ -10,19 +10,13 @@ train_data = {
     'talk.politics.mideast': fetch_20newsgroups(subset='train', categories=['talk.politics.mideast']).data
 }
 
-corpus = []
-
+corpus = {}   
 for category in train_data:
-    corpus = corpus + train_data[category]
-    
-email = []
-for document in corpus:
-    email.append(Email(document))
-    
-#email = Email(train_data['soc.religion.christian'][random.randint(0, len(train_data['soc.religion.christian']))])
-# data_parse = DataVectorizer(train_data)
+    corpus[category] = [Email(category, email) for email in train_data[category][:2]]
+
+# data_parse = DataVectorizer(email)
 # data_parse.vectorizeData()
 # 
 # print(train_data['soc.religion.christian'][162])
 # 
-# print(data_parse.getOriginalDocumentFromParsed(data_parse.getParsedDocumentAt(2)))
+#print(data_parse.getOriginalDocumentFromParsed(data_parse.getParsedDocumentAt(2)))

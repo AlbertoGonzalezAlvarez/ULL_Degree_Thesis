@@ -12,20 +12,31 @@ stop_words = stopwords.words(Config.CORPUS_LANGUAGE)
 
 class Email:
     
+    category = None
     from_email = None
     subject_ = None
     organization_ = None
     content_ = None
     errors = 0
     
-    def __init__(self, message):
+    def __init__(self, category, message):
+        self.category = category
         self.extractHeaders(message)
     
+    def __str__(self):
+        _from_ = f'From: {self.from_email}'
+        _subject_ = f'\nSubject: {self.subject}'
+        _organization_ = f'\nOrganization: {self.organization_}'
+        _content_ = f'\nContent: {self.content_[:100]}...'
+        _category_ = f'\nCategory: {self.category}'
+        
+        return _from_ + _subject_ + _organization_ + _content_
+        
     def getSender(self):
         return self.from_email
     
     # Private
-    def extractHeaders(self, message):        
+    def extractHeaders(self, message):
         searchHeader = re.search(Config.EMAIL_HEADER_REGEX, message)
         
         if searchHeader != None:
@@ -46,14 +57,15 @@ class Email:
     # Private
     def getEmailFromHeader(self, header):
         found_email = re.search(Config.FROM_EMAIL_REGEX, header).group().lower()
-        from_email = re.search(Config.EMAIL_ADRESS, found_email)
-        
+        from_email = re.search(Config.EMAIL_ADRESS, found_email).group()
+
         return from_email
     
     # Private    
     def getSubjectFromHeader(self, header):
         found_subject = re.search(Config.SUBJECT_REGEX, header).group(2).lower()
-        self.removeMeaningLessWords(found_subject)
+        
+        return self.removeMeaningLessWords(found_subject)
     
     # Private
     def getOrganization(self, header):
