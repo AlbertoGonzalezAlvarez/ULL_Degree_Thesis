@@ -1,5 +1,4 @@
 import random
-import copy
 
 class Crossover:
     cutting_points = None

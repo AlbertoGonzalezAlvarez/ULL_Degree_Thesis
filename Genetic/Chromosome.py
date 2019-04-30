@@ -1,11 +1,14 @@
 from Genetic.Gen import Gen, GEN_STATE
-
+from copy import copy, deepcopy
 
 class Chromosome:
 
     gens = []
+    index = 0
 
     def __init__(self, size = 0, gens = []):
+        self.index = 0
+
         if(len(gens) == 0):
             self.gens = [Gen() for _ in range(size)]
         else:
@@ -65,6 +68,37 @@ class Chromosome:
 
     def __str__(self):
         return str([gen for gen in self.gens])
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            result = self.gens[self.index]
+        except IndexError:
+            raise StopIteration
+        self.index += 1
+        return result
+
+    def __eq__(self, other):
+        if isinstance(other, Chromosome):
+            return self.gens == other.gens
+        else:
+            return TypeError
+
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result
 
     @property
     def lenght(self):

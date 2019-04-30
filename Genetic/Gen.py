@@ -3,12 +3,6 @@ from enum import Enum
 class GEN_STATE(Enum):
     SELECTED, REMOVED = 1, 0
 
-    def __repr__(self):
-        return self.name
-
-    def __str__(self):
-        return self.name
-
 class Gen:
     gen_state = None
 
@@ -35,6 +29,14 @@ class Gen:
 
     def __repr__(self):
         return  self.gen_state.name
+
+    def __eq__(self, other):
+        if isinstance(other, Gen):
+            return self.state == other.state
+        elif isinstance(other, GEN_STATE):
+            return self.state == other
+        else:
+            return TypeError
 
     @property
     def state(self):

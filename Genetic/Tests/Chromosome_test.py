@@ -10,7 +10,7 @@ class TestChromosome(unittest.TestCase):
         TestChromosome.test_chromosome = Chromosome(10)
 
     def testChromosomeInit(self):
-        EXPECTED_VALUE = ([GEN_STATE.SELECTED, GEN_STATE.SELECTED, GEN_STATE.REMOVED])
+        EXPECTED_VALUE = ([Gen(GEN_STATE.SELECTED), Gen(GEN_STATE.SELECTED), Gen(GEN_STATE.REMOVED)])
         init_chromosome = Chromosome(gens = [GEN_STATE.SELECTED, GEN_STATE.SELECTED, GEN_STATE.REMOVED])
         self.assertEqual(str(init_chromosome), str(EXPECTED_VALUE))
 
@@ -66,6 +66,7 @@ class TestChromosome(unittest.TestCase):
 
         self.assertEqual(CHROMOSOME.getSelectedFeaturesSize(), EXPECTED_VALUE)
 
+    #TODO: Test iterator
 
 if __name__ == '__main__':
     unittest.main()
