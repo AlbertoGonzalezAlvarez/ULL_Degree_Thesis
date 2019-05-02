@@ -1,35 +1,52 @@
+import json
 import GlobalConfig
 import re
-import json
 from Utilities.WordCleaner import cleanWord
 
-class Email:
+class Email():
     HEADER_LENGHT = 10
 
-    def __init__(self, category: str, message: str) -> None:
-        header = "".join(message.splitlines(Email.HEADER_LENGHT)[:Email.HEADER_LENGHT])
+    def __init__(self, category: str ="", from_: str = "", subject: str = "", organization: str = "", content: str = "") -> None:
+        self.category = category
+        self.from_ = from_
+        self.subject = subject
+        self.organization = organization
+        self.content = content
+
+
+    @staticmethod
+    def parseEmail(category: str, content: str) -> object:
+        header = "".join(content.splitlines(Email.HEADER_LENGHT)[:Email.HEADER_LENGHT])
         organization = re.search(GlobalConfig.ORGANIZATION_REGEX, header)
         emailAdress = re.search(GlobalConfig.FROM_EMAIL_REGEX, header)
 
         # Maybe we could delete
-        self.category = category
-        self.subject = cleanWord(re.search(GlobalConfig.SUBJECT_REGEX, header).group(1).lower())
-        self.content = cleanWord(message.replace(header, ''))
+        category = category
+        subject = cleanWord(re.search(GlobalConfig.SUBJECT_REGEX, header).group(1).lower())
+        content = cleanWord(content.replace(header, ''))
 
         if organization:
-            self.organization = organization.group(1)
+            organization = organization.group(1)
         else:
-            self.organization = ""
+            organization = ""
 
         if emailAdress:
-            self.emailAdress = emailAdress.group(1).lower()
+            emailAdress = emailAdress.group(1).lower()
         else:
-            self.emailAdress = ""
+            emailAdress = ""
+
+        return {
+            "category": category,
+            "from_": emailAdress,
+            "subject": subject,
+            "organization": organization,
+            "content": content
+        }
 
     def __str__(self) -> str:
         JSON = {}
         JSON['category'] = f'{self.category}'
-        JSON['from'] = f'{self.emailAdress}'
+        JSON['from'] = f'{self.from_}'
         JSON['subject'] = f'{self.subject}'
         JSON['organization'] = f'{self.organization}'
         JSON['content'] = f'{self.content}'
@@ -37,11 +54,15 @@ class Email:
         return json.dumps(JSON, indent = 5)
 
     def __repr__(self) -> str:
-        JSON = {}
-        JSON['category'] = f'{self.category}'
-        JSON['from'] = f'{self.emailAdress}'
-        JSON['subject'] = f'{self.subject}'
-        JSON['organization'] = f'{self.organization}'
-        JSON['content'] = f'{self.content}'
+        JSON = {
+            "email":
+                {
+                    "category": self.category,
+                    "from": self.from_,
+                    "subject": self.subject,
+                    "organization": self.organization,
+                    "content": self.content
+                }
+        }
 
         return json.dumps(JSON, indent = 5)
