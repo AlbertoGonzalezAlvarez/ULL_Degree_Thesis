@@ -1,5 +1,8 @@
 from sklearn.datasets import fetch_20newsgroups
-from Email import Email
+from EmailParser.Email import Email
+from Genetic.Simple_GA import Simple_GA
+from Utilities.FileUtilities import FileUtilities
+import os
 
 train_data = {
     'soc.religion.christian': fetch_20newsgroups(subset='train', categories=['soc.religion.christian']).data,
@@ -7,8 +10,11 @@ train_data = {
     'talk.politics.mideast': fetch_20newsgroups(subset='train', categories=['talk.politics.mideast']).data
 }
 
+
 corpus = {}
 for category in train_data:
-    corpus[category] = [Email(category, email) for email in train_data[category][:2]]
+    corpus[category] = [Email(category, email) for email in train_data[category]]
 
-print(corpus['soc.religion.christian'][0])
+FileUtilities.writeToFile(corpus, "emails.json")
+
+FileUtilities.writeToFile(train_data, "emails.txt")
