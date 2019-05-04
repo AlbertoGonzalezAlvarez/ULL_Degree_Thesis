@@ -6,7 +6,7 @@ class EmailEncoder(json.JSONEncoder):
         if isinstance(object, Email):
             return  {
                             "category": object.category,
-                            "from": object.from_,
+                            "from_": object.from_,
                             "subject": object.subject,
                             "organization": object.organization,
                             "content": object.content
@@ -17,6 +17,13 @@ class EmailEncoder(json.JSONEncoder):
     @staticmethod
     def encodeEmail(email):
         if 'category' in email:
-            return Email(category=email["category"], from_=email['from'], subject=email['subject'],
-                         organization=email['organization'], content=email['content'])
+            return Email(email["category"], email['from_'], email['subject'], email['organization'], email['content'])
         return email
+
+    @staticmethod
+    def getCorpusFromDict(data: dict) -> dict:
+        corpus = {}
+        for category in data:
+            corpus[category] = [Email(**Email.parseEmail(category, email)) for email in data[category]]
+
+        return corpus

@@ -8,7 +8,7 @@ class FileUtilities:
     FILE_REGISTER = []
 
     @staticmethod
-    def start():
+    def startService():
         LoggerHandler.log(__name__, f"Fetching data from '{FileUtilities.DEFAULT_DIR}'")
         for file in os.listdir(FileUtilities.DEFAULT_DIR):
             FileUtilities.FILE_REGISTER.append(file)
