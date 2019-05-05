@@ -24,7 +24,6 @@ if not FileUtilities.isRegistred("train_data.json", "test_data.json"):
     FileUtilities.writeToFile(train_data_corpus, "train_data.json", encoder = EmailEncoder)
     FileUtilities.writeToFile(train_data_corpus, "test_data.json", encoder = EmailEncoder)
 
-
 train_data_JSON = FileUtilities.readJSON("train_data.json")
 test_data_JSON = FileUtilities.readJSON("train_data.json")
 

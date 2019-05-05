@@ -13,6 +13,7 @@ class Email(json.JSONEncoder):
         self.subject = subject
         self.organization = organization
         self.content = content
+        self.contentLenght = len(re.findall(r'\w+', self.content))
 
     @classmethod
     def from_json(cls, json_str):

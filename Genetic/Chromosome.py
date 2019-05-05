@@ -8,6 +8,7 @@ class Chromosome:
 
     def __init__(self, size = 0, gens = []):
         self.index = 0
+        self.puntuaction = 0
 
         if(len(gens) == 0):
             self.gens = [Gen() for _ in range(size)]
