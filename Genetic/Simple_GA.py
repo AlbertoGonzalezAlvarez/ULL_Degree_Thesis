@@ -12,8 +12,25 @@ class Simple_GA():
         self.initialPopulationSize = initialPopulationSize
         self.population = {}
         self.individuals_lenght = {}
-        self.fitnesFunc = Fitness.startUp(self)
 
+        #temporal
+        self.train_joined_words = self.joinWords(train_data)
+        # print(self.train_joined_words['soc.religion.christian'][0])
+        self.test_data_joined = []
+
+        for category in test_data:
+            for email in test_data[category]:
+                self.test_data_joined.append(email.content)
+
+        self.test_data_labels = []
+        i = 0
+        for category in test_data:
+            for _ in range(len(test_data[category])):
+                self.test_data_labels.append(i)
+            i = i + 1
+
+
+        print(len(self.test_data_joined))
         if mutation_rate > 0.0 and mutation_rate <= 1.0:
             Mutation.MUTATION_RATE = mutation_rate
         else:
@@ -22,16 +39,11 @@ class Simple_GA():
         for category in train_data:
             self.population[category] = []
 
-        Fitness
-
     def generateInitialSolution(self, selectedFeatures: int):
-        # Calculate TF-IDF score
-
-
         # Initialize population
         for category in self.population:
             self.individuals_lenght[category] = sum(email.contentLenght for email in self.train_data[category])
-            for i in range(self.initialPopulationSize):
+            for _ in range(self.initialPopulationSize):
                 individual = Chromosome(self.individuals_lenght[category])
                 self.population[category].append(individual)
 
@@ -39,17 +51,55 @@ class Simple_GA():
 
         # Generate random genes for each individual
         for category in self.population:
+            # print(category)
             for index in range(self.initialPopulationSize):
                 threshold = selectedFeatures/self.individuals_lenght[category]
                 for gen in self.population[category][index]:
                     if (random.uniform(0, 1) < threshold):
                         gen.selectGen()
+                        gen.updateWord(self.train_joined_words[category][self.population[category][index].getSelectedFeatures()[-1]])
+                        # print(gen.word)
+                        # self.searchWord(category, self.population[category][index].getSelectedFeatures()[-1])
+                        # print(index, category, self.population[category][index].getSelectedFeatures()[-1])
 
         LoggerHandler.log(__name__, "Initial population genes haven changed randomly.")
         LoggerHandler.log(__name__, "Ready to start!")
 
-        # Fitness.computeFitness(self)
+        # Calculate score
+        Fitness.compute(self.population, self.test_data_joined, self.test_data_labels)
+
     def startUpGA(self):
         pass
 
+    def joinWords(self, data):
+        joined_data = {}
 
+        for category in data:
+            joined_data[category] = []
+            for email in data[category]:
+                joined_data[category] = joined_data[category] + email.words
+
+        return joined_data
+
+    # def searchWord(self, category, index):
+    #     accum = 0
+    #     for i in range(len(self.train_data[category])):
+    #         accum = accum + len(self.train_data[category][i].words) - 1
+    #         if accum >= index:
+    #             print(index, accum, len(self.train_data[category][i].words), len(self.train_data[category][i-1].words))
+    #             initlenght = accum - len(self.train_data[category][i].words)
+    #             print(self.train_data[category][i].getContentWordAt(index - initlenght))
+
+    # def getJoinedData(self):
+    #     dictionary = {}
+    #
+    #     for category in self.train_data:
+    #         dictionary[category] = []
+    #
+    #     for category in self.train_data:
+    #         for email in self.train_data[category]:
+    #             for content_word in email.content:
+    #                 dictionary[category].append(content_word)
+    #
+    #     print(dictionary['soc.religion.christian'][34])
+    #     return dictionary

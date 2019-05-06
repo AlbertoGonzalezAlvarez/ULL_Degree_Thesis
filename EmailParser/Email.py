@@ -8,19 +8,24 @@ class Email(json.JSONEncoder):
     HEADER_LENGHT = 10
 
     def __init__(self, category: str ="", from_: str = "", subject: str = "", organization: str = "", content: str = "") -> None:
+        # Maybe its redundant
         self.category = category
         self.from_ = from_
         self.subject = subject
         self.organization = organization
         self.content = content
-        self.contentLenght = len(re.findall(r'\w+', self.content))
+        self.words = re.findall(r'\w+', self.content)
+        self.contentLenght = len(self.words)
+
+    def getContentWordAt(self, index):
+        return self.words[index]
 
     @classmethod
     def from_json(cls, json_str):
         listOfEmails = {}
 
         if type(json_str) != dict:
-            LoggerHandler.error(__name__, "You are trying to impor a JSON that isn't a dict")
+            LoggerHandler.error(__name__, "You are trying to import a JSON that isn't a dict")
 
         for category in json_str:
             if type(json_str[category]) == list:

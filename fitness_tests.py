@@ -1,26 +1,34 @@
-# from sklearn.model_selection import cross_val_score
-# from sklearn.datasets import load_iris
-# from sklearn.ensemble import AdaBoostClassifier
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
+import numpy as np
+
+categories = ['alt.atheism', 'sci.med']
+
+twenty_train = fetch_20newsgroups(subset='train',
+    categories=categories, shuffle=True, random_state=42)
+
+# count_vect = CountVectorizer()
+# X_train_counts = count_vect.fit_transform(twenty_train.data)
 #
-# iris = load_iris()
-# clf = AdaBoostClassifier(n_estimators=100)
-# scores = cross_val_score(clf, iris.data, iris.target, cv=5)
-# print(scores)
+# tfidf_transformer = TfidfTransformer()
+# X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
+#
+# clf = MultinomialNB().fit(X_train_tfidf, twenty_train.target)
 
-class User(object):
-    def __init__(self, name, username):
-        self.name = name
-        self.username = username
+text_clf = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+    ('clf', MultinomialNB()),
+])
 
-import json
-def object_decoder(obj):
-    if 'name' in obj:
-        return User(obj['name'], obj['username'])
-    return obj
+text_clf.fit(twenty_train.data, twenty_train.target)
 
-a = json.loads('{"name": "John Smith", "username": "jsmith"}',
-           object_hook=object_decoder)
-
-print(type(a))  # -> <type 'type'>
-
-print(a.name)
+twenty_test = fetch_20newsgroups(subset='test',
+    categories=categories, shuffle=True, random_state=42)
+docs_test = twenty_test.data
+predicted = text_clf.predict(docs_test)
+print(twenty_test.target)
+print(np.mean(predicted == twenty_test.target))

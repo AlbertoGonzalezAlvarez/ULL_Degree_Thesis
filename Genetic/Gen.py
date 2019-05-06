@@ -7,10 +7,14 @@ class Gen:
     gen_state = None
 
     def __init__(self, state = None):
+        self.word = ""
         if state == None:
             self.gen_state = GEN_STATE.REMOVED
         else:
             self.gen_state = state
+
+    def updateWord(self, word):
+        self.word = word
 
     def selectGen(self):
         self.gen_state = GEN_STATE.SELECTED

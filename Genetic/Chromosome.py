@@ -42,6 +42,12 @@ class Chromosome:
                              self.gens[index].state == GEN_STATE.SELECTED]
         return len(selected_features)
 
+    def getSelectedWords(self):
+        selected_words = [self.gens[index].word for index in range(len(self.gens)) if
+                             self.gens[index].state == GEN_STATE.SELECTED]
+
+        return selected_words
+
     def getRemovedFeaturesSize(self):
         removed_features = [index for index in range(len(self.gens)) if
                             self.gens[index].state == GEN_STATE.REMOVED]
