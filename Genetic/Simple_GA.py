@@ -30,7 +30,7 @@ class Simple_GA():
             i = i + 1
 
 
-        print(len(self.test_data_joined))
+        # print(len(self.test_data_joined))
         if mutation_rate > 0.0 and mutation_rate <= 1.0:
             Mutation.MUTATION_RATE = mutation_rate
         else:
@@ -51,16 +51,12 @@ class Simple_GA():
 
         # Generate random genes for each individual
         for category in self.population:
-            # print(category)
             for index in range(self.initialPopulationSize):
                 threshold = selectedFeatures/self.individuals_lenght[category]
                 for gen in self.population[category][index]:
                     if (random.uniform(0, 1) < threshold):
                         gen.selectGen()
                         gen.updateWord(self.train_joined_words[category][self.population[category][index].getSelectedFeatures()[-1]])
-                        # print(gen.word)
-                        # self.searchWord(category, self.population[category][index].getSelectedFeatures()[-1])
-                        # print(index, category, self.population[category][index].getSelectedFeatures()[-1])
 
         LoggerHandler.log(__name__, "Initial population genes haven changed randomly.")
         LoggerHandler.log(__name__, "Ready to start!")
@@ -80,26 +76,3 @@ class Simple_GA():
                 joined_data[category] = joined_data[category] + email.words
 
         return joined_data
-
-    # def searchWord(self, category, index):
-    #     accum = 0
-    #     for i in range(len(self.train_data[category])):
-    #         accum = accum + len(self.train_data[category][i].words) - 1
-    #         if accum >= index:
-    #             print(index, accum, len(self.train_data[category][i].words), len(self.train_data[category][i-1].words))
-    #             initlenght = accum - len(self.train_data[category][i].words)
-    #             print(self.train_data[category][i].getContentWordAt(index - initlenght))
-
-    # def getJoinedData(self):
-    #     dictionary = {}
-    #
-    #     for category in self.train_data:
-    #         dictionary[category] = []
-    #
-    #     for category in self.train_data:
-    #         for email in self.train_data[category]:
-    #             for content_word in email.content:
-    #                 dictionary[category].append(content_word)
-    #
-    #     print(dictionary['soc.religion.christian'][34])
-    #     return dictionary

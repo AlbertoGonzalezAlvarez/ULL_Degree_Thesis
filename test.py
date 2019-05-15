@@ -1,6 +1,5 @@
 from sklearn.datasets import fetch_20newsgroups
 from EmailParser.Email import Email
-from EmailParser.EmailCategory import EmailCategory
 from EmailParser.EmailEncoder import EmailEncoder
 from Genetic.Simple_GA import Simple_GA
 from Utilities.FileUtilities import FileUtilities
