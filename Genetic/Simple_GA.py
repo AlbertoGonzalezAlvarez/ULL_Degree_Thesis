@@ -62,7 +62,7 @@ class Simple_GA():
         LoggerHandler.log(__name__, "Ready to start!")
 
         # Calculate score
-        Fitness.compute(self.population, self.test_data_joined, self.test_data_labels)
+        print(Fitness.compute(self.population, self.test_data_joined, self.test_data_labels))
 
     def startUpGA(self):
         pass

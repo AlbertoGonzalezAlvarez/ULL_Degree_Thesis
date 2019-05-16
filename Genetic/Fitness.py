@@ -3,10 +3,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
-from sklearn import metrics
 from sklearn.metrics import f1_score
-from collections import Counter
-import numpy as np
 
 class Fitness():
 
