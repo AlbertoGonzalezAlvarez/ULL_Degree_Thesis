@@ -7,7 +7,7 @@ from Genetic.Gen import GEN_STATE as G
 class TestMutation(unittest.TestCase):
 
     def setUp(self):
-        self.CHRROMOSOME = Chromosome(gens=[G.REMOVED, G.SELECTED, G.REMOVED, G.REMOVED, G.SELECTED])
+        self.CHRROMOSOME = Chromosome(selectedGensIndex=[G.REMOVED, G.SELECTED, G.REMOVED, G.REMOVED, G.SELECTED])
 
     def testYesMutation(self):
         CHROMOSOME_COPY = deepcopy(self.CHRROMOSOME)

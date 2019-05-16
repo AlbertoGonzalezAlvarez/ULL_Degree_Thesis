@@ -1,43 +1,50 @@
 from Genetic.Operations.Mutation import Mutation
 from Log.LoggerHandler import LoggerHandler
+from Genetic.Population import Population
 from Genetic.Chromosome import Chromosome
 from Genetic.Fitness import Fitness
+from Genetic.Individual import Individual
 import random
 
 class Simple_GA():
 
-    def __init__(self, train_data, test_data: dict, mutation_rate: float = 0.1, initialPopulationSize: int = 0):
+    def __init__(self, train_data, test_data: type, mutation_rate: float = 0.1,
+                 populationSize: int = 0, maxIndividualFeatures: int = 0):
+
+        Population.SIZE = populationSize
+        Individual.MAX_INDIVIDUAL_FEATURES = maxIndividualFeatures
+
         self.train_data = train_data
         self.test_data = test_data
-        self.initialPopulationSize = initialPopulationSize
-        self.population = {}
-        self.individuals_lenght = {}
+        self.population = [Population(category.lenght) for category in train_data]
 
-        #temporal
-        self.train_joined_words = self.joinWords(train_data)
-        # print(self.train_joined_words['soc.religion.christian'][0])
-        self.test_data_joined = []
-
-        for category in test_data:
-            for email in test_data[category]:
-                self.test_data_joined.append(email.content)
-
-        self.test_data_labels = []
-        i = 0
-        for category in test_data:
-            for _ in range(len(test_data[category])):
-                self.test_data_labels.append(i)
-            i = i + 1
-
-
-        # print(len(self.test_data_joined))
-        if mutation_rate > 0.0 and mutation_rate <= 1.0:
-            Mutation.MUTATION_RATE = mutation_rate
-        else:
-            LoggerHandler.error(__name__, "Mutation rate should be between (0.0 - 1.0]")
-
-        for category in train_data:
-            self.population[category] = []
+        # self.individuals_lenght = {}
+        #
+        # #temporal
+        # self.train_joined_words = self.joinWords(train_data)
+        # # print(self.train_joined_words['soc.religion.christian'][0])
+        # self.test_data_joined = []
+        #
+        # for category in test_data:
+        #     for email in test_data[category]:
+        #         self.test_data_joined.append(email.content)
+        #
+        # self.test_data_labels = []
+        # i = 0
+        # for category in test_data:
+        #     for _ in range(len(test_data[category])):
+        #         self.test_data_labels.append(i)
+        #     i = i + 1
+        #
+        #
+        # # print(len(self.test_data_joined))
+        # if mutation_rate > 0.0 and mutation_rate <= 1.0:
+        #     Mutation.MUTATION_RATE = mutation_rate
+        # else:
+        #     LoggerHandler.error(__name__, "Mutation rate should be between (0.0 - 1.0]")
+        #
+        # for category in train_data:
+        #     self.population[category] = []
 
     def generateInitialSolution(self, selectedFeatures: int):
         # Initialize population

@@ -1,7 +1,9 @@
 from sklearn.datasets import fetch_20newsgroups
 from EmailParser.Email import Email
+from Genetic.Chromosome import Chromosome
 from EmailParser.EmailEncoder import EmailEncoder
 from Genetic.Simple_GA import Simple_GA
+from Genetic.Gen import GEN_STATE, Gen
 from Utilities.FileUtilities import FileUtilities
 from EmailParser.DataCategories import DataCategories
 
@@ -28,10 +30,8 @@ if not FileUtilities.isRegistred("train_data.json", "test_data.json"):
 train_data_dict = FileUtilities.readJSON("train_data.json")
 test_data_dict = FileUtilities.readJSON("test_data.json")
 
-train_data = [DataCategories.addCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
-test_data = [DataCategories.addCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
+train_data = [DataCategories.addTrainCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
+test_data = [DataCategories.addTestCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
 
-
-genetic = Simple_GA(train_data, test_data, 0.1, 2)
-# genetic.generateInitialSolution(2)
+# genetic = Simple_GA(train_data, test_data, 0.1, 2, 2)
 # genetic.startUpGA()
