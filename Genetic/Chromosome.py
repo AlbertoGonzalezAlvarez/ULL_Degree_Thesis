@@ -7,7 +7,7 @@ import sys
 class Chromosome:
 
     def __init__(self, selectedGensIndex:set = set(), size:int = 0):
-        if max(selectedGensIndex) >= size:
+        if len(selectedGensIndex) > 0 and max(selectedGensIndex) >= size:
             LoggerHandler.error(__name__, "You trying to insert a gen greather than chromosome lenght")
 
         self.iterLastIndex = 0
@@ -18,13 +18,6 @@ class Chromosome:
         if(len(selectedGensIndex) > 0):
             self.gens = Gen.getGensFromList(selectedGensIndex)
 
-        self.addFeatureAt(4)
-        print(self.gens)
-        print(self.gens[4])
-        self.removeFeatureAt(8)
-        self.addFeatureAt(23)
-        print(self.gens)
-        print(self.featureAt(48))
 
     def addFeatureAt(self, index, gen: Gen = None):
         if gen != None and isinstance(gen, Gen):
