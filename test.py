@@ -3,7 +3,7 @@ from EmailParser.Email import Email
 from EmailParser.EmailEncoder import EmailEncoder
 from Genetic.Simple_GA import Simple_GA
 from Utilities.FileUtilities import FileUtilities
-from EmailParser.EmailCategory import EmailCategory
+from EmailParser.DataCategories import DataCategories
 
 FileUtilities.startService()
 
@@ -28,19 +28,10 @@ if not FileUtilities.isRegistred("train_data.json", "test_data.json"):
 train_data_dict = FileUtilities.readJSON("train_data.json")
 test_data_dict = FileUtilities.readJSON("test_data.json")
 
-train_data = [EmailCategory.addCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
-# print(train_data[0])
+train_data = [DataCategories.addCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
+test_data = [DataCategories.addCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
 
-# EmailCategory.addCategory("soc.religion.christian")
-# EmailCategory.addCategory("talk.politics.guns")
-# EmailCategory.addCategory("talk.politics.mideast")
-#
-# train_data = Email.from_json(train_data_JSON, ['content'])
-# test_data = Email.from_json(test_data_JSON, ['content'])
 
-# EmailCategory.addCategory('soc.religion.christian', train_data['soc.religion.christian'])
-
-# print(train_data['soc.religion.christian'][0])
-# genetic = Simple_GA(train_data, test_data, 0.1, 2)
+genetic = Simple_GA(train_data, test_data, 0.1, 2)
 # genetic.generateInitialSolution(2)
 # genetic.startUpGA()

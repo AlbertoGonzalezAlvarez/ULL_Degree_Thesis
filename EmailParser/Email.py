@@ -26,22 +26,32 @@ class Email(json.JSONEncoder):
         return self.email_joined_fields[index]
 
     def __join_fields_data(self):
-        if (len(self.email_joined_fields) > 0):
+        if (len(self.email_joined_fields) <= 0):
             self.email_joined_fields = ""
             for field in self.email_desired_fields:
                 self.email_joined_fields += self.email_content[field]
 
+    # not working
     @property
-    def content(self):
+    def corpus(self):
         self.__join_fields_data()
         return self.email_joined_fields
 
     @property
-    def words(self):
-        if(len(self.vector_of_words) > 0):
-            self.vector_of_words = re.findall(r'\w+', self.email_joined_fields)
+    def lenght(self):
+        self.words_vector
+        return len(self.vector_of_words)
 
+    #not working
+    @property
+    def words_vector(self):
+        if(len(self.vector_of_words) > 0):
+            return self.vector_of_words
+
+        self.__join_fields_data()
+        self.vector_of_words = re.findall(r'\w+', self.email_joined_fields)
         return self.vector_of_words
+
 
     @classmethod
     def from_json(cls, email: str, fields: [] = DEFAULT_FIELDS) -> None:
