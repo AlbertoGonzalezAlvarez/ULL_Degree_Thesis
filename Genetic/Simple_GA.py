@@ -16,7 +16,7 @@ class Simple_GA():
 
         self.train_data = train_data
         self.test_data = test_data
-        self.population = [Population(category.lenght) for category in train_data]
+        self.population = [Population(category.lenght, ) for category in train_data]
 
         # self.individuals_lenght = {}
         #

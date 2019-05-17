@@ -23,7 +23,7 @@ class Chromosome:
         if gen != None and isinstance(gen, Gen):
             self.gens[index] = gen
         else:
-            self.gens[index] = Gen(GEN_STATE.REMOVED)
+            self.gens[index] = Gen(GEN_STATE.SELECTED)
 
     def removeFeatureAt(self, index):
         del self.gens[index]

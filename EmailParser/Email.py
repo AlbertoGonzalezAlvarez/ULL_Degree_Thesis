@@ -31,7 +31,6 @@ class Email(json.JSONEncoder):
             for field in self.email_desired_fields:
                 self.email_joined_fields += self.email_content[field]
 
-    # not working
     @property
     def corpus(self):
         self.__join_fields_data()
@@ -42,7 +41,6 @@ class Email(json.JSONEncoder):
         self.words_vector
         return len(self.vector_of_words)
 
-    #not working
     @property
     def words_vector(self):
         if(len(self.vector_of_words) > 0):
