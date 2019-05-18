@@ -43,13 +43,13 @@ class Gen:
         else:
             return TypeError
 
-    @staticmethod
-    def getGensFromList(genSet: set = []):
-        sparse_gen_vector = {}
-        for genIndex in genSet:
-            sparse_gen_vector[genIndex] = Gen(GEN_STATE.SELECTED)
-
-        return collections.OrderedDict(sorted(sparse_gen_vector.items()))
+    # @staticmethod
+    # def getGensFromList(genSet: set = []):
+    #     sparse_gen_vector = {}
+    #     for genIndex in genSet:
+    #         sparse_gen_vector[genIndex] = Gen(GEN_STATE.SELECTED)
+    #
+    #     return collections.OrderedDict(sorted(sparse_gen_vector.items()))
 
 
     # print(genSet)

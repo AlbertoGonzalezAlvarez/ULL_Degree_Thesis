@@ -20,7 +20,7 @@ class Chromosome:
 
 
     def addFeatureAt(self, index, gen: Gen = None):
-        if gen != None and isinstance(gen, Gen):
+        if isinstance(gen, Gen):
             self.gens[index] = gen
         else:
             self.gens[index] = Gen(GEN_STATE.SELECTED)

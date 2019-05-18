@@ -12,14 +12,13 @@ class Individual:
         self.score = 0
 
     @staticmethod
-    def generateRandom(lenght: int = 0) -> Individual:
-        individual = Individual(lenght)
-        threshold = individual.chromosome.getSelectedFeaturesSize() / Individual.MAX_INDIVIDUAL_FEATURES
+    def generateRandom(individual_lenght: int = 0) -> Individual:
+        individual = Individual(individual_lenght)
+        threshold = Individual.MAX_INDIVIDUAL_FEATURES / individual_lenght
 
-        for gen in individual.chromosome:
-            print(gen)
-            # if (random.uniform(0, 1) < 0.001):
-            #     gen.selectGen()
+        for index in range(individual.chromosome.lenght):
+            if (random.uniform(0, 1) < threshold):
+                individual.chromosome.addFeatureAt(index)
 
         return individual
 
