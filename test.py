@@ -34,7 +34,6 @@ test_data_dict = FileUtilities.readJSON("test_data.json")
 train_data = [DataCategories.addTrainCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
 test_data = [DataCategories.addTestCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
 
-print(train_data[0].corpus)
+# print(train_data[0].corpus)
 genetic_spec = GAData(train_data, test_data, 0.1, 2, 2)
-
-# genetic.startUpGA()
+parent_2 = Chromosome([0, 2, 1, 3, 5, 4], 5)

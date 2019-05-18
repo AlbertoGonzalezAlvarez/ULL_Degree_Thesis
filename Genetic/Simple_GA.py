@@ -19,13 +19,3 @@ class Simple_GA():
 
     def startUpGA(self) -> None:
         pass
-
-    # def joinWords(self, data):
-    #     joined_data = {}
-    #
-    #     for category in data:
-    #         joined_data[category] = []
-    #         for email in data[category]:
-    #             joined_data[category] = joined_data[category] + email.words
-    #
-    #     return joined_data

@@ -8,8 +8,8 @@ class Individual:
     MAX_INDIVIDUAL_FEATURES = 0
 
     def __init__(self, lenght: int = 0):
-        self.chromosome = Chromosome(size = lenght)
-        self.score = 0
+        self.chromosome: Chromosome = Chromosome(size = lenght)
+        self.score: int = 0
 
     @staticmethod
     def generateRandom(individual_lenght: int = 0) -> Individual:
@@ -29,5 +29,5 @@ class Individual:
         return str(self.chromosome)
 
     @staticmethod
-    def setMaxIndividualFeatures(maxIndividualFeatures: int):
+    def setMaxIndividualFeatures(maxIndividualFeatures: int) -> None:
         Individual.MAX_INDIVIDUAL_FEATURES = maxIndividualFeatures

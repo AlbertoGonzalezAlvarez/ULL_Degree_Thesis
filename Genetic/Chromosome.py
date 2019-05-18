@@ -3,12 +3,13 @@ from Genetic.Gen import Gen, GEN_STATE
 from copy import copy, deepcopy
 from Log.LoggerHandler import LoggerHandler
 import numpy as np
+from collections import OrderedDict
 import sys
 
 class Chromosome:
 
     def __init__(self, selectedGensIndex:set = set(), size:int = 0):
-        if len(selectedGensIndex) > 0 and max(selectedGensIndex) >= size:
+        if len(selectedGensIndex) > 0 and max(selectedGensIndex) > size:
             LoggerHandler.error(__name__, "You trying to insert a gen greather than chromosome lenght")
 
         self.iterLastIndex: int = 0
@@ -21,6 +22,9 @@ class Chromosome:
 
 
     def addFeatureAt(self, index, gen: Gen = None) -> None:
+        if index > self.size:
+            raise IndexError(f"You are trying to add a feature at {index} and chromosome only have {self.size} gens")
+
         if isinstance(gen, Gen):
             self.gens[index] = gen
         else:
@@ -46,7 +50,7 @@ class Chromosome:
 
         return list(all - selected)
 
-    def getChromosome(self) -> list[Gen]:
+    def getChromosome(self) -> OrderedDict[Gen]:
         return self.gens
 
     def getSelectedFeaturesSize(self) -> int:
@@ -59,8 +63,14 @@ class Chromosome:
     def lenght(self) -> int:
         return self.size
 
+    # temporal
     def __getitem__(self, index) -> Gen:
-        return self.featureAt(index)
+        if isinstance(index, slice) and index.start == index.stop:
+            list = [gen for gen in self.gens[index.start:index.stop + 1]]
+        else:
+            list = [gen for gen in self.gens[index]]
+
+        return list
 
     def __setitem__(self, index, value) -> None:
         if value != None and isinstance(value, Gen):
