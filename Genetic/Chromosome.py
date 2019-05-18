@@ -1,10 +1,9 @@
 from __future__ import annotations
-from Genetic.Gen import Gen, GEN_STATE
 from copy import copy, deepcopy
 from Log.LoggerHandler import LoggerHandler
+from Genetic.Gen import Gen, GEN_STATE
 import numpy as np
 from collections import OrderedDict
-import sys
 
 class Chromosome:
 
@@ -15,36 +14,32 @@ class Chromosome:
         self.iterLastIndex: int = 0
         self.puntuaction: float = 0.0
         self.size:int = size
-        self.gens: dict = {}
+        self.gens: list = []
 
         if(len(selectedGensIndex) > 0):
-            self.gens = Gen.getGensFromList(selectedGensIndex)
+            self.gens = selectedGensIndex
 
-
-    def addFeatureAt(self, index, gen: Gen = None) -> None:
+    def alterGenAt(self, index) -> None:
         if index > self.size:
             raise IndexError(f"You are trying to add a feature at {index} and chromosome only have {self.size} gens")
 
-        if isinstance(gen, Gen):
-            self.gens[index] = gen
+        if index in self.gens:
+            del self.gens[self.gens.index(index)]
         else:
-            self.gens[index] = Gen(GEN_STATE.SELECTED)
+            self.gens.append(index)
 
-    def removeFeatureAt(self, index) -> list[Gen]:
-        del self.gens[index]
-
-    def featureAt(self, index) -> Gen:
-        if index > self.size:
-            raise IndexError(f"You are trying to access gen at {index} and chromosome only have {self.size} gens")
-        elif index not in self.gens:
+    def featureAt(self, element) -> Gen:
+        if element > self.size:
+            raise IndexError(f"You are trying to access gen at {element} and chromosome only have {self.size} gens")
+        elif element not in self.getSelectedFeatures():
             return Gen(GEN_STATE.REMOVED)
 
-        return self.gens[index]
+        return Gen(GEN_STATE.SELECTED)
 
-    def getSelectedFeatures(self) -> list[Gen]:
-        return list(self.gens.keys())
+    def getSelectedFeatures(self) -> list[int]:
+        return list(self.gens)
 
-    def getRemovedFeatures(self) -> list[Gen]:
+    def getRemovedFeatures(self) -> list[int]:
         selected = set(self.getSelectedFeatures())
         all =  set(list(np.arange(self.size)))
 
@@ -63,18 +58,8 @@ class Chromosome:
     def lenght(self) -> int:
         return self.size
 
-    # temporal
     def __getitem__(self, index) -> Gen:
-        if isinstance(index, slice) and index.start == index.stop:
-            list = [gen for gen in self.gens[index.start:index.stop + 1]]
-        else:
-            list = [gen for gen in self.gens[index]]
-
-        return list
-
-    def __setitem__(self, index, value) -> None:
-        if value != None and isinstance(value, Gen):
-            self.addFeatureAt(index, value)
+        return self.featureAt(index)
 
     def __repr__(self) -> str(Gen):
         return str(self.getSelectedFeatures())

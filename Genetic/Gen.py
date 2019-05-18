@@ -1,5 +1,4 @@
 from enum import Enum
-import collections
 
 class GEN_STATE(Enum):
     SELECTED, REMOVED = 1, 0
@@ -42,26 +41,6 @@ class Gen:
             return self.state == other
         else:
             return TypeError
-
-    @staticmethod
-    def getGensFromList(genSet: set = []):
-        sparse_gen_vector = {}
-        for genIndex in genSet:
-            sparse_gen_vector[genIndex] = Gen(GEN_STATE.SELECTED)
-
-        return collections.OrderedDict(sorted(sparse_gen_vector.items()))
-
-
-    # print(genSet)
-    # genList = list(genSet)
-    # genList.sort()
-    #
-    # sparse_gen_vector = {}
-    # for genIndex in genList:
-    #     sparse_gen_vector[genIndex] = Gen(GEN_STATE.SELECTED)
-    #
-    # collections.OrderedDict(sorted(sparse_gen_vector.items()))
-    # return sparse_gen_vector
 
     @property
     def state(self):

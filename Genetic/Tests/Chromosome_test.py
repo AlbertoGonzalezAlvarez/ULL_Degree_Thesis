@@ -24,13 +24,13 @@
 #
 #     def testAddFeatureAt(self):
 #         EXPECTED_VALUE = GEN_STATE.SELECTED
-#         self.test_chromosome.addFeatureAt(4)
+#         self.test_chromosome.alterGenAt(4)
 #         self.assertEqual(self.test_chromosome.getFeatureAt(4), EXPECTED_VALUE)
 #
 #     def testRemoveFeatureAt(self):
 #         EXPECTED_VALUE = GEN_STATE.REMOVED
-#         self.test_chromosome.addFeatureAt(8)
-#         self.test_chromosome.removeFeatureAt(8)
+#         self.test_chromosome.alterGenAt(8)
+#         self.test_chromosome.removeGenAt(8)
 #         self.assertEqual(self.test_chromosome.getFeatureAt(8), EXPECTED_VALUE)
 #
 #     def testGetSelectedFeatures(self):

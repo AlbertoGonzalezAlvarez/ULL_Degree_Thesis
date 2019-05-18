@@ -3,7 +3,6 @@ from EmailParser.Email import Email
 from Genetic.Chromosome import Chromosome
 from EmailParser.EmailEncoder import EmailEncoder
 from Genetic.Simple_GA import Simple_GA
-from Genetic.Gen import GEN_STATE, Gen
 from Utilities.FileUtilities import FileUtilities
 from EmailParser.DataCategories import DataCategories
 from Genetic.GAData import GAData
@@ -36,4 +35,3 @@ test_data = [DataCategories.addTestCategory(category, test_data_dict[category], 
 
 # print(train_data[0].corpus)
 genetic_spec = GAData(train_data, test_data, 0.1, 2, 2)
-parent_2 = Chromosome([0, 2, 1, 3, 5, 4], 5)
