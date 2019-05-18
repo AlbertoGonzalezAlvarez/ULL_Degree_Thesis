@@ -1,3 +1,4 @@
+from __future__ import annotations
 from Genetic.Gen import Gen, GEN_STATE
 from copy import copy, deepcopy
 from Log.LoggerHandler import LoggerHandler
@@ -10,25 +11,25 @@ class Chromosome:
         if len(selectedGensIndex) > 0 and max(selectedGensIndex) >= size:
             LoggerHandler.error(__name__, "You trying to insert a gen greather than chromosome lenght")
 
-        self.iterLastIndex = 0
-        self.puntuaction = 0
-        self.size = size
-        self.gens = {}
+        self.iterLastIndex: int = 0
+        self.puntuaction: float = 0.0
+        self.size:int = size
+        self.gens: dict = {}
 
         if(len(selectedGensIndex) > 0):
             self.gens = Gen.getGensFromList(selectedGensIndex)
 
 
-    def addFeatureAt(self, index, gen: Gen = None):
+    def addFeatureAt(self, index, gen: Gen = None) -> None:
         if isinstance(gen, Gen):
             self.gens[index] = gen
         else:
             self.gens[index] = Gen(GEN_STATE.SELECTED)
 
-    def removeFeatureAt(self, index):
+    def removeFeatureAt(self, index) -> list[Gen]:
         del self.gens[index]
 
-    def featureAt(self, index):
+    def featureAt(self, index) -> Gen:
         if index > self.size:
             raise IndexError(f"You are trying to access gen at {index} and chromosome only have {self.size} gens")
         elif index not in self.gens:
@@ -36,45 +37,45 @@ class Chromosome:
 
         return self.gens[index]
 
-    def getSelectedFeatures(self):
+    def getSelectedFeatures(self) -> list[Gen]:
         return list(self.gens.keys())
 
-    def getRemovedFeatures(self):
+    def getRemovedFeatures(self) -> list[Gen]:
         selected = set(self.getSelectedFeatures())
         all =  set(list(np.arange(self.size)))
 
         return list(all - selected)
 
-    def getChromosome(self):
+    def getChromosome(self) -> list[Gen]:
         return self.gens
 
-    def getSelectedFeaturesSize(self):
+    def getSelectedFeaturesSize(self) -> int:
         return len(self.gens)
 
-    def getRemovedFeaturesSize(self):
+    def getRemovedFeaturesSize(self) -> int:
         return self.size - self.getSelectedFeaturesSize()
 
     @property
-    def lenght(self):
+    def lenght(self) -> int:
         return self.size
 
-    def __getitem__(self, index):
+    def __getitem__(self, index) -> Gen:
         return self.featureAt(index)
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index, value) -> None:
         if value != None and isinstance(value, Gen):
             self.addFeatureAt(index, value)
 
-    def __repr__(self):
+    def __repr__(self) -> str(Gen):
         return str(self.getSelectedFeatures())
 
-    def __str__(self):
+    def __str__(self) -> str(Gen):
         return str(self.getSelectedFeatures())
 
-    def __iter__(self):
+    def __iter__(self) -> Chromosome:
         return self
 
-    def __next__(self):
+    def __next__(self) -> Gen:
         try:
             result = self.featureAt(self.iterLastIndex)
         except IndexError:
@@ -82,19 +83,19 @@ class Chromosome:
         self.iterLastIndex += 1
         return result
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if isinstance(other, Chromosome):
             return self.gens == other.gens
         else:
             return TypeError
 
-    def __copy__(self):
+    def __copy__(self) -> Gen:
         cls = self.__class__
         result = cls.__new__(cls)
         result.__dict__.update(self.__dict__)
         return result
 
-    def __deepcopy__(self, memo):
+    def __deepcopy__(self, memo) -> Gen:
         cls = self.__class__
         result = cls.__new__(cls)
         memo[id(self)] = result

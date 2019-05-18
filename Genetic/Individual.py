@@ -7,7 +7,7 @@ class Individual:
 
     MAX_INDIVIDUAL_FEATURES = 0
 
-    def __init__(self, lenght: int = 0) -> None:
+    def __init__(self, lenght: int = 0):
         self.chromosome = Chromosome(size = lenght)
         self.score = 0
 
@@ -22,3 +22,12 @@ class Individual:
 
         return individual
 
+    def __str__(self):
+        return str(self.chromosome)
+
+    def __repr__(self):
+        return str(self.chromosome)
+
+    @staticmethod
+    def setMaxIndividualFeatures(maxIndividualFeatures: int):
+        Individual.MAX_INDIVIDUAL_FEATURES = maxIndividualFeatures
