@@ -8,6 +8,7 @@ class Crossover:
         if len(crosspoints) == 0:
             crosspoints = random.sample(range(0, len(chromosome1)), Crossover.cutting_points)
 
+        print(crosspoints)
         father_gens = chromosome1.getChromosome()
         mother_gens = chromosome2.getChromosome()
 
@@ -29,4 +30,4 @@ class Crossover:
             last_crosspoint_index = index
             switcher += 1
 
-        return  offspring
+        return offspring

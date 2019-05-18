@@ -13,8 +13,8 @@ class TestCrossover(unittest.TestCase):
         CROSSPOINTS = [2, 4]
         EXPECTED_VALUE = \
             [
-                [Gen(STATE.REMOVED), Gen(STATE.REMOVED), Gen(STATE.SELECTED), Gen(STATE.REMOVED), Gen(STATE.REMOVED)],
-                [Gen(STATE.SELECTED), Gen(STATE.REMOVED), Gen(STATE.REMOVED), Gen(STATE.REMOVED), Gen(STATE.SELECTED)]
+                [2],
+                [0, 4]
             ]
 
         self.assertEqual(str(Crossover.apply(self.parent_1, self.parent_2, CROSSPOINTS)), str(EXPECTED_VALUE))

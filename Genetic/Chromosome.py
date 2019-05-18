@@ -58,8 +58,21 @@ class Chromosome:
     def lenght(self) -> int:
         return self.size
 
+    def gensBetween(self, from_, start) -> list[Gen]:
+        return [gen for gen in self.gens if from_ <= gen <= start]
+
     def __getitem__(self, index) -> Gen:
-        return self.featureAt(index)
+        if isinstance(index, slice):
+            return self.gensBetween(index.start, index.stop)
+        else:
+            return self.featureAt(index)
+
+    def __setitem__(self, index, value) -> None:
+        if isinstance(value, Gen):
+            if value == GEN_STATE.REMOVED and index in self.gens:
+                self.alterGenAt(index)
+            elif value == GEN_STATE.SELECTED and index not in self.gens:
+                self.alterGenAt(index)
 
     def __repr__(self) -> str(Gen):
         return str(self.getSelectedFeatures())
@@ -97,3 +110,6 @@ class Chromosome:
         for k, v in self.__dict__.items():
             setattr(result, k, deepcopy(v, memo))
         return result
+
+    def __len__(self):
+        return self.size
