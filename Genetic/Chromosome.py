@@ -19,7 +19,7 @@ class Chromosome:
         if(len(selectedGensIndex) > 0):
             self.gens = selectedGensIndex
 
-    def alterGenAt(self, index) -> None:
+    def alterGen(self, index) -> None:
         if index > self.size:
             raise IndexError(f"You are trying to add a feature at {index} and chromosome only have {self.size} gens")
 
@@ -52,7 +52,7 @@ class Chromosome:
         return len(self.gens)
 
     def getRemovedFeaturesSize(self) -> int:
-        return self.size - self.getSelectedFeaturesSize()
+        return self.size - (self.getSelectedFeaturesSize() - 1)
 
     @property
     def lenght(self) -> int:

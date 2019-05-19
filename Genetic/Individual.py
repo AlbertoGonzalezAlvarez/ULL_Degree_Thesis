@@ -18,7 +18,7 @@ class Individual:
 
         for index in range(individual.chromosome.lenght):
             if (random.uniform(0, 1) < threshold):
-                individual.chromosome.alterGenAt(index)
+                individual.chromosome.alterGen(index)
 
         return individual
 

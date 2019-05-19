@@ -11,9 +11,10 @@ class Mutation:
         removed_mutation_rate = Mutation.MUTATION_RATE
         selected_mutation_rate = Mutation.MUTATION_RATE * selected_removed
 
-        for gen in chromosome:
+        for index in range(chromosome.lenght):
             threshold = random.random()
-            if gen == GEN_STATE.SELECTED and removed_mutation_rate < removed_mutation_rate:
-                gen.alterGen()
-            elif gen == GEN_STATE.REMOVED and threshold < selected_mutation_rate:
-                gen.alterGen()
+            if index in chromosome.gens and threshold < removed_mutation_rate:
+                chromosome.alterGen(index)
+            elif index not in chromosome.gens and threshold < selected_mutation_rate:
+                chromosome.alterGen(index)
+

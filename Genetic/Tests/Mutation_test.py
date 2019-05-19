@@ -4,21 +4,23 @@ from Genetic.Operations.Mutation import Mutation
 from Genetic.Chromosome import Chromosome
 from Genetic.Gen import GEN_STATE as G
 
+
 class TestMutation(unittest.TestCase):
 
-    def setUp(self):
-        self.CHRROMOSOME = Chromosome(selectedGensIndex=[G.REMOVED, G.SELECTED, G.REMOVED, G.REMOVED, G.SELECTED])
+    @classmethod
+    def setUp(cls):
+        cls.CHRROMOSOME = Chromosome([1, 4], 4)
 
     def testYesMutation(self):
-        CHROMOSOME_COPY = deepcopy(self.CHRROMOSOME)
+        CHROMOSOME_COPY = deepcopy(TestMutation.CHRROMOSOME)
         Mutation.MUTATION_RATE = 1
-        Mutation.apply(self.CHRROMOSOME)
+        Mutation.apply(TestMutation.CHRROMOSOME)
 
-        self.assertNotEqual(CHROMOSOME_COPY, self.CHRROMOSOME)
+        self.assertNotEqual(CHROMOSOME_COPY, TestMutation.CHRROMOSOME)
 
     def testNoMutation(self):
-        CHROMOSOME_COPY = self.CHRROMOSOME
+        CHROMOSOME_COPY = TestMutation.CHRROMOSOME
         Mutation.MUTATION_RATE = 0
         Mutation.apply(CHROMOSOME_COPY)
 
-        self.assertEqual(CHROMOSOME_COPY, self.CHRROMOSOME)
+        self.assertEqual(CHROMOSOME_COPY, TestMutation.CHRROMOSOME)
