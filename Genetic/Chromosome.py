@@ -58,21 +58,50 @@ class Chromosome:
     def lenght(self) -> int:
         return self.size
 
-    def gensBetween(self, from_, start) -> list[Gen]:
-        return [gen for gen in self.gens if from_ <= gen <= start]
+    def gensBetween(self, from_, stop) -> list[int]:
+        if not(from_ <= self.size and  stop <= self.size):
+            raise IndexError(f"You are trying to slice gen {from_} - {stop} and chromosome only have {self.size} gens")
+
+        if from_ == stop:
+            if stop in self.gens:
+                return [self.gens[self.gens.index(stop)]]
+            else:
+                return []
+        else:
+            return [gen for gen in self.gens if from_ <= gen <= stop]
 
     def __getitem__(self, index) -> Gen:
         if isinstance(index, slice):
             return self.gensBetween(index.start, index.stop)
         else:
-            return self.featureAt(index)
+            return self.gensBetween(index, index)
 
     def __setitem__(self, index, value) -> None:
-        if isinstance(value, Gen):
-            if value == GEN_STATE.REMOVED and index in self.gens:
-                self.alterGenAt(index)
-            elif value == GEN_STATE.SELECTED and index not in self.gens:
-                self.alterGenAt(index)
+        if isinstance(index, slice):
+            result = self.gens.copy()
+
+            for gen in self.gens:
+                if index.start <= gen <= index.stop:
+                    del result[result.index(gen)]
+
+            if isinstance(value, list):
+                for gen in value:
+                    if gen not in result:
+                        result.append(gen)
+            else:
+                result.append(value)
+
+            self.gens = result
+        elif isinstance(value, list):
+            result = self.gens.copy()
+            if index in result:
+                del result[result.index(index)]
+
+            for gen in value:
+                if gen not in result:
+                    result.append(gen)
+
+            self.gens = result
 
     def __repr__(self) -> str(Gen):
         return str(self.getSelectedFeatures())

@@ -36,12 +36,15 @@ test_data = [DataCategories.addTestCategory(category, test_data_dict[category], 
 
 # print(train_data[0].corpus)
 # genetic_spec = GAData(train_data, test_data, 0.1, 2, 2)
-parent_2 = Chromosome([3, 1, 4], 5)
-print(len(parent_2))
-# print(parent_2)
-# parent_2[0:0] = Gen(GEN_STATE.REMOVED)
-# print(parent_2)
-# print(parent_2.gensBetween(2, 3))
-# print(parent_2[2:3])
-#
-# parent_2.gensBetween(1, 2) = [4]
+parent_2 = Chromosome([3, 4, 2], 5)
+parent_1 = Chromosome([0, 1, 2], 5)
+
+print(parent_2)
+# parent_2[3] = parent_1[0:0] # [3, 4, 2] -> [4, 2, 0]
+# parent_2[2:2] = parent_1[3] # [3, 4, 2] -> [3, 4]
+# parent_2[1:2] = parent_1[0:1] # [3, 4, 2] -> [3, 4, 0, 1] !!
+# parent_2[1] = parent_1[1] # [3, 4, 2] -> [3, 4, 2, 1]
+print(parent_2)
+# print(parent_1[0:0])
+# print(parent_1[0:1])
+# print(parent_1[1:1])

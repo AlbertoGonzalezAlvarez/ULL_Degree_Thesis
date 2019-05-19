@@ -1,4 +1,5 @@
 import random
+import copy
 
 class Crossover:
     cutting_points = None
@@ -8,12 +9,11 @@ class Crossover:
         if len(crosspoints) == 0:
             crosspoints = random.sample(range(0, len(chromosome1)), Crossover.cutting_points)
 
-        print(crosspoints)
-        father_gens = chromosome1.getChromosome()
-        mother_gens = chromosome2.getChromosome()
+        father_gens = chromosome1
+        mother_gens = chromosome2
 
-        offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, father_gens.copy())
-        offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, mother_gens.copy())
+        offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, copy.copy(father_gens))
+        offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, copy.copy(mother_gens))
 
         return [offspring_1, offspring_2]
 
@@ -29,5 +29,11 @@ class Crossover:
 
             last_crosspoint_index = index
             switcher += 1
+
+        # From last index until father or mother gens
+        if switcher % 2 == 0:
+            offspring[last_crosspoint_index:index] = father_gens[last_crosspoint_index:father_gens.lenght]
+        else:
+            offspring[last_crosspoint_index:index] = mother_gens[last_crosspoint_index:mother_gens.lenght]
 
         return offspring

@@ -6,8 +6,8 @@ from Genetic.Gen import Gen
 
 
 class TestCrossover(unittest.TestCase):
-    parent_1 = Chromosome([], 5)
-    parent_2 = Chromosome([0, 4], 5)
+    parent_1 = Chromosome([], 4)
+    parent_2 = Chromosome([0, 2, 4], 4)
 
     def testApply(self):
         CROSSPOINTS = [2, 4]
