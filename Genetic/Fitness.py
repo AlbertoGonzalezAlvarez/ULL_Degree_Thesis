@@ -9,9 +9,7 @@ class Fitness:
 
     @staticmethod
     def compute(current_category_name: str, individuals_words, individuals: Individual):
-        individuals_words[0] = ['abolish', 'abolish']
         individuals_score = {}
-        print(individuals_words)
 
         for category in Fitness.TFIDF:
             individuals_score[category] = []
@@ -24,20 +22,14 @@ class Fitness:
                         probabilities_of_words.append(0)
                 individuals_score[category].append(sum(probabilities_of_words) / len(individuals_words[individual_index]))
 
-        individuals_score['talk.politics.guns'].append(0.9)
-        print(individuals_score)
-
         # Penalization
         max_category_probability_scores = individuals_score[current_category_name]
         max_category_probability_name = current_category_name
 
         for category in individuals_score:
-            print(category, f': {sum(individuals_score[category])}')
             if sum(individuals_score[category]) > sum(max_category_probability_scores):
                 max_category_probability_scores = individuals_score[category]
                 max_category_probability_name = category
-
-        print(max_category_probability_name + f': {max_category_probability_scores}')
 
         if max_category_probability_name != current_category_name:
             for individual_index_score in range(len(individuals_score[current_category_name])):
