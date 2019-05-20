@@ -31,3 +31,15 @@ class Individual:
     @staticmethod
     def setMaxIndividualFeatures(maxIndividualFeatures: int) -> None:
         Individual.MAX_INDIVIDUAL_FEATURES = maxIndividualFeatures
+
+    def calculateIndividualScore(self) -> None:
+        pass
+
+    # @staticmethod
+    # def getWordsFromChromosome(chromosome: Chromosome, category_corpus: DataCategories):
+    #     vect_of_words = []
+    #
+    #     for word_index in chromosome:
+    #         vect_of_words.append(category_corpus[word_index])
+    #
+    #     return vect_of_words

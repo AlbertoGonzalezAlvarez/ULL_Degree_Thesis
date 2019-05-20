@@ -1,58 +1,21 @@
-from Log.LoggerHandler import LoggerHandler
-from sklearn.pipeline import Pipeline
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import f1_score
+from sklearn.feature_extraction.text import TfidfVectorizer
+from EmailParser.DataCategory import DataCategory
+from Genetic.Individual import Individual
 
-class Fitness():
-
-    # def __init__(self, geneticAlg: type):
-    #     self.geneticAlg = geneticAlg
-    #     self.corpus = []
-    #
-    # @staticmethod
-    # def startUp(geneticAlg: type):
-    #     from Genetic.Simple_GA import Simple_GA
-    #     if (type == None or not isinstance(geneticAlg, Simple_GA)):
-    #         LoggerHandler.error(__name__, "Fitness function must receive a genetic algorithm.")
-    #
-    #     return Fitness(geneticAlg)
+class Fitness:
 
     @staticmethod
-    def compute(population, test_data, test_data_labels ):
-        # categories = [category for category in population]
+    def compute(test_data_corpus: DataCategory, population_words, individuals: Individual):
 
-        train_corpus = []
-        labels = []
-        i = 0
+        for individual_index in range(len(individuals)):
+            vectorizer = TfidfVectorizer(vocabulary = population_words[individual_index])
+            result = vectorizer.fit_transform(test_data_corpus)
 
-        for category in population:
-            # print(category)
-            for individual in population[category]:
-                # print(individual.getSelectedWords())
-                if ' '.join(individual.getSelectedWords()) != '':
-                    train_corpus.append(' '.join(individual.getSelectedWords()))
-                    labels.append(i)
-            i = i + 1
-            # print()
+            feature_names = vectorizer.get_feature_names()
 
-        # print(train_corpus, labels)
-
-        text_clf = Pipeline([
-            ('vect', CountVectorizer()),
-            ('tfidf', TfidfTransformer()),
-            ('clf', MultinomialNB()),
-        ])
+            for col in set(result.nonzero()[1]):
+                if result[0, col] > 0.0:
+                    print(feature_names[col], ' - ', result[0, col])
 
 
-        text_clf.fit(train_corpus, labels)
-        predicted = text_clf.predict(test_data)
-        # print(Counter(test_data_labels))
-        score = f1_score(test_data_labels, predicted, average=None)
-        # print(score[0], score[1], score[2])
-        # asd = metrics.classification_report(test_data_labels, predicted, target_names = categories)
-        # print(metrics.classification_report(test_data_labels, predicted, target_names = categories))
-        # print(metrics.confusion_matrix(test_data_labels, predicted))
-
-        return score
+        return 0
