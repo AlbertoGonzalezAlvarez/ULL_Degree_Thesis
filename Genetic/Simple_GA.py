@@ -18,7 +18,15 @@ class Simple_GA():
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
     def startUpGA(self) -> None:
+        for train_data_category in self.train_data:
+            Fitness.calculateTFIDF(train_data_category)
+
         # print(self.test_data[0].corpus[0])
         # for population_index in range(len(self.population)):
             # population.calculateIndividualsScore()
-        self.population[0].calculateIndividualsScore(self.test_data[0])
+
+        # for population in self.population:
+        #     population.calculateIndividualsScore(self.test_data, self.train_data[self.population.index(population)].corpus)
+
+        # Pasarle todo el conjunto de datos y ademaás la categoria que esta entrenando
+        self.population[0].calculateIndividualsScore(self.train_data[0])

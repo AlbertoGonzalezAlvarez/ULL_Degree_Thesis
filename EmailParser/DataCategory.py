@@ -2,16 +2,9 @@ from __future__ import annotations
 from EmailParser.Email import Email
 from Log.LoggerHandler import LoggerHandler
 
-# class MetaDataCategories(type):
-#     def __getitem__(self, index) -> None:
-#         if type(index) == str:
-#             return DataCategories.EMAIL_CATEGORIES[index]
-#         else:
-#             return list(DataCategories.EMAIL_CATEGORIES.values())[index]
-
 class DataCategory():
 
-    # EMAIL_CATEGORIES = {}
+    NUMBER_OF_CATEGORIES: int = 0
 
     def __init__(self, category_name: str = "", documents_data: list = []):
         self.categoryName: str = category_name
@@ -25,7 +18,7 @@ class DataCategory():
             self.document_words_vector += (document.words_vector)
             self.documents.append(document.corpus)
 
-        # DataCategories.EMAIL_CATEGORIES[category_name] = self
+        DataCategory.NUMBER_OF_CATEGORIES += 1
 
     @property
     def corpus(self):

@@ -1,6 +1,5 @@
 import logging
 import time
-import inspect
 import sys
 
 logger = logging.getLogger(__name__)

@@ -8,7 +8,7 @@ class Population():
     MAX_POPULATION_SIZE = 0
 
     def __init__(self, category_data: DataCategory):
-        self.category_words = category_data
+        self.corpus_data: DataCategory = category_data
         self.individuals: list[Individual] = []
 
         for _ in range(Population.MAX_POPULATION_SIZE):
@@ -16,19 +16,18 @@ class Population():
             if individual.chromosome.getSelectedFeaturesSize() > 0:
                 self.individuals.append(individual)
 
-    def calculateIndividualsScore(self, test_data: DataCategory):
-        population_words = self.getWordsFromIndividuals()
-        # print(population_words)
-        Fitness.compute(test_data.documents, population_words, self.individuals)
+    def calculateIndividualsScore(self, corpus_data: DataCategory):
+        population_words = self.getWordsFromIndividuals(corpus_data.corpus)
+        Fitness.compute(corpus_data.categoryName, population_words, self.individuals)
+        print("asd")
 
-
-    def getWordsFromIndividuals(self):
+    def getWordsFromIndividuals(self, corpus_data: list):
         population_words = []
 
         for individual in self.individuals:
             individual_words = []
             for index in individual.chromosome.getSelectedFeatures():
-                individual_words.append(self.category_words[index])
+                individual_words.append(corpus_data[index])
 
             if len(individual_words) > 0:
                 population_words.append(individual_words)
