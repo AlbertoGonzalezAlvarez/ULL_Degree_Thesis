@@ -4,7 +4,7 @@ from Genetic.Individual import Individual
 
 class Fitness:
 
-    PENALIZATION_COEFFICIENT = 0.5
+    PENALIZATION_COEFFICIENT = 0.0
     TFIDF = {}
 
     @staticmethod
@@ -31,10 +31,12 @@ class Fitness:
                 max_category_probability_scores = individuals_score[category]
                 max_category_probability_name = category
 
-        if max_category_probability_name != current_category_name:
-            for individual_index_score in range(len(individuals_score[current_category_name])):
-                score = individuals_score[current_category_name][individual_index_score]
+        for individual_index_score in range(len(individuals_score[current_category_name])):
+            score = individuals_score[current_category_name][individual_index_score]
+            if max_category_probability_name != current_category_name:
                 individuals[individual_index_score].score = score * (1 - Fitness.PENALIZATION_COEFFICIENT)
+            else:
+                individuals[individual_index_score].score = score
 
     @staticmethod
     def calculateTFIDF(train_data_category: DataCategory) ->  None:

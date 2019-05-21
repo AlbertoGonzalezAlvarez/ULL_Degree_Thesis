@@ -9,14 +9,14 @@ class Individual:
 
     def __init__(self, lenght: int = 0):
         self.chromosome: Chromosome = Chromosome(size = lenght)
-        self.score: int = 0
+        self.score: float = 0.0
 
     @staticmethod
     def generateRandom(individual_lenght: int = 0) -> Individual:
         individual = Individual(individual_lenght)
         threshold = Individual.MAX_INDIVIDUAL_FEATURES / individual_lenght
 
-        for index in range(individual.chromosome.lenght):
+        for index in range(individual_lenght):
             if (random.uniform(0, 1) < threshold):
                 individual.chromosome.alterGen(index)
 

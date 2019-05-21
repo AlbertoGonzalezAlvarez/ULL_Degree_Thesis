@@ -10,7 +10,8 @@ import random
 
 class Simple_GA():
 
-    def __init__(self, problem_specification: GAData) -> None:
+    def __init__(self, problem_specification: GAData):
+
         self.train_data: list[DataCategory] = problem_specification.train_data
         self.test_data: list[DataCategory] = problem_specification.test_data
         self.population: list[Population] = problem_specification.population
@@ -21,12 +22,11 @@ class Simple_GA():
         for train_data_category in self.train_data:
             Fitness.calculateTFIDF(train_data_category)
 
-        # print(self.test_data[0].corpus[0])
-        # for population_index in range(len(self.population)):
-            # population.calculateIndividualsScore()
+        for population in self.population:
+            population.calculateIndividualsScore(self.train_data[self.population.index(population)])
+        LoggerHandler.log(__name__, "Fitness calculated for initial population!")
 
-        # for population in self.population:
-        #     population.calculateIndividualsScore(self.test_data, self.train_data[self.population.index(population)].corpus)
+        for individual in self.population[0].individuals:
+            print(individual.score)
+            print(Population.getWordsFromIndividuals(individual, self.train_data[0].corpus))
 
-        # Pasarle todo el conjunto de datos y ademaás la categoria que esta entrenando
-        self.population[0].calculateIndividualsScore(self.train_data[0])

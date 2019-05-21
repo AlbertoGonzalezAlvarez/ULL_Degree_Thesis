@@ -17,16 +17,25 @@ class Population():
                 self.individuals.append(individual)
 
     def calculateIndividualsScore(self, corpus_data: DataCategory):
-        population_words = self.getWordsFromIndividuals(corpus_data.corpus)
+        population_words = Population.getWordsFromIndividuals(self.individuals, corpus_data.corpus)
         Fitness.compute(corpus_data.categoryName, population_words, self.individuals)
-        print("asd")
+        # print("fit")
 
-    def getWordsFromIndividuals(self, corpus_data: list):
+    @staticmethod
+    def getWordsFromIndividuals(individuals, corpus_data: list) -> list[str]:
         population_words = []
 
-        for individual in self.individuals:
+        if isinstance(individuals, list):
+            for individual in individuals:
+                individual_words = []
+                for index in individual.chromosome.getSelectedFeatures():
+                    individual_words.append(corpus_data[index])
+
+                if len(individual_words) > 0:
+                    population_words.append(individual_words)
+        else:
             individual_words = []
-            for index in individual.chromosome.getSelectedFeatures():
+            for index in individuals.chromosome.getSelectedFeatures():
                 individual_words.append(corpus_data[index])
 
             if len(individual_words) > 0:
