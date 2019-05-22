@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from EmailParser.DataCategory import DataCategory
-from Genetic.Individual import Individual
+from EmailParser import DataCategory
+from Genetic.Components import Individual
 
 class Fitness:
 

@@ -1,6 +1,6 @@
 import re
 import nltk
-import GlobalConfig
+from EmailParser import GlobalConfig
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 

@@ -1,8 +1,7 @@
 import unittest
-from copy import copy, deepcopy
+from copy import deepcopy
 from Genetic.Operations.Mutation import Mutation
-from Genetic.Chromosome import Chromosome
-from Genetic.Gen import GEN_STATE as G
+from Genetic.Components.Chromosome import Chromosome
 
 
 class TestMutation(unittest.TestCase):

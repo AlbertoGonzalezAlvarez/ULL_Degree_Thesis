@@ -1,5 +1,5 @@
 import json
-from EmailParser.Email import Email
+from EmailParser import Email
 
 class EmailEncoder(json.JSONEncoder):
     def default(self, object):

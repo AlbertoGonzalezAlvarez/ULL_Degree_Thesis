@@ -1,9 +1,7 @@
 from __future__ import annotations
 from copy import copy, deepcopy
-from Log.LoggerHandler import LoggerHandler
-from Genetic.Gen import Gen, GEN_STATE
+from Log import LoggerHandler
 import numpy as np
-from collections import OrderedDict
 
 class Chromosome:
 
@@ -45,7 +43,7 @@ class Chromosome:
 
         return list(all - selected)
 
-    def getChromosome(self) -> OrderedDict[Gen]:
+    def getChromosome(self) -> list[int]:
         return self.gens
 
     def getSelectedFeaturesSize(self) -> int:
@@ -141,4 +139,4 @@ class Chromosome:
         return result
 
     def __len__(self):
-        return self.size
+        return len(self.gens)

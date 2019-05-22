@@ -1,5 +1,5 @@
 from __future__ import annotations
-from Genetic.Chromosome import Chromosome
+from Genetic.Components import Chromosome
 import random
 
 
@@ -7,8 +7,12 @@ class Individual:
 
     MAX_INDIVIDUAL_FEATURES = 0
 
-    def __init__(self, lenght: int = 0):
-        self.chromosome: Chromosome = Chromosome(size = lenght)
+    def __init__(self, lenght: int = 0, chromosome: Chromosome = None):
+        if isinstance(chromosome, Chromosome):
+            self.chromosome: Chromosome = chromosome
+        else:
+            self.chromosome: Chromosome = Chromosome(size = lenght)
+
         self.score: float = 0.0
 
     @staticmethod
@@ -34,12 +38,3 @@ class Individual:
 
     def calculateIndividualScore(self) -> None:
         pass
-
-    # @staticmethod
-    # def getWordsFromChromosome(chromosome: Chromosome, category_corpus: DataCategories):
-    #     vect_of_words = []
-    #
-    #     for word_index in chromosome:
-    #         vect_of_words.append(category_corpus[word_index])
-    #
-    #     return vect_of_words

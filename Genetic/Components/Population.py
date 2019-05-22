@@ -1,8 +1,8 @@
 from __future__ import annotations
-from Genetic.Individual import Individual
-from EmailParser.DataCategory import DataCategory
+from EmailParser import DataCategory
 from Genetic.Fitness import Fitness
-from Log.LoggerHandler import LoggerHandler
+from Genetic.Components import Individual
+
 
 class Population():
     MAX_POPULATION_SIZE = 0
@@ -19,7 +19,13 @@ class Population():
     def calculateIndividualsScore(self, corpus_data: DataCategory):
         population_words = Population.getWordsFromIndividuals(self.individuals, corpus_data.corpus)
         Fitness.compute(corpus_data.categoryName, population_words, self.individuals)
-        # print("fit")
+
+    @staticmethod
+    def calculateIndividualsScore(individuals: list(Individual), corpus_data: DataCategory):
+        if isinstance(individuals, Individual):
+            individuals = [individuals]
+        population_words = Population.getWordsFromIndividuals(individuals, corpus_data.corpus)
+        Fitness.compute(corpus_data.categoryName, population_words, individuals)
 
     @staticmethod
     def getWordsFromIndividuals(individuals, corpus_data: list) -> list[str]:
@@ -45,13 +51,35 @@ class Population():
             return population_words
 
     def __len__(self):
-        return len(self.corpus)
+        return len(self.individuals)
 
     def __repr__(self):
         return str(self.individuals)
 
     def __str__(self):
         return str(self.individuals)
+
+    def pop(self, index: int) -> Individual:
+        if index < len(self.individuals):
+            return self.individuals.pop(index)
+
+    def getIndividualAt(self, index: int) -> Individual:
+        if index < len(self.individuals):
+            return self.individuals[index]
+
+    def push(self, individual: Individual):
+        self.individuals.append(individual)
+
+    def individualIndex(self, individual: Individual) -> int:
+        return self.individuals.index(individual)
+
+    def getNFirstIndividuals(self, start: int = -1, stop: int = -1) -> [Individual]:
+        sorted_individuals = sorted(self.individuals, key=lambda individual: individual.score, reverse=True)
+
+        if start != -1 and stop != -1:
+            return sorted_individuals[start:stop]
+        else:
+            return sorted_individuals[start]
 
     @staticmethod
     def setMaxPopulationSize(maxPopulationSize: int):

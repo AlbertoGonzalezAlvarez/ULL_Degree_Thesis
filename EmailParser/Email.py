@@ -1,8 +1,8 @@
 import json
-import GlobalConfig
+from EmailParser import GlobalConfig
 import re
-from Utilities.WordCleaner import cleanWord
-from Log.LoggerHandler import LoggerHandler
+from Utilities import cleanWord
+from Log import LoggerHandler
 
 class Email(json.JSONEncoder):
     HEADER_LENGHT = 10

@@ -1,19 +1,27 @@
+from Genetic.Components import Individual
 import random
 import copy
 
 class Crossover:
-    cutting_points = None
+    CUTTING_POINTS = None
 
     @classmethod
-    def apply(cls, chromosome1, chromosome2, crosspoints = []):
+    def apply(cls, individual_1: Individual, individual_2: Individual, crosspoints = []) -> [Individual]:
+        if (isinstance(individual_1, Individual) and isinstance(individual_2, Individual)):
+            individual_1 = individual_1.chromosome
+            individual_2 = individual_2.chromosome
+
         if len(crosspoints) == 0:
-            crosspoints = random.sample(range(0, len(chromosome1)), Crossover.cutting_points)
+            crosspoints = random.sample(range(0, len(individual_1)), Crossover.CUTTING_POINTS)
 
-        father_gens = chromosome1
-        mother_gens = chromosome2
+        father_gens = individual_1
+        mother_gens = individual_2
 
-        offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, copy.copy(father_gens))
-        offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, copy.copy(mother_gens))
+        chromosome_offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, copy.copy(father_gens))
+        chromosome_offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, copy.copy(mother_gens))
+
+        offspring_1 = Individual(chromosome = chromosome_offspring_1)
+        offspring_2 = Individual(chromosome = chromosome_offspring_2)
 
         return [offspring_1, offspring_2]
 

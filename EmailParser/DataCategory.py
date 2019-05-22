@@ -1,6 +1,6 @@
 from __future__ import annotations
-from EmailParser.Email import Email
-from Log.LoggerHandler import LoggerHandler
+from EmailParser import Email
+from Log import LoggerHandler
 
 class DataCategory():
 

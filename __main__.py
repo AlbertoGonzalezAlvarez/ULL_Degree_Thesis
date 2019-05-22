@@ -1,12 +1,8 @@
 from sklearn.datasets import fetch_20newsgroups
-from EmailParser.Email import Email
-from Genetic.Chromosome import Chromosome
-from EmailParser.EmailEncoder import EmailEncoder
-from Genetic.Simple_GA import Simple_GA
-from Utilities.FileUtilities import FileUtilities
-from EmailParser.DataCategory import DataCategory
-from Genetic.GAData import GAData
-from Genetic.Gen import Gen, GEN_STATE
+from EmailParser import EmailEncoder, DataCategory
+from Utilities import FileUtilities
+from Genetic.Simple_GA_Specification import SimpleGASpecification
+from Genetic.Simple_GA_Solver import Simple_GA
 
 FileUtilities.startService()
 
@@ -34,12 +30,13 @@ test_data_dict = FileUtilities.readJSON("test_data.json")
 train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
 test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
 
-genetic_spec = GAData(train_data, test_data,
-    mutation_rate = 0.1,
-    populationSize = 20,
-    maxIndividualFeatures = 60,
-    fitness_penalization = 0.7
-)
+genetic_spec = SimpleGASpecification(train_data, test_data,
+                                     mutation_rate = 0.1,
+                                     populationSize = 20,
+                                     maxIndividualFeatures = 20,
+                                     fitness_penalization = 0.7,
+                                     cutting_points = 7
+                                     )
 
 genetic_alg = Simple_GA(genetic_spec)
 genetic_alg.startUpGA()

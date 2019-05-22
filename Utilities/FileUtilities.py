@@ -1,6 +1,6 @@
 import os
 import json
-from Log.LoggerHandler import LoggerHandler
+from Log import LoggerHandler
 
 class FileUtilities:
 

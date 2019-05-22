@@ -1,0 +1,2 @@
+from Genetic.ReplacementMethods.ReplacementMethods import ReplacementMethods
+from Genetic.ReplacementMethods.SelectiveReplacement import SelectiveReplacement
