@@ -19,7 +19,7 @@ class FileUtilities:
         FileUtilities.FILE_REGISTER.append(fileName)
         LoggerHandler.log(__name__, f"Writing data to '{fileName}'")
 
-        with open(fileName, "w") as write_file:
+        with open(fileName, "w+") as write_file:
             json.dump(content, write_file, cls = encoder, indent = 5)
 
     @staticmethod

@@ -32,10 +32,6 @@ class SelectiveReplacement(ReplacementMethods):
                 population.pop(index_to_remove)
                 population.push(offspring)
 
-
-            LoggerHandler.log(cls.__name__,
-                                f"parent_1.score <= offspring.score >= parent_2.score'.")
-
         elif parent_1.score >= offspring.score >= parent_2.score or parent_1.score <= offspring.score <= parent_2.score:
             distance_to_parent_1 = SelectiveReplacement.hamming_distance(offspring.chromosome, parent_1.chromosome)
             distance_to_parent_2 = SelectiveReplacement.hamming_distance(offspring.chromosome, parent_2.chromosome)
@@ -49,13 +45,8 @@ class SelectiveReplacement(ReplacementMethods):
                 population.pop(index_to_remove)
                 population.push(offspring)
 
-            LoggerHandler.log(cls.__name__,
-                               f"parent_1.score >= offspring.score >= parent_2.score or parent_1.score <= offspring.score <= parent_2.score.")
         else:
-            LoggerHandler.log(cls.__name__,
-                               f"replace worst.")
             index_to_remove = population.individualIndex(population.getNFirstIndividuals(-1))
-            print(population.getIndividualAt(index_to_remove), population.getIndividualAt(index_to_remove).score)
             population.pop(index_to_remove)
             population.push(offspring)
 
