@@ -5,6 +5,8 @@ import numpy as np
 
 class Chromosome:
 
+    MAX_CHROMOSOME_FEATURES = 0
+
     def __init__(self, selectedGensIndex:set = set(), size:int = 0):
         if len(selectedGensIndex) > 0 and max(selectedGensIndex) > size:
             LoggerHandler.error(__name__, "You trying to insert a gen greather than chromosome lenght")
@@ -51,6 +53,10 @@ class Chromosome:
 
     def getRemovedFeaturesSize(self) -> int:
         return self.size - (self.getSelectedFeaturesSize() - 1)
+
+    @staticmethod
+    def setMaxChromosomeFeatures(maxChromosomeFeatures: int) -> None:
+        Chromosome.MAX_CHROMOSOME_FEATURES = maxChromosomeFeatures
 
     @property
     def lenght(self) -> int:

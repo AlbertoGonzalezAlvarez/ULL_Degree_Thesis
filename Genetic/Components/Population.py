@@ -1,6 +1,6 @@
 from __future__ import annotations
 from EmailParser import DataCategory
-from Genetic.Fitness import Fitness
+from Genetic.Fitness import TFIDF
 from Genetic.Components import Individual
 from copy import deepcopy
 
@@ -19,14 +19,14 @@ class Population():
 
     def calculateIndividualsScore(self, corpus_data: DataCategory):
         population_words = Population.getWordsFromIndividuals(self.individuals, corpus_data.corpus)
-        Fitness.compute(corpus_data.categoryName, population_words, self.individuals)
+        TFIDF.compute(corpus_data.categoryName, population_words, self.individuals)
 
     @staticmethod
     def calculateIndividualsScore(individuals: list(Individual), corpus_data: DataCategory):
         if isinstance(individuals, Individual):
             individuals = [individuals]
         population_words = Population.getWordsFromIndividuals(individuals, corpus_data.corpus)
-        Fitness.compute(corpus_data.categoryName, population_words, individuals)
+        TFIDF.compute(corpus_data.categoryName, population_words, individuals)
 
     @staticmethod
     def getWordsFromIndividuals(individuals, corpus_data: list) -> list[str]:
@@ -67,6 +67,15 @@ class Population():
         if index < len(self.individuals):
             return self.individuals.pop(index)
 
+    def getAveragePopulationScore(self) -> float:
+        return sum(individual.score for individual in self.individuals) / len(self.individuals)
+
+    def replace(self, individual_to_delete: Individual, individual_to_insert: Individual):
+        index_to_remove = self.individualIndex(individual_to_delete)
+        if index_to_remove != -1:
+            self.pop(index_to_remove)
+            self.push(individual_to_insert)
+
     def getIndividualAt(self, index: int) -> Individual:
         if index < len(self.individuals):
             return self.individuals[index]
@@ -75,7 +84,10 @@ class Population():
         self.individuals.append(individual)
 
     def individualIndex(self, individual: Individual) -> int:
-        return self.individuals.index(individual)
+        if individual in self.individuals:
+            return self.individuals.index(individual)
+
+        return -1
 
     def getNFirstIndividuals(self, start: int = -1, stop: int = -1) -> [Individual]:
         sorted_individuals = sorted(self.individuals, key=lambda individual: individual.score, reverse=True)

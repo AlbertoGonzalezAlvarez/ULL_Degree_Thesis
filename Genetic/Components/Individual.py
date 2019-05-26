@@ -14,6 +14,7 @@ class Individual:
             self.chromosome: Chromosome = Chromosome(size = lenght)
 
         self.score: float = 0.0
+        self.globalScore: float = 1.0
 
     @staticmethod
     def generateRandom(individual_lenght: int = 0) -> Individual:
@@ -35,6 +36,3 @@ class Individual:
     @staticmethod
     def setMaxIndividualFeatures(maxIndividualFeatures: int) -> None:
         Individual.MAX_INDIVIDUAL_FEATURES = maxIndividualFeatures
-
-    def calculateIndividualScore(self) -> None:
-        pass

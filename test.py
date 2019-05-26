@@ -1,15 +1,31 @@
-from __future__ import annotations
-
-from Utilities import cleanWord
-
-word = "His existence So question reversed Why cant assume universe exists assume God exist Why must universe It may one day man create life also create man Now I dont see happening lifetime I assert probable But possibility given scientist working hard decoding genetic code perhaps help cure disease genetic variation Again though must divine prupose man existence As far tell man fall mammal catagory Now something man say soul yet find evidence But man mammal baby born live mother give milk warmblooded etc mammal similar genetic construction particular primate For check talkorigins Well Buddhism Confucianism Taoism Hinduism Judaism Zoerasterism Shintoism Islam fit bit logic quite nicely All depth enduring value thus must true Stephen Atheist Libertarian Proindividuality Proresponsibility Jr jazz"
-(cleanWord(word))
-
-categories = ['soc.religion.christian']
-
 from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
+from collections import Counter
+import numpy as np
+from sklearn.linear_model import SGDClassifier
+
+categories = ['alt.atheism', 'soc.religion.christian',
+              'comp.graphics', 'sci.med']
+
 twenty_train = fetch_20newsgroups(subset='train',
     categories=categories, shuffle=True, random_state=42)
 
+text_clf = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+    ('clf', SGDClassifier(loss='hinge', penalty='l2',
+                          alpha=1e-3, random_state=42,
+                          max_iter=5, tol=None)),
+])
 
-(cleanWord(twenty_train.data[7]))
+text_clf.fit(twenty_train.data, twenty_train.target)
+
+twenty_test = fetch_20newsgroups(subset='test',
+    categories=categories, shuffle=True, random_state=42)
+docs_test = twenty_test.data
+
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == twenty_test.target)

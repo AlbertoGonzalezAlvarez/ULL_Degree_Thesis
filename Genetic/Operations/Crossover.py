@@ -28,7 +28,7 @@ class Crossover:
         offspring_1 = Individual(chromosome = chromosome_offspring_1)
         offspring_2 = Individual(chromosome = chromosome_offspring_2)
 
-        if len(chromosome_offspring_1) != len(individual_1) or len(chromosome_offspring_2) != len(individual_2):
+        if len(chromosome_offspring_1) == 0 or len(chromosome_offspring_2) == 0:
             LoggerHandler.error(__name__, f"Error crossover")
 
         return [offspring_1, offspring_2]
@@ -46,7 +46,7 @@ class Crossover:
             last_crosspoint_index = index
             switcher += 1
 
-        # From last index until father or mother gens
+        # From last index until father or mother gens end
         if switcher % 2 == 0:
             offspring[last_crosspoint_index:index] = father_gens[last_crosspoint_index:father_gens.lenght]
         else:

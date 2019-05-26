@@ -37,34 +37,35 @@ train_data = [DataCategory.addTrainCategory(category, train_data_dict[category],
 test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
 
 genetic_spec = SimpleGASpecification(train_data, test_data,
-                                     mutation_rate = 0.6,
-                                     populationSize = 10,
-                                     maxIndividualFeatures = 10,
-                                     fitness_penalization = 0.6,
-                                     cutting_points = 7
+                                     mutation_rate = 0.8,
+                                     populationSize = 5,
+                                     maxIndividualFeatures = 20,
+                                     fitness_penalization = 0.7,
+                                     gt_max_features = 0.0,
+                                     cutting_points = 4
                                      )
 
-# genetic_alg = Simple_GA(genetic_spec, generations = 500)
-# genetic_alg.startUpGA()
-#
-# trained_data_dict = FileUtilities.readJSON("categories_data.json")
-# categories = list(trained_data_dict.keys())
-# categories_index = [0, 1, 2]
-#
-# twenty_test = fetch_20newsgroups(subset='test',
-#     categories=categories, shuffle=True, random_state=42)
-# docs_test = twenty_test.data
-#
-# text_clf = Pipeline([
-#     ('vect', CountVectorizer()),
-#     ('tfidf', TfidfTransformer()),
-#     ('clf', MultinomialNB()),
-# ])
-#
-# corpus_vector = [" ".join(trained_data_dict[category]) for category in categories]
-#
-# text_clf.fit(corpus_vector, categories_index)
-# predicted = text_clf.predict(docs_test)
-# print(metrics.classification_report(twenty_test.target, predicted,
-#     target_names=twenty_test.target_names))
+genetic_alg = Simple_GA(genetic_spec, generations = 1, improve = True, graphic = False)
+genetic_alg.startUpGA()
+
+trained_data_dict = FileUtilities.readJSON("categories_data.json")
+categories_names = list(trained_data_dict.keys())
+categories_index = list(set(range(len(trained_data_dict))))
+
+twenty_test = fetch_20newsgroups(subset='test',
+                                 categories=categories_names, shuffle=True, random_state=42)
+docs_test = twenty_test.data
+
+text_clf = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+    ('clf', MultinomialNB()),
+])
+
+corpus_vector = [" ".join(trained_data_dict[category]) for category in categories_names]
+
+text_clf.fit(corpus_vector, categories_index)
+predicted = text_clf.predict(docs_test)
+print(metrics.classification_report(twenty_test.target, predicted,
+    target_names=twenty_test.target_names))
 
