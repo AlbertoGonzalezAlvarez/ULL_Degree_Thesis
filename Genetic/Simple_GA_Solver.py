@@ -10,13 +10,14 @@ from Utilities import FileUtilities
 
 class Simple_GA():
 
-    def __init__(self, problem_specification: SimpleGASpecification):
+    def __init__(self, problem_specification: SimpleGASpecification, generations: int):
         SelectionMethods.Roulette_Wheel = Roulette_Wheel
         ReplacementMethods.SelectiveReplacement = SelectiveReplacement
 
         self.train_data: list[DataCategory] = problem_specification.train_data
         self.test_data: list[DataCategory] = problem_specification.test_data
         self.population: list[Population] = problem_specification.population
+        self.generations = generations
 
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
@@ -29,19 +30,21 @@ class Simple_GA():
 
         LoggerHandler.log(__name__, "Fitness calculated for initial population!")
 
-        max_generations = 200
         actual_generation = 0
 
-        while actual_generation < max_generations:
+        while actual_generation < self.generations:
             for category_population in self.population:
-                population_index = self.population.index(population)
+                population_index = self.population.index(category_population)
+
 
                 parent_1 = SelectionMethods.Roulette_Wheel.getParents(category_population)
                 parent_2 = SelectionMethods.Roulette_Wheel.getParents(category_population)
+                category_population.addIndividual(parent_1)
+                category_population.addIndividual(parent_2)
                 offspring_1, offspring_2 = Crossover.apply(parent_1, parent_2)
 
-                offspring_1 = Mutation.apply(offspring_1)
-                offspring_2 = Mutation.apply(offspring_2)
+                # offspring_1 = Mutation.apply(offspring_1)
+                # offspring_2 = Mutation.apply(offspring_2)
                 Population.calculateIndividualsScore(offspring_1, self.train_data[population_index])
                 Population.calculateIndividualsScore(offspring_2, self.train_data[population_index])
 

@@ -1,6 +1,8 @@
 from Genetic.Components import Individual
 import random
 import copy
+from Log import LoggerHandler
+
 
 class Crossover:
     CUTTING_POINTS = None
@@ -12,7 +14,10 @@ class Crossover:
             individual_2 = individual_2.chromosome
 
         if len(crosspoints) == 0:
-            crosspoints = random.sample(range(0, len(individual_1)), Crossover.CUTTING_POINTS)
+            if len(individual_1) <= Crossover.CUTTING_POINTS:
+                crosspoints = random.sample(range(0, len(individual_1)), len(individual_1))
+            else:
+                crosspoints = random.sample(range(0, len(individual_1)), Crossover.CUTTING_POINTS)
 
         father_gens = individual_1
         mother_gens = individual_2
@@ -22,6 +27,9 @@ class Crossover:
 
         offspring_1 = Individual(chromosome = chromosome_offspring_1)
         offspring_2 = Individual(chromosome = chromosome_offspring_2)
+
+        if len(chromosome_offspring_1) != len(individual_1) or len(chromosome_offspring_2) != len(individual_2):
+            LoggerHandler.error(__name__, f"Error crossover")
 
         return [offspring_1, offspring_2]
 

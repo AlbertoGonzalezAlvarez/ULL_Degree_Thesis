@@ -1,7 +1,7 @@
 import json
 from EmailParser import GlobalConfig
 import re
-from Utilities import cleanWord
+from Utilities.WordCleaner import *
 from Log import LoggerHandler
 
 class Email(json.JSONEncoder):

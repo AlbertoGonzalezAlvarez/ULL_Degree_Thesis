@@ -20,6 +20,6 @@ class Roulette_Wheel(SelectionMethods):
         for index in range(1, len(accumulative_prob)):
             if accumulative_prob[index - 1] < random_number < accumulative_prob[index]:
                 index_of_parent = population.individualIndex(sorted_population[index])
-                individual = population.getIndividualAt(index_of_parent)
+                individual = population.pop(index_of_parent)
 
         return individual

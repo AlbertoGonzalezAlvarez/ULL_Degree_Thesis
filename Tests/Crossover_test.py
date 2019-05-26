@@ -7,7 +7,7 @@ class TestCrossover(unittest.TestCase):
     parent_1 = Chromosome([], 4)
     parent_2 = Chromosome([0, 2, 4], 4)
 
-    def testApply(self):
+    def tesSimple(self):
         CROSSPOINTS = [2, 4]
         EXPECTED_VALUE = \
             [

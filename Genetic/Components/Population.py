@@ -2,6 +2,7 @@ from __future__ import annotations
 from EmailParser import DataCategory
 from Genetic.Fitness import Fitness
 from Genetic.Components import Individual
+from copy import deepcopy
 
 
 class Population():
@@ -50,6 +51,9 @@ class Population():
         if len(population_words) > 0:
             return population_words
 
+    def addIndividual(self, individual: Individual):
+        self.individuals.append(individual)
+
     def __len__(self):
         return len(self.individuals)
 
@@ -80,6 +84,20 @@ class Population():
             return sorted_individuals[start:stop]
         else:
             return sorted_individuals[start]
+
+    def __copy__(self) -> Population:
+        cls = self.__class__
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memo) -> Population:
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result
 
     @staticmethod
     def setMaxPopulationSize(maxPopulationSize: int):

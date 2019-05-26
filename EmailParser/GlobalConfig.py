@@ -5,5 +5,4 @@ FROM_EMAIL_REGEX = "From:.+?" + EMAIL_ADRESS
 SUBJECT_REGEX = "Subject: (.+)"
 ORGANIZATION_REGEX = "Organization: (.+)"
 TOKENS_PATTERN = "(?u)\\b\\w\\w\\w+\\b"
-
 CORPUS_LANGUAGE = 'english'

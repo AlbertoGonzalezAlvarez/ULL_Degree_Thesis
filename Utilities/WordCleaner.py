@@ -8,12 +8,12 @@ LEMMATIZER = WordNetLemmatizer()
 STOP_WORDS = stopwords.words(GlobalConfig.CORPUS_LANGUAGE)
 
 def cleanWord(content: str) -> str:
-    content = re.sub(r'[^\w\s]', '', content)
+    content = re.sub(r'[^\w\s]|\w*\d\w*', '', content)
     tokens = nltk.word_tokenize(content)
-    tokens = [word for word in tokens if word.isalpha()]
+    tokens = [word.lower() for word in tokens if word.isalpha() and len(word) > 2]
 
     for i in range(len(tokens)):
-        tokens[i] = LEMMATIZER.lemmatize(tokens[i])
+        tokens[i] = LEMMATIZER.lemmatize(tokens[i], 'v')
 
     stop_words_removed = [word for word in tokens if word not in STOP_WORDS]
     return " ".join(stop_words_removed)

@@ -4,12 +4,13 @@ from EmailParser import Email
 class EmailEncoder(json.JSONEncoder):
     def default(self, object):
         if isinstance(object, Email):
+            object = object.email_content
             return  {
-                            "category": object.category,
-                            "from_": object.from_,
-                            "subject": object.subject,
-                            "organization": object.organization,
-                            "content": object.content
+                            "category": object['category'],
+                            "from_": object['from_'],
+                            "subject": object['subject'],
+                            "organization": object['organization'],
+                            "content": object['content']
                     }
         else:
             return json.JSONEncoder.default(self, object)
