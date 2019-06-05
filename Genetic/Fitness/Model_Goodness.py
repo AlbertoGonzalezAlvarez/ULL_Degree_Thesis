@@ -41,6 +41,7 @@ class Model_Goodness(Fitness):
 
         for category, index in zip(population, range(len(population))):
             for individual in category.individuals:
-                individual.score = individual.score * individual.globalScore
-                individual.score = individual.score / score_for_category[index]
-                individual.globalScore = score_for_category[index]
+                #Deshacer puntuacion global
+                # individual.score = individual.score * individual.globalScore
+                individual.score = (individual.score *  20 + 80 * score_for_category[index]) / 100
+                # individual.globalScore = score_for_category[index]

@@ -4,21 +4,16 @@ from Log import LoggerHandler
 
 class DataCategory():
 
-    NUMBER_OF_CATEGORIES: int = 0
-
     def __init__(self, category_name: str = "", documents_data: list = []):
         self.categoryName: str = category_name
-        # TODO: maybe we could delete this attribute
         self.data: list[Email] = documents_data
-        self.lenght: int = sum(document.lenght for document in documents_data)
+        self.lenght: int = sum(document.lenght for document in documents_data) # Puedo coger el tamaño de document_words_vector
         self.document_words_vector: list[str] = []
         self.documents: list[str] = []
 
         for document in documents_data:
             self.document_words_vector += (document.words_vector)
             self.documents.append(document.corpus)
-
-        DataCategory.NUMBER_OF_CATEGORIES += 1
 
     @property
     def corpus(self):

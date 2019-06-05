@@ -52,7 +52,7 @@ class Simple_GA():
                     train_words[self.train_data[index].categoryName] = \
                         category_population.getWordsFromIndividuals(category_population.individuals, self.train_data[index].corpus)
 
-                Model_Goodness.compute(train_words, self.test_data, self.population)
+                # Model_Goodness.compute(train_words, self.test_data, self.population)
 
             for category_population in self.population:
                 population_index = self.population.index(category_population)
