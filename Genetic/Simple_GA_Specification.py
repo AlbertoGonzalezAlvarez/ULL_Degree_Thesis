@@ -19,8 +19,13 @@ class SimpleGASpecification:
 
         self.train_data: list[DataCategory] = train_data
         self.test_data: list[DataCategory] = test_data
-        self.population: list[Population] = []
+        self.population: list[Individual] = []
 
+        category_lenghts = {}
         for category_data in train_data:
-            self.population.append(Population(category_data.corpus))
-            LoggerHandler.log(__name__, f"Population for category_data '{category_data.name}' has been initialized.")
+            category_lenghts[category_data.name] = category_data.lenght - 1
+
+        for _ in range(Population.MAX_POPULATION_SIZE):
+            individual: Individual = Individual.generateRandom(category_lenghts=category_lenghts)
+            self.population.append(individual)
+

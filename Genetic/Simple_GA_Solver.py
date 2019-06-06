@@ -18,25 +18,23 @@ class Simple_GA():
     IMPROVE: bool
 
     def __init__(self, problem_specification: SimpleGASpecification, generations: int, graphic: bool, improve: bool):
-        SelectionMethods.Roulette_Wheel = Roulette_Wheel
-        ReplacementMethods.SelectiveReplacement = SelectiveReplacement
-
         self.train_data: list[DataCategory] = problem_specification.train_data
         self.test_data: list[DataCategory] = problem_specification.test_data
-        self.population: list[Population] = problem_specification.population
+        self.population: list[Individual] = problem_specification.population
 
         Simple_GA.MAX_GENERATIONS = generations
         Simple_GA.GRAPHIC = graphic
         Simple_GA.IMPROVE = improve
-
+        SelectionMethods.Roulette_Wheel = Roulette_Wheel
+        ReplacementMethods.SelectiveReplacement = SelectiveReplacement
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
     def startUpGA(self) -> None:
-        for test_data_category in self.test_data:
-            TFIDF.calculateTFIDF(test_data_category)
+        for train_data_category in self.train_data:
+            TFIDF.calculateTFIDF(train_data_category)
 
-        for population in self.population:
-            population.calculateIndividualsScore(population.individuals, self.train_data[self.population.index(population)])
+        for individual in self.population:
+            individual.calculateScore(self.train_data)
 
         LoggerHandler.log(__name__, "Fitness calculated for initial population!")
 
@@ -46,52 +44,31 @@ class Simple_GA():
             plt.axis([0, Simple_GA.MAX_GENERATIONS, 0, 1])
 
         while actual_generation < Simple_GA.MAX_GENERATIONS:
-            if Simple_GA.IMPROVE:
-                train_words = {}
-                for category_population, index in zip(self.population, range(len(self.population))):
-                    train_words[self.train_data[index].categoryName] = \
-                        category_population.getWordsFromIndividuals(category_population.individuals, self.train_data[index].corpus)
+            parent_1 = SelectionMethods.Roulette_Wheel.getParents(self.population)
+            parent_2 = SelectionMethods.Roulette_Wheel.getParents(self.population)
+            self.population.append(parent_1)
+            self.population.append(parent_2)
 
-                # Model_Goodness.compute(train_words, self.test_data, self.population)
+            offspring_1, offspring_2 = Crossover.apply(parent_1, parent_2)
+            offspring_1.calculateScore(self.train_data)
+            offspring_2.calculateScore(self.train_data)
 
-            for category_population in self.population:
-                population_index = self.population.index(category_population)
+            if offspring_1.score > offspring_2.score:
+                best_offspring = offspring_1
+            else:
+                best_offspring = offspring_2
 
-                parent_1 = SelectionMethods.Roulette_Wheel.getParents(category_population)
-                parent_2 = SelectionMethods.Roulette_Wheel.getParents(category_population)
-                category_population.addIndividual(parent_1)
-                category_population.addIndividual(parent_2)
-                offspring_1, offspring_2 = Crossover.apply(parent_1, parent_2)
+            best_offspring = Mutation.apply(best_offspring)
+            best_offspring.calculateScore(self.train_data)
 
-                offspring_1 = Mutation.apply(offspring_1)
-                offspring_2 = Mutation.apply(offspring_2)
-                Population.calculateIndividualsScore(offspring_1, self.train_data[population_index])
-                Population.calculateIndividualsScore(offspring_2, self.train_data[population_index])
-
-                ReplacementMethods.SelectiveReplacement.calculateNextPopulation(parent_1, parent_2, offspring_1, category_population)
-                ReplacementMethods.SelectiveReplacement.calculateNextPopulation(parent_1, parent_2, offspring_2, category_population)
+            ReplacementMethods.SelectiveReplacement.replacement(parent_1, parent_2, best_offspring, self.population, self.train_data)
 
             if Simple_GA.GRAPHIC:
-                colors = itertools.cycle(["r", "b", "g"])
-                for category_population, index in zip(self.population, range(len(self.population))):
-                    plt.scatter(actual_generation, category_population.getAveragePopulationScore(), label=self.train_data[index].categoryName, color= next(colors))
-                    plt.pause(0.05)
-
-                if actual_generation == 0:
-                    plt.legend(loc='best', scatterpoints = 1)
+                self.population.sort(key=lambda individual: individual.score, reverse=True)
+                colors = itertools.cycle(["r"])
+                print(self.population[0].score)
+                plt.scatter(actual_generation, self.population[0].score, color=next(colors))
+                plt.pause(0.05)
 
             LoggerHandler.log(__name__, f"Generation {actual_generation}")
             actual_generation += 1
-
-        LoggerHandler.log(__name__, "Simple GA has finished!")
-
-        content_to_write = {}
-        for category_index in range(len(self.train_data)):
-            population = self.population[category_index]
-            word_list = Population.getWordsFromIndividuals(population.individuals,
-                                                           self.train_data[category_index].corpus)
-            joined_category_words = []
-            for words in word_list:
-                joined_category_words += words
-            content_to_write[self.train_data[category_index].categoryName] = joined_category_words
-        FileUtilities.writeToFile(content_to_write, "categories_data.json")

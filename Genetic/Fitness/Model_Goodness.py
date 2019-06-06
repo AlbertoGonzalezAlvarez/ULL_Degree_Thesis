@@ -6,22 +6,20 @@ from sklearn.pipeline import Pipeline
 from sklearn import metrics
 from Genetic.Fitness import Fitness
 from sklearn.metrics import f1_score
-from Genetic.Components import Population
+from Genetic.Components import Individual
 
 
 class Model_Goodness(Fitness):
 
     @classmethod
-    def compute(cls, train_data: dict, test_data: dict, population: Population):
+    def compute(cls, individual_words: dict, test_data: dict, individual: Individual):
         test_documents = []
         test_labels = []
         train_documents = []
-        train_labels = []
+        train_labels = list(range(len(individual_words)))
 
-        for category_documents, index in zip(train_data.values(), range(len(train_data))):
-            for documents in category_documents:
-                train_documents.append(" ".join(documents))
-                train_labels.append(index)
+        for partial_individual in individual_words:
+            train_documents.append(" ".join(individual_words[partial_individual]))
 
         for category_test_data, index in zip(test_data, range(len(test_data))):
             for email in category_test_data.data:
@@ -37,11 +35,6 @@ class Model_Goodness(Fitness):
 
         text_clf.fit(train_documents, train_labels)
         predicted = text_clf.predict(test_documents)
-        score_for_category = f1_score(test_labels, predicted, average=None)
 
-        for category, index in zip(population, range(len(population))):
-            for individual in category.individuals:
-                #Deshacer puntuacion global
-                # individual.score = individual.score * individual.globalScore
-                individual.score = (individual.score *  20 + 80 * score_for_category[index]) / 100
-                # individual.globalScore = score_for_category[index]
+        score_for_category = f1_score(test_labels, predicted, average=None)
+        individual.score = (individual.score *  20 + 80 * (sum(score_for_category)/len(individual_words))) / 100

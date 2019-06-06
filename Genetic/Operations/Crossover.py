@@ -1,4 +1,4 @@
-from Genetic.Components import Individual
+from Genetic.Components import Individual, Chromosome
 import random
 import copy
 from Log import LoggerHandler
@@ -9,29 +9,33 @@ class Crossover:
 
     @classmethod
     def apply(cls, individual_1: Individual, individual_2: Individual, crosspoints = []) -> [Individual]:
-        if (isinstance(individual_1, Individual) and isinstance(individual_2, Individual)):
-            individual_1 = individual_1.chromosome
-            individual_2 = individual_2.chromosome
+        chromosome_offspring_1 = {}
+        chromosome_offspring_2 = {}
 
-        if len(crosspoints) == 0:
-            if len(individual_1) <= Crossover.CUTTING_POINTS:
-                crosspoints = random.sample(range(0, len(individual_1)), len(individual_1))
-            else:
-                crosspoints = random.sample(range(0, len(individual_1)), Crossover.CUTTING_POINTS)
+        for category in individual_1.chromosome:
+            if (isinstance(individual_1, Individual) and isinstance(individual_2, Individual)):
+                chromosome_individual_1 = copy.deepcopy(individual_1.chromosome[category])
+                chromosome_individual_2 = copy.deepcopy(individual_2.chromosome[category])
 
-        father_gens = individual_1
-        mother_gens = individual_2
+            if len(crosspoints) == 0:
+                if len(chromosome_individual_1) <= Crossover.CUTTING_POINTS:
+                    crosspoints = random.sample(range(0, len(chromosome_individual_1)), len(chromosome_individual_1))
+                else:
+                    crosspoints = random.sample(range(0, len(chromosome_individual_1)), Crossover.CUTTING_POINTS)
 
-        chromosome_offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, copy.copy(father_gens))
-        chromosome_offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, copy.copy(mother_gens))
+            father_gens = copy.deepcopy(chromosome_individual_1)
+            mother_gens = copy.deepcopy(chromosome_individual_2)
 
-        offspring_1 = Individual(chromosome = chromosome_offspring_1)
-        offspring_2 = Individual(chromosome = chromosome_offspring_2)
+            partial_chromosome_offspring_1 = Crossover.__swapElements(father_gens, mother_gens, crosspoints, (father_gens))
+            partial_chromosome_offspring_2 = Crossover.__swapElements(mother_gens, father_gens, crosspoints, (mother_gens))
 
-        if len(chromosome_offspring_1) == 0 or len(chromosome_offspring_2) == 0:
-            LoggerHandler.error(__name__, f"Error crossover")
+            chromosome_offspring_1[category] = partial_chromosome_offspring_1
+            chromosome_offspring_2[category] = partial_chromosome_offspring_2
 
-        return [offspring_1, offspring_2]
+            if len(chromosome_offspring_1) == 0 or len(chromosome_offspring_2) == 0:
+                LoggerHandler.error(__name__, f"Error crossover")
+
+        return [Individual(chromosome=chromosome_offspring_1), Individual(chromosome=chromosome_offspring_2)]
 
     @staticmethod
     def __swapElements(father_gens, mother_gens, crosspoints, offspring):

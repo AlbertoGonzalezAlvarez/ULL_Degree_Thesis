@@ -12,7 +12,6 @@ class Chromosome:
             LoggerHandler.error(__name__, "You trying to insert a gen greather than chromosome lenght")
 
         self.iterLastIndex: int = 0
-        self.puntuaction: float = 0.0
         self.size:int = size
         self.gens: list = []
 

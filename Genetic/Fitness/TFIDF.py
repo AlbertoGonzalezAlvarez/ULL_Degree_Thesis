@@ -1,7 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from EmailParser import DataCategory
-from Genetic.Components import Individual
-import numpy as np
+from Log import LoggerHandler
+
 
 class TFIDF:
 
@@ -9,43 +9,21 @@ class TFIDF:
     TFIDF_VALUES = {}
 
     @staticmethod
-    def compute(current_category_name: str, individuals_words, individuals: Individual):
+    def compute(individuals_words: dict):
         individuals_score = {}
 
-        for category in TFIDF.TFIDF_VALUES:
-            individuals_score[category] = []
-            for individual_index in range(len(individuals)):
-                probabilities_of_words = []
-                for word in individuals_words[individual_index]:
-                    if word in TFIDF.TFIDF_VALUES[category]:
-                        probabilities_of_words.append(TFIDF.TFIDF_VALUES[category][word])
-                    else:
-                        probabilities_of_words.append(0)
-                individuals_score[category].append(sum(probabilities_of_words) / len(individuals_words[individual_index]))
+        for category_name in individuals_words:
+            individuals_score[category_name] = 0
 
-        # Penalization
-        max_category_probability_scores = individuals_score[current_category_name]
-        max_category_probability_name = current_category_name
+        for category_name in individuals_words:
+            for word in individuals_words[category_name]:
+                if word in TFIDF.TFIDF_VALUES[category_name]:
+                    individuals_score[category_name] = individuals_score[category_name] + TFIDF.TFIDF_VALUES[category_name][word]
 
-        for category in individuals_score:
-            if sum(individuals_score[category]) > sum(max_category_probability_scores):
-                max_category_probability_scores = individuals_score[category]
-                max_category_probability_name = category
+        for category_name in individuals_score:
+            individuals_score[category_name] = individuals_score[category_name] / len(individuals_words[category_name])
 
-        for individual_index_score in range(len(individuals_score[current_category_name])):
-            score = individuals_score[current_category_name][individual_index_score]
-            if max_category_probability_name != current_category_name:
-                lenExceed = individuals[individual_index_score].chromosome.lenght - Individual.MAX_INDIVIDUAL_FEATURES
-                if lenExceed > 0 and TFIDF.PENALIZATION_GT_MAX_FEATURES > 0:
-                    score = score / np.log(lenExceed)
-
-                individuals[individual_index_score].score = score * (1 - TFIDF.PENALIZATION_BAD_CATEGORY)
-            else:
-                lenExceed = individuals[individual_index_score].chromosome.lenght - Individual.MAX_INDIVIDUAL_FEATURES
-                if lenExceed > 0 and TFIDF.PENALIZATION_GT_MAX_FEATURES > 0:
-                    score = score / np.log(lenExceed)
-
-                individuals[individual_index_score].score = score
+        return sum(individuals_score.values())/len(individuals_words)
 
     @staticmethod
     def calculateTFIDF(train_data_category: DataCategory) ->  None:
@@ -60,3 +38,4 @@ class TFIDF:
                 feature_tfidf_map[feature_names[index]] = result[0, index]
 
         TFIDF.TFIDF_VALUES[train_data_category.categoryName] = feature_tfidf_map
+        LoggerHandler.log(__name__, f"TFIDF computed for category {train_data_category.categoryName}")
