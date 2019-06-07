@@ -5,6 +5,7 @@ import random
 class Roulette_Wheel(SelectionMethods):
 
     COEFFICIENT: float = 0.25
+    LAST_PARENT: Individual = None
 
     @classmethod
     def getParents(cls, population: [Individual]):

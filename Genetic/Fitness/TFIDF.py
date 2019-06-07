@@ -9,7 +9,7 @@ class TFIDF:
     TFIDF_VALUES = {}
 
     @staticmethod
-    def compute(individuals_words: dict):
+    def compute(individuals_words: dict) -> float:
         individuals_score = {}
 
         for category_name in individuals_words:

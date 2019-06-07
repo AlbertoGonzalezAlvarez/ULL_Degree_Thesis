@@ -3,7 +3,7 @@ from Log import LoggerHandler
 from Genetic.Components import Population, Individual, Chromosome
 from Genetic.Fitness import TFIDF, Model_Goodness
 from Genetic.Simple_GA_Specification import SimpleGASpecification
-from Genetic.SelectionMethods import SelectionMethods, Roulette_Wheel
+from Genetic.SelectionMethods import SelectionMethods, Roulette_Wheel, RandomSelection
 from Genetic.ReplacementMethods import ReplacementMethods, SelectiveReplacement
 from Genetic.Operations import Mutation, Crossover
 from Utilities import FileUtilities
@@ -26,6 +26,7 @@ class Simple_GA():
         Simple_GA.GRAPHIC = graphic
         Simple_GA.IMPROVE = improve
         SelectionMethods.Roulette_Wheel = Roulette_Wheel
+        SelectionMethods.RandomSelection = RandomSelection
         ReplacementMethods.SelectiveReplacement = SelectiveReplacement
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
@@ -64,11 +65,11 @@ class Simple_GA():
             ReplacementMethods.SelectiveReplacement.replacement(parent_1, parent_2, best_offspring, self.population, self.train_data)
 
             if Simple_GA.GRAPHIC:
-                self.population.sort(key=lambda individual: individual.score, reverse=True)
                 colors = itertools.cycle(["r"])
-                print(self.population[0].score)
                 plt.scatter(actual_generation, self.population[0].score, color=next(colors))
                 plt.pause(0.05)
 
+            self.population.sort(key=lambda individual: individual.score, reverse=True)
+            LoggerHandler.log(__name__, f"Best individual => [{self.population[0].score}: {len(self.population[0])}]")
             LoggerHandler.log(__name__, f"Generation {actual_generation}")
             actual_generation += 1

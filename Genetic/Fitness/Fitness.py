@@ -3,9 +3,7 @@ from Genetic.Components import Individual
 
 
 class Fitness:
-
-    PENALIZATION_BAD_CATEGORY = 0.0
-    PENALIZATION_GT_MAX_FEATURES = 0.0
+    PENALIZATION = 0.001
 
     @classmethod
     def compute(cls):

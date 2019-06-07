@@ -12,7 +12,7 @@ from Genetic.Components import Individual
 class Model_Goodness(Fitness):
 
     @classmethod
-    def compute(cls, individual_words: dict, test_data: dict, individual: Individual):
+    def compute(cls, individual_words: dict, test_data: dict) -> float:
         test_documents = []
         test_labels = []
         train_documents = []
@@ -37,4 +37,5 @@ class Model_Goodness(Fitness):
         predicted = text_clf.predict(test_documents)
 
         score_for_category = f1_score(test_labels, predicted, average=None)
-        individual.score = (individual.score *  20 + 80 * (sum(score_for_category)/len(individual_words))) / 100
+
+        return (sum(score_for_category)/len(individual_words))

@@ -1,2 +1,3 @@
 from Genetic.SelectionMethods.SelectionMethods import SelectionMethods
 from Genetic.SelectionMethods.Roulette_Wheel import Roulette_Wheel
+from Genetic.SelectionMethods.RandomSelection import RandomSelection
