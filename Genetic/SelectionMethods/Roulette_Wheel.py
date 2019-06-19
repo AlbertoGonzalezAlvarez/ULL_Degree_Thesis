@@ -18,9 +18,13 @@ class Roulette_Wheel(SelectionMethods):
         random_number = random.uniform(0, max(accumulative_prob))
 
         individual = None
-        for index in range(1, len(accumulative_prob)):
-            if accumulative_prob[index - 1] < random_number < accumulative_prob[index]:
-                index_of_parent = population.index(population[index])
-                individual = population.pop(index_of_parent)
+
+        if len(population) > 1:
+            for index in range(1, len(accumulative_prob)):
+                if accumulative_prob[index - 1] < random_number < accumulative_prob[index]:
+                    index_of_parent = population.index(population[index])
+                    individual = population.pop(index_of_parent)
+        else:
+            individual = population.pop(0)
 
         return individual

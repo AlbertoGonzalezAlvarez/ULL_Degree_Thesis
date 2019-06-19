@@ -39,12 +39,12 @@ test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['
 genetic_spec = SimpleGASpecification(train_data, test_data,
                                      mutation_rate = 0.15,
                                      populationSize = 20,
-                                     maxIndividualFeatures = 50,
-                                     fitness_penalization = 0.1,
-                                     cutting_points=15
+                                     maxIndividualFeatures=0.0005,
+                                     fitness_penalization = 0.5,
+                                     cutting_points=5
                                      )
 
-genetic_alg = Simple_GA(genetic_spec, generations = 50, improve = False, graphic = False)
+genetic_alg = Simple_GA(genetic_spec, generations = 1000, improve = False, graphic = False)
 genetic_alg.startUpGA()
 #
 # trained_data_dict = FileUtilities.readJSON("categories_data.json")

@@ -3,7 +3,7 @@ from Genetic.Components import Chromosome
 from Genetic.Fitness import TFIDF, Model_Goodness, Fitness
 import random
 import numpy as np
-
+import math
 
 class Individual:
 
@@ -29,11 +29,12 @@ class Individual:
         tfidf = TFIDF.compute(individual_words)
         global_score = Model_Goodness.compute(individual_words, data)
 
-        words_surplus = len(self) - (3 * Individual.MAX_INDIVIDUAL_FEATURES)
-        self.score = ((tfidf * 20 + 80 * global_score) / 100)
+        words_surplus = math.fabs(len(self) - (sum(Individual.MAX_INDIVIDUAL_FEATURES.values())))
+        self.score = np.sqrt(((tfidf * 20 + 80 * global_score) / 100))
 
-        if words_surplus > 1:
-            self.score = self.score / np.log(words_surplus)
+        if words_surplus > 0:
+            # print("word surplus", words_surplus)
+            self.score = self.score * ((len(self) - words_surplus * Fitness.PENALIZATION) / len(self))
 
     def getWordsFromIndividual(self, dataCategory: DataCategory):
         indexs = (self.chromosome[dataCategory.categoryName].getSelectedFeatures())
@@ -44,7 +45,7 @@ class Individual:
         individual = Individual(category_lenghts=category_lenghts)
 
         for category in category_lenghts:
-            threshold = (Individual.MAX_INDIVIDUAL_FEATURES-1) / category_lenghts[category]
+            threshold = (Individual.MAX_INDIVIDUAL_FEATURES[category]) / (category_lenghts[category] - 1)
 
             for index in range(category_lenghts[category]):
                 if (random.uniform(0, 1) < threshold):
