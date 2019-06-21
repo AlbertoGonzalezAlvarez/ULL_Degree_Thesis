@@ -1,7 +1,5 @@
 from EmailParser import EmailEncoder, DataCategory
 from Utilities import FileUtilities
-from Genetic.Simple_GA_Specification import SimpleGASpecification
-from Genetic.Simple_GA_Solver import Simple_GA
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -33,19 +31,19 @@ if not FileUtilities.isRegistred("train_data.json", "test_data.json"):
 train_data_dict = FileUtilities.readJSON("train_data.json")
 test_data_dict = FileUtilities.readJSON("test_data.json")
 
-train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['content']) for category in train_data_dict]
-test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['content']) for category in test_data_dict]
-
-genetic_spec = SimpleGASpecification(train_data, test_data,
-                                     mutation_rate = 0.15,
-                                     populationSize = 20,
-                                     maxIndividualFeatures=0.0005,
-                                     fitness_penalization = 0.5,
-                                     cutting_points=5
-                                     )
-
-genetic_alg = Simple_GA(genetic_spec, generations = 1000, improve = False, graphic = False)
-genetic_alg.startUpGA()
+train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['msg']) for category in train_data_dict]
+test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['msg']) for category in test_data_dict]
+#
+# genetic_spec = SimpleGASpecification(train_data, test_data,
+#                                      mutation_rate = 0.15,
+#                                      populationSize = 20,
+#                                      maxIndividualFeatures=0.0005,
+#                                      fitness_penalization = 0.5,
+#                                      cutting_points=5
+#                                      )
+#
+# genetic_alg = Simple_GA(genetic_spec, generations = 1000, improve = False, graphic = False)
+# genetic_alg.startUpGA()
 #
 # trained_data_dict = FileUtilities.readJSON("categories_data.json")
 # categories_names = list(trained_data_dict.keys())

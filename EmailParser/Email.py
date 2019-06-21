@@ -6,9 +6,9 @@ from Log import LoggerHandler
 
 class Email(json.JSONEncoder):
     HEADER_LENGHT = 10
-    DEFAULT_FIELDS = ['category', 'from_', 'subject', 'organization', 'content']
+    DEFAULT_FIELDS = ['category', 'from_', 'subject', 'organization', 'msg']
 
-    def __init__(self, category: str ="", from_: str = "", subject: str = "", organization: str = "", content: str = "", fields: [] = DEFAULT_FIELDS) -> None:
+    def __init__(self, category: str ="", from_: str = "", subject: str = "", organization: str = "", msg: str = "", fields: [] = DEFAULT_FIELDS) -> None:
         self.email_desired_fields = fields
         self.vector_of_words = []
         self.email_joined_fields = ""
@@ -17,7 +17,7 @@ class Email(json.JSONEncoder):
             'from_': from_,
             'subject': subject,
             'organization': organization,
-            'content': content
+            'msg': msg
         }
 
     # Returns word at index position, taking in account all email fields
@@ -32,7 +32,7 @@ class Email(json.JSONEncoder):
                 self.email_joined_fields += self.email_content[field]
 
     @property
-    def corpus(self):
+    def content(self):
         self.__join_fields_data()
         return self.email_joined_fields
 
@@ -86,7 +86,7 @@ class Email(json.JSONEncoder):
             "from_": emailAdress,
             "subject": subject,
             "organization": organization,
-            "content": content
+            "msg": content
         }
 
     def __str__(self) -> str:

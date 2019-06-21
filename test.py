@@ -1,52 +1,56 @@
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
-from collections import Counter
-import numpy as np
-from sklearn.linear_model import SGDClassifier
-
-categories = ['alt.atheism']
-
-twenty_train = fetch_20newsgroups(subset='train',
-    categories=categories, shuffle=True, random_state=42)
-
-text_clf = Pipeline([
-    ('vect', CountVectorizer()),
-    ('tfidf', TfidfTransformer()),
-    ('clf', MultinomialNB())
-])
-
-text_clf.fit(twenty_train.data, twenty_train.target)
-
-twenty_test = fetch_20newsgroups(subset='test',
-    categories=categories, shuffle=True, random_state=42)
-docs_test = twenty_test.data
-
-predicted = text_clf.predict(docs_test)
-np.mean(predicted == twenty_test.target)
-
-# from nltk import pos_tag, word_tokenize
-# from nltk.stem import WordNetLemmatizer
+# class ParentSelector():
+#     method = {}
 #
-# wnl = WordNetLemmatizer()
+#     def __init_subclass__(cls):
+#         ParentSelector.method.update({cls.__name__: cls})
+#
+#     @staticmethod
+#     def selectParents(population, selectionMethod, parents=2):
+#         list_of_parents = []
+#
+#         for _ in range(parents):
+#             list_of_parents.append(selectionMethod.getParent(population))
+#
+#         return list_of_parents
+#
+# class RouletteWheel(ParentSelector):
+#     @staticmethod
+#     def getParent(population):
+#         return population[0]
 #
 #
-# def penn2morphy(penntag):
-#     """ Converts Penn Treebank tags to WordNet. """
-#     morphy_tag = {'NN': 'n', 'JJ': 'a',
-#                   'VB': 'v', 'RB': 'r'}
-#     try:
-#         print(morphy_tag[penntag[:2]])
-#         return morphy_tag[penntag[:2]]
-#     except:
-#         return 'n'
+# # print(ParentSelector.SELECTION_METHODS)
+# # print(ParentSelector.methods('RouletteWheel'))
+# population = [3, 4, 49, 239, 234]
+# print(ParentSelector.selectParents(population, ParentSelector.method['RouletteWheel']))
+
+# class ReplacementMethods():
+#     method = {}
+#
+#     def __init_subclass__(cls):
+#         if 'desendancy' not in dir(cls):
+#             raise ValueError(cls.__name__ + ' has no desendancy() method')
+#
+#         ReplacementMethods.method.update({cls.__name__: cls})
+#
+#     @staticmethod
+#     def getDesendancy(replacementMethod, parents, offsprings):
+#         return replacementMethod.desendancy(parents, offsprings)
+#
+# class BestIndividuals(ReplacementMethods):
+#     @staticmethod
+#     def desendancy(parents, offsprings):
+#         return [parents[0], offsprings[0]]
 #
 #
-# def lemmatize_sent(text):
-#     # Text input is string, returns lowercased strings.
-#     return [wnl.lemmatize(word.lower(), pos=penn2morphy(tag))
-#             for word, tag in pos_tag(word_tokenize(text))]
-#
-# print(lemmatize_sent('He is walking to school with his friends'))
+# print(ReplacementMethods.getDesendancy(ReplacementMethods.method['BestIndividuals'], [1,2,3], [9,8,7]))
+
+class test:
+    def __init__(self, dct):
+        self.dct = dct
+
+
+
+dct = {
+    "asd":
+}

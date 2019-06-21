@@ -1,6 +1,6 @@
 import unittest
 from Genetic.Operations.Crossover import Crossover
-from Genetic.Components.Chromosome import Chromosome
+from Genetic.Chromosome import Chromosome
 
 
 class TestCrossover(unittest.TestCase):

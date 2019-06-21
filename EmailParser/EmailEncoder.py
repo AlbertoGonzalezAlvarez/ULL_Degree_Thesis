@@ -10,7 +10,7 @@ class EmailEncoder(json.JSONEncoder):
                             "from_": object['from_'],
                             "subject": object['subject'],
                             "organization": object['organization'],
-                            "content": object['content']
+                            "msg": object['msg']
                     }
         else:
             return json.JSONEncoder.default(self, object)
@@ -18,7 +18,7 @@ class EmailEncoder(json.JSONEncoder):
     @staticmethod
     def encodeEmail(email):
         if 'category' in email:
-            return Email(email["category"], email['from_'], email['subject'], email['organization'], email['content'])
+            return Email(email["category"], email['from_'], email['subject'], email['organization'], email['msg'])
         return email
 
     @staticmethod

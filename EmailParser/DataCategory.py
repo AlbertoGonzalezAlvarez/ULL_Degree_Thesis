@@ -4,28 +4,25 @@ from Log import LoggerHandler
 
 class DataCategory():
 
-    def __init__(self, category_name: str = "", documents_data: list = []):
-        self.categoryName: str = category_name
-        self.data: list[Email] = documents_data
-        self.document_words_vector: list[str] = []
+    def __init__(self, category_name: str = "", emails_data: list = []):
+        self.name: str = category_name
+        self.corpus: list[str] = []
         self.documents: list[str] = []
 
-        for document in documents_data:
-            self.document_words_vector += (document.words_vector)
-            self.documents.append(document.corpus)
+        for email in emails_data:
+            self.corpus += (email.words_vector)
+            self.documents.append(email.content)
 
-        self.lenght: int = len(self.document_words_vector)
-
-    @property
-    def corpus(self):
-        return self.document_words_vector
+        # Avoid repeated words
+        self.corpus = list(set(self.corpus))
+        self.lenght: int = len(self.corpus)
 
     def getWorsdAt(self, indexs) -> str:
         if isinstance(indexs, int):
-            return self.document_words_vector[index]
+            return self.corpus[index]
 
         elif isinstance(indexs, list):
-            return [self.document_words_vector[index] for index in indexs]
+            return [self.corpus[index] for index in indexs]
 
         else:
             LoggerHandler.error(__name__, "You trying get an invalid word index")
@@ -49,12 +46,4 @@ class DataCategory():
 
         LoggerHandler.log(__name__, f"Added new category to validate '{category_name}'.")
         return DataCategory(category_name, emails)
-
-    @property
-    def name(self) -> str:
-        return self.categoryName
-
-    def __str__(self):
-        return self.categoryName + '\n' + str(self.data)
-
 
