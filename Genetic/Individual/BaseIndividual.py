@@ -1,6 +1,5 @@
 from Genetic.Chromosome import BaseChromosome
 from Genetic.Individual import *
-from Genetic.Gen import *
 
 class BaseIndividual(IndividualTypes):
     def __init__(self, chromosome: BaseChromosome):
@@ -12,3 +11,4 @@ class BaseIndividual(IndividualTypes):
 
     def __gt__(self, other):
         return self.score > other.score
+

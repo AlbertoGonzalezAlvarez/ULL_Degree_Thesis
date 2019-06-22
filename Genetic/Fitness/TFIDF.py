@@ -11,11 +11,8 @@ class TFIDF(FitnessFunctions):
     __TFIDF_VALUES__: dict = {}
 
     @staticmethod
-    def evaluate(individual: BaseIndividual, train_data: [DataCategory]):
+    def evaluate(individual: CategorizedIndividual, train_data: [DataCategory]):
         TFIDF.__calculateTFIDF__(train_data)
-
-        if not isinstance(BaseIndividual.chromosome[0], CategorizedGen):
-            LoggerHandler.error(__name__, f"TFIDF can not be computed. Missing category property")
 
         score_per_category: dict = {}
         for data_category in train_data:

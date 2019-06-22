@@ -17,6 +17,9 @@ class DataCategory():
         self.corpus = list(set(self.corpus))
         self.lenght: int = len(self.corpus)
 
+    def __len__(self):
+        return self.lenght
+
     def getWorsdAt(self, indexs) -> str:
         if isinstance(indexs, int):
             return self.corpus[index]

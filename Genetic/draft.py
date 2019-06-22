@@ -100,41 +100,91 @@ print(list(asd.values()))
 #         feature_tfidf_map[feature_names[index]] = result[0, index]
 #
 # TFIDF.__TFIDF_VALUES__[data_category.name] = feature_tfidf_map
+#
+# class Vector:
+#     def __init__(self):
+#         self.vect = []
+#         self.current = 0
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         if self.current > len(self.vect) - 1:
+#             raise StopIteration
+#
+#         self.current += 1
+#         return self.vect[self.current - 1]
+#
+#     def __repr__(self):
+#         return str(self.vect)
+#
+# class Test(Vector):
+#
+#     def __init__(self):
+#         pass
+#         # self.value = Vector(vector)
+#
+#     def __iter__(self):
+#         return self.value
+#
+# a = Test()
+# b = Vector()
+#
+# print(isinstance(b, Test))
 
-class Vector:
-    def __init__(self):
-        self.vect = []
-        self.current = 0
 
-    def __iter__(self):
-        return self
+# class WordGen:
+#     def __init__(self, cat, word):
+#         self.cat = cat
+#         self.word = word
+#
+#     def __repr__(self):
+#         return str(self.cat) + ": " + str(self.word)
+#
+#
+# list = [WordGen("crime", "dead"), WordGen("crime", "victim"), WordGen("gun", "police"),
+#         WordGen("gun", "steal"), WordGen("god", "coran"), WordGen("god", "bible")]
+#
+# newlist = sorted(list, key=lambda x: (x.cat, x.word), reverse=True)
+# print({word.cat for word in newlist})
 
-    def __next__(self):
-        if self.current > len(self.vect) - 1:
-            raise StopIteration
+# class BaseIndividual():
+#     def __init__(self, chromosome):
+#         self.chromosome: set = set(chromosome)
+#         self.score: float = 0.0
+#
+#     def __lt__(self, other):
+#         return self.score < other.score
+#
+#     def __gt__(self, other):
+#         return self.score > other.score
+#
+#
+# class CategorizedIndividual(BaseIndividual):
+#     def __init__(self, chromosome: list):
+#         super().__init__(chromosome)
+#         self.chromosome: list = chromosome
+#
+# a = CategorizedIndividual([2,3, 4, 4])
+# print(a.score, a.chromosome)
 
-        self.current += 1
-        return self.vect[self.current - 1]
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import f1_score
 
-    def __repr__(self):
-        return str(self.vect)
+text_clf = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+    ('clf', MultinomialNB()),
+])
 
-class Test(Vector):
+text_clf.fit(['asd', 'vcxzcx'], ['cat1', 'cat2'])
+predicted = text_clf.predict(['asd', 'vcxzcx'])
 
-    def __init__(self):
-        pass
-        # self.value = Vector(vector)
+score_for_category = f1_score(['cat1', 'cat2'], predicted, average=None)
 
-    def __iter__(self):
-        return self.value
-
-a = Test()
-b = Vector()
-
-print(isinstance(b, Test))
-
-
-d = {'x': 2}
-
-d.update({"a": d["a"] + 5})
-print(d)
+print(sum(score_for_category))
