@@ -11,7 +11,7 @@ from sklearn.pipeline import Pipeline
 class Classifier(FitnessFunctions):
 
     @staticmethod
-    def evaluate(individual: CategorizedIndividual, train_data: [DataCategory]):
+    def evaluate(individual: BaseIndividual, train_data: [DataCategory]):
         test_labels = []
 
         for category in train_data:

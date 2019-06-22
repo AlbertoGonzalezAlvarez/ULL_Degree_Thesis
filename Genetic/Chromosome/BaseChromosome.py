@@ -25,3 +25,18 @@ class BaseChromosome(ChromosomeTypes):
 
     def __len__(self):
         return len(self.__selected_gens__) + len(self.__removed_gens__)
+
+    def chromosomeDocuments(self) -> [str]:
+        categories = {gen.category for gen in self.__selected_gens__}
+
+        map_of_documents = {}
+        for category in categories:
+            map_of_documents[category] = ""
+
+        for gen in self.__selected_gens__:
+            map_of_documents[gen.category] += gen.word
+
+        return [map_of_documents.values()]
+
+    def chromosomeCategories(self) -> [str]:
+        return list({gen.category for gen in self.__selected_gens__})

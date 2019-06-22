@@ -11,7 +11,7 @@ class TFIDF(FitnessFunctions):
     __TFIDF_VALUES__: dict = {}
 
     @staticmethod
-    def evaluate(individual: CategorizedIndividual, train_data: [DataCategory]):
+    def evaluate(individual: BaseIndividual, train_data: [DataCategory]):
         TFIDF.__calculateTFIDF__(train_data)
 
         score_per_category: dict = {}
