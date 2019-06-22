@@ -1,1 +1,3 @@
-from Genetic.PopulationUpdaters.Switch import Switch
+from Genetic.PopulationUpdaters.PopulationUpdaters import PopulationUpdaters
+from Genetic.PopulationUpdaters.SimpleSwapper import SimpleSwapper
+from Genetic.PopulationUpdaters.BestsIndividuals import BestsIndividuals

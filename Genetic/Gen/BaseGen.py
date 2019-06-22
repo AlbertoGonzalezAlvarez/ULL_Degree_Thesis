@@ -1,3 +1,7 @@
-class BaseGen:
-    def __init__(self, content: str):
-        self.content = content
+from Genetic.Gen import *
+
+
+class BaseGen(GenTypes):
+
+    def __init__(self, word: str):
+        self.word = word

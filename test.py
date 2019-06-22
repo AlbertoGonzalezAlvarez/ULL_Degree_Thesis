@@ -45,12 +45,33 @@
 #
 # print(ReplacementMethods.getDesendancy(ReplacementMethods.method['BestIndividuals'], [1,2,3], [9,8,7]))
 
-class test:
-    def __init__(self, dct):
-        self.dct = dct
+class ReplacementMethods():
+    method = {}
+
+    def __init_subclass__(cls):
+        if 'desendancy' not in dir(cls):
+            raise ValueError(cls.__name__ + ' has no desendancy() method')
+
+        ReplacementMethods.method.update({cls.__name__: cls})
+
+    @staticmethod
+    def getDesendancy(replacementMethod, parents, offsprings):
+        return replacementMethod.desendancy(parents, offsprings)
+
+class BaseReplacement(ReplacementMethods):
+
+    @staticmethod
+    def desendancy(parents, offsprings):
+        return [parents[0], offsprings[0]]
+
+class BestIndividuals(BaseReplacement):
+
+    @staticmethod
+    def desendancy(parents, offsprings):
+        return [parents[0], offsprings[0]]
+
+def testing(param1: ReplacementMethods):
+    return param1.getDesendancy(param1.method['BestIndividuals'], [1,2,3], [9,8,7])
 
 
-
-dct = {
-    "asd":
-}
+print(testing(ReplacementMethods.method['BestIndividuals']))

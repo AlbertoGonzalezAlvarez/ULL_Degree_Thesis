@@ -9,11 +9,15 @@ class BestsIndividuals(PopulationUpdaters):
         next_population_ordered = sorted(next_population)
 
         real_next_population = []
+        actual_index = 0
+        next_index = 0
 
-        for index in range(len(actual_population_ordered)):
-            if actual_population_ordered[index].score > next_population_ordered.score:
-                real_next_population.append(actual_population_ordered[index])
+        for _ in range(len(actual_population_ordered)):
+            if actual_population_ordered[actual_index].score > next_population_ordered[next_index].score:
+                real_next_population.append(actual_population_ordered[actual_index])
+                actual_index += 1
             else:
-                real_next_population.append(next_population_ordered[index])
+                real_next_population.append(next_population_ordered[next_index])
+                next_index += 1
 
         return real_next_population

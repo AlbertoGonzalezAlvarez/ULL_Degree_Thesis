@@ -1,1 +1,2 @@
-from Genetic.Individual import BaseIndividual
+from Genetic.Individual.IndividualTypes import IndividualTypes
+from Genetic.Individual.BaseIndividual import BaseIndividual
