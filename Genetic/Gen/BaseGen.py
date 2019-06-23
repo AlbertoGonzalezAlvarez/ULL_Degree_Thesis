@@ -20,3 +20,6 @@ class BaseGen(GenTypes):
                 list_of_gens[category].append(BaseGen(word, category))
 
         return list_of_gens
+
+    def __eq__(self, other):
+        return self.word == other.word and self.category == other.category

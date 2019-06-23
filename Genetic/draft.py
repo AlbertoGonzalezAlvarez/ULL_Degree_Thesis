@@ -119,15 +119,20 @@ print(list(asd.values()))
 #     def __repr__(self):
 #         return str(self.vect)
 #
-# class Test(Vector):
-#
-#     def __init__(self):
-#         pass
-#         # self.value = Vector(vector)
-#
-#     def __iter__(self):
-#         return self.value
-#
+class Test():
+
+    def __init__(self, value):
+        self.value = value
+
+    def __iter__(self):
+        return self.value
+
+    def __eq__(self, other):
+        return self.value == other.value
+
+vect = [Test(2), Test(5), Test(67)]
+
+print(Test(9) in vect)
 # a = Test()
 # b = Vector()
 #
@@ -169,22 +174,22 @@ print(list(asd.values()))
 # a = CategorizedIndividual([2,3, 4, 4])
 # print(a.score, a.chromosome)
 
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import f1_score
-
-text_clf = Pipeline([
-    ('vect', CountVectorizer()),
-    ('tfidf', TfidfTransformer()),
-    ('clf', MultinomialNB()),
-])
-
-text_clf.fit(['asd', 'vcxzcx'], ['cat1', 'cat2'])
-predicted = text_clf.predict(['asd', 'vcxzcx'])
-
-score_for_category = f1_score(['cat1', 'cat2'], predicted, average=None)
-
-print(sum(score_for_category))
+# from sklearn.datasets import fetch_20newsgroups
+# from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.feature_extraction.text import TfidfTransformer
+# from sklearn.naive_bayes import MultinomialNB
+# from sklearn.pipeline import Pipeline
+# from sklearn.metrics import f1_score
+#
+# text_clf = Pipeline([
+#     ('vect', CountVectorizer()),
+#     ('tfidf', TfidfTransformer()),
+#     ('clf', MultinomialNB()),
+# ])
+#
+# text_clf.fit(['asd', 'vcxzcx'], ['cat1', 'cat2'])
+# predicted = text_clf.predict(['asd', 'vcxzcx'])
+#
+# score_for_category = f1_score(['cat1', 'cat2'], predicted, average=None)
+#
+# print(sum(score_for_category))

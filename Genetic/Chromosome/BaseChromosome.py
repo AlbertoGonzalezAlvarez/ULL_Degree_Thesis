@@ -40,3 +40,26 @@ class BaseChromosome(ChromosomeTypes):
 
     def chromosomeCategories(self) -> [str]:
         return list({gen.category for gen in self.__selected_gens__})
+
+    def is_selected(self, gen: BaseGen) -> bool:
+        return gen in self.__selected_gens__
+
+    @property
+    def selected_gens_size(self) -> int:
+        return len(self.__selected_gens__)
+
+    @property
+    def removed_gens_size(self) -> int:
+        return len(self.__removed_gens__)
+
+    @property
+    def selected_gens(self):
+        return self.__selected_gens__
+
+    def unselect(self, gen: BaseGen):
+        self.__selected_gens__.pop(self.__selected_gens__.index(gen))
+        self.__removed_gens__.append(gen)
+
+    def select(self, gen: BaseGen):
+        self.__selected_gens__.append(self.__selected_gens__.index(gen))
+        self.__removed_gens__.pop(gen)

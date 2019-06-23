@@ -17,7 +17,7 @@ class TFIDF(FitnessFunctions):
         for data_category in train_data:
             score_per_category[data_category.name] = 0
 
-        for gen in BaseIndividual.chromosome:
+        for gen in BaseIndividual.chromosome.selected_gens:
             score_per_category[gen.category] += TFIDF.__TFIDF_VALUES__[gen.category][gen.word]
 
         individual.score = TFIDF.__meanTFIDF__(score_per_category)
