@@ -1,11 +1,11 @@
 from Genetic.PopulationUpdaters import *
-from Genetic.PopulationGenerators import *
+from Genetic.IndividualGenerators import *
 from Genetic.Individual import *
 from EmailParser.DataCategory import *
 
 class GeneticAlgorithmSpecification:
     def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
-                 population_updater: PopulationUpdaters, population_generator: PopulationGenerators):
+                 population_updater: PopulationUpdaters, population_generator: PopulationGenerator):
 
         self.crossover_prob: float = crossover_prob
         self.mutation_prob: float = mutation_prob

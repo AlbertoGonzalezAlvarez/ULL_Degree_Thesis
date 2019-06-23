@@ -1,2 +1,0 @@
-from Genetic.PopulationGenerators.PopulationGenerators import PopulationGenerators
-from Genetic.PopulationGenerators.RandomWithoutRepeat import RandomWithoutRepeat

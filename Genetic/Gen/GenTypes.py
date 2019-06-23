@@ -1,4 +1,4 @@
-class GenTypes():
+class GenTypes:
 
     type = {}
 

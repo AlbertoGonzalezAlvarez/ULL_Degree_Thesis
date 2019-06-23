@@ -1,8 +1,8 @@
-# class ParentSelector():
+# class ParentSelectors():
 #     method = {}
 #
 #     def __init_subclass__(cls):
-#         ParentSelector.method.update({cls.__name__: cls})
+#         ParentSelectors.method.update({cls.__name__: cls})
 #
 #     @staticmethod
 #     def selectParents(population, selectionMethod, parents=2):
@@ -13,16 +13,16 @@
 #
 #         return list_of_parents
 #
-# class RouletteWheel(ParentSelector):
+# class RouletteWheel(ParentSelectors):
 #     @staticmethod
 #     def getParent(population):
 #         return population[0]
 #
 #
-# # print(ParentSelector.SELECTION_METHODS)
-# # print(ParentSelector.methods('RouletteWheel'))
+# # print(ParentSelectors.SELECTION_METHODS)
+# # print(ParentSelectors.methods('RouletteWheel'))
 # population = [3, 4, 49, 239, 234]
-# print(ParentSelector.selectParents(population, ParentSelector.method['RouletteWheel']))
+# print(ParentSelectors.selectParents(population, ParentSelectors.method['RouletteWheel']))
 
 # class ReplacementMethods():
 #     method = {}

@@ -1,7 +1,6 @@
 from Genetic.Fitness import *
 from Genetic.Individual import *
 from EmailParser.DataCategory import *
-from Genetic.Gen import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from Log import LoggerHandler
 

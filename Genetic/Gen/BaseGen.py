@@ -1,4 +1,5 @@
-from Genetic.Gen import *
+from Genetic.Gen import BaseGen, GenTypes
+from EmailParser.DataCategory import *
 
 
 class BaseGen(GenTypes):
@@ -6,3 +7,16 @@ class BaseGen(GenTypes):
     def __init__(self, word: str, category: str):
         self.word = word
         self.category = category
+
+    @staticmethod
+    def generate_gens_from_data(train_data: [DataCategory]) -> dict:
+        list_of_gens: dict = {}
+
+        for category in train_data:
+            list_of_gens[category] = []
+
+        for category in train_data:
+            for word in category.corpus:
+                list_of_gens[category].append(BaseGen(word, category))
+
+        return list_of_gens

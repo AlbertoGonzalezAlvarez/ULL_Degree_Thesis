@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn import metrics
+import copy
 
 FileUtilities.startService()
 
@@ -33,7 +34,7 @@ test_data_dict = FileUtilities.readJSON("test_data.json")
 
 train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['msg']) for category in train_data_dict]
 test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['msg']) for category in test_data_dict]
-#
+
 # genetic_spec = SimpleGASpecification(train_data, test_data,
 #                                      mutation_rate = 0.15,
 #                                      populationSize = 20,
