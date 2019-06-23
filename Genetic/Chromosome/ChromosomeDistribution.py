@@ -22,8 +22,9 @@ class ChromosomeDistribution:
         return diff
 
     def distance(self, other) -> int:
-        return np.abs(np.sum(np.array(list(self.__ideal_chromosome_distribution__.values())) -
-                      np.array(list(other.__ideal_chromosome_distribution__.values()))))
+        # Take care, probably negative values are possible
+        return np.sum(np.array(list(self.__ideal_chromosome_distribution__.values())) -
+                      np.array(list(other.__ideal_chromosome_distribution__.values())))
 
     @staticmethod
     def __from_individual__(individual: BaseIndividual):
@@ -45,3 +46,9 @@ class ChromosomeDistribution:
         chromosome_2_distribution = ChromosomeDistribution.__from_individual__(individual_2)
 
         return chromosome_1_distribution.distance(chromosome_2_distribution)
+
+    @staticmethod
+    def distance_from_ideal(individual_1: BaseIndividual) -> int:
+        chromosome_1_distribution = ChromosomeDistribution.__from_individual__(individual_1)
+
+        return np.abs(chromosome_1_distribution.distance(ChromosomeDistribution.IDEAL_CHROMOSOME_DISTRIBUTION))
