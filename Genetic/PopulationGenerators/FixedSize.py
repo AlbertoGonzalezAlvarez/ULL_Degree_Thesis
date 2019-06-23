@@ -1,7 +1,7 @@
 from Genetic.Chromosome import *
 from Genetic.Gen import *
 from Genetic.Individual import *
-from Genetic.IndividualGenerators import *
+from Genetic.PopulationGenerators import *
 
 
 class FixedSize(PopulationGenerator):

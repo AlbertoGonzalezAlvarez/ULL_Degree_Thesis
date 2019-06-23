@@ -1,0 +1,2 @@
+from Genetic.PenaltyFunctions.PenaltyFunctions import PenaltyFunctions
+from Genetic.PenaltyFunctions.PenaltyDistribution import PenaltyDistribution

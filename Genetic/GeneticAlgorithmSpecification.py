@@ -1,5 +1,5 @@
 from Genetic.PopulationUpdaters import *
-from Genetic.IndividualGenerators import *
+from Genetic.PopulationGenerators import *
 from Genetic.Individual import *
 from EmailParser.DataCategory import *
 
