@@ -23,3 +23,6 @@ class BaseGen(GenTypes):
 
     def __eq__(self, other):
         return self.word == other.word and self.category == other.category
+
+    def __repr__(self):
+        return f"'{self.category}': {self.word}"

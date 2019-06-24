@@ -34,11 +34,11 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     crossover_prob=1.0,
     mutation_prob=0.15,
     train_data=train_data,
-    individual_max_len=0.2,
+    individual_max_len=0.005,
     population_updater="SimpleSwapper",
     population_generator="ApproximatedSize",
     parent_selector="RouletteWheel",
-    population_size=1,
+    population_size=10,
     max_generations=20
 )
 

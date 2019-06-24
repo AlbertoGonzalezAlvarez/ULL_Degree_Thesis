@@ -14,8 +14,8 @@ class GeneticAlgorithm:
     def start(self):
         actual_generation: int = 0
 
-        # parent_1: BaseIndividual = self.problemSpecification.parent_selector.select_parent(self.population)
-        # parent_2: BaseIndividual = self.problemSpecification.parent_selector.select_parent(self.population)
-        #
-        # offspring_1: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'], self.problemSpecification.crossover_prob)
-        # print("asd")
+        parent_1: BaseIndividual = self.problemSpecification.parent_selector.select_parent(self.population)
+        parent_2: BaseIndividual = self.problemSpecification.parent_selector.select_parent(self.population)
+
+        offspring_1: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'], self.problemSpecification.crossover_prob)
+        print("asd")
