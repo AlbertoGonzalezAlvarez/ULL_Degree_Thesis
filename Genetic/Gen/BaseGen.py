@@ -26,3 +26,6 @@ class BaseGen(GenTypes):
 
     def __repr__(self):
         return f"'{self.category}': {self.word}"
+
+    def __hash__(self):
+        return hash(self.word) + hash(self.category)

@@ -10,21 +10,21 @@ class TFIDF(FitnessFunctions):
     __TFIDF_VALUES__: dict = {}
 
     @staticmethod
-    def evaluate(individual: BaseIndividual, train_data: [DataCategory]):
+    def evaluate(individual: BaseIndividual, train_data: [DataCategory], weight: float, multiplier: int = 1):
         TFIDF.__calculateTFIDF__(train_data)
 
         score_per_category: dict = {}
         for data_category in train_data:
             score_per_category[data_category.name] = 0
 
-        for gen in BaseIndividual.chromosome.selected_gens:
+        for gen in individual.chromosome.selected_gens:
             score_per_category[gen.category] += TFIDF.__TFIDF_VALUES__[gen.category][gen.word]
 
-        individual.score = TFIDF.__meanTFIDF__(score_per_category)
+        individual.score += TFIDF.__meanTFIDF__(len(individual.chromosome.chromosomeCategories()), score_per_category) * multiplier * weight
 
     @staticmethod
-    def __meanTFIDF__(individual: BaseIndividual, score_per_category: {str: int}):
-        return sum(score_per_category.values())/len(individual.chromosome)
+    def __meanTFIDF__(chromosome_len: int, score_per_category: {str: int}):
+        return sum(score_per_category.values())/chromosome_len
 
     @staticmethod
     def __calculateTFIDF__(train_data: [DataCategory]):
@@ -33,8 +33,9 @@ class TFIDF(FitnessFunctions):
             LoggerHandler.log(__name__, f"Computing TFIDF for train data")
 
             for data_category in train_data:
-                result = TfidfVectorizer().fit_transform(data_category.documents)
-                feature_names = TfidfVectorizer().get_feature_names()
+                vectorizer = TfidfVectorizer()
+                result = vectorizer.fit_transform(data_category.documents)
+                feature_names = vectorizer.get_feature_names()
 
                 feature_tfidf_map = {}
 

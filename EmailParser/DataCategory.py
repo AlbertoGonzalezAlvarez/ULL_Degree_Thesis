@@ -20,6 +20,9 @@ class DataCategory():
     def __len__(self):
         return self.lenght
 
+    def documents_len(self):
+        return len(self.documents)
+
     def getWorsdAt(self, indexs) -> str:
         if isinstance(indexs, int):
             return self.corpus[index]

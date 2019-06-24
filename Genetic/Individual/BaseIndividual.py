@@ -11,4 +11,3 @@ class BaseIndividual(IndividualTypes):
 
     def __gt__(self, other):
         return self.score > other.score
-

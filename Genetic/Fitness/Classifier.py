@@ -11,11 +11,15 @@ from sklearn.pipeline import Pipeline
 class Classifier(FitnessFunctions):
 
     @staticmethod
-    def evaluate(individual: BaseIndividual, train_data: [DataCategory]):
+    def evaluate(individual: BaseIndividual, train_data: [DataCategory], weight: float, multiplier: int = 1):
         test_labels = []
+        test_documents = []
 
         for category in train_data:
-            test_labels += [category.name * len(category)]
+            test_labels += [category.name] * category.documents_len()
+
+        for index in range(len(train_data)):
+            test_documents += train_data[index].documents
 
         text_clf = Pipeline([
             ('vect', CountVectorizer()),
@@ -25,8 +29,7 @@ class Classifier(FitnessFunctions):
 
         chromosome = individual.chromosome
         text_clf.fit(chromosome.chromosomeDocuments(), chromosome.chromosomeCategories())
-        predicted = text_clf.predict(train_data)
+        predicted = text_clf.predict(test_documents)
 
         score_for_category = f1_score(test_labels, predicted, average=None)
-
-        return (sum(score_for_category) / len(individual.chromosome))
+        individual.score += (sum(score_for_category) / len(individual.chromosome.chromosomeCategories())) * weight * multiplier

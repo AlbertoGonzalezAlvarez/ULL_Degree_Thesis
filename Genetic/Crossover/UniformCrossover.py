@@ -9,17 +9,18 @@ class UniformCrossover(BaseCrossover):
 
     @staticmethod
     def crossover(individual_1: BaseIndividual, individual_2: BaseIndividual, individual_type: BaseIndividual,
-                  crossover_prob: float) -> BaseIndividual:
+                  chromosome_type: BaseChromosome, crossover_prob: float) -> BaseIndividual:
 
         if random.random() < crossover_prob:
-            parents_chromosomes: BaseChromosome = individual_2.chromosome + individual_1.chromosome
-            parents_chromosomes: BaseChromosome = random.shuffle(parents_chromosomes)
+            parents_chromosomes: [] = individual_2.chromosome.selected_gens + individual_1.chromosome.selected_gens
+            random.shuffle(parents_chromosomes)
 
             offsprings_chromosome: [BaseGen] = []
-            for index in range(len(parents_chromosomes)):
+            for index in range(min(individual_1.chromosome.selected_gens_size, individual_2.chromosome.selected_gens_size)):
                 offsprings_chromosome.append(parents_chromosomes[index])
 
-            return individual_type(offsprings_chromosome)
+            removed_gens: [BaseGen] = list(set(individual_1.chromosome.gens) - set(offsprings_chromosome))
+            return individual_type(BaseChromosome(offsprings_chromosome, removed_gens))
 
         else:
             return None

@@ -13,20 +13,21 @@ import random
 class GeneticAlgorithmSpecification:
     def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
                  population_updater: str, population_generator: str, max_generations: int,
-                 parent_selector: str, population_size: int):
+                 parent_selector: str, population_size: int, penalty: float):
 
         self.config: dict = {
             "chromosome": BaseChromosome.types["BaseChromosome"],
             "gen": BaseGen.type["BaseGen"],
             "individual": BaseIndividual.types["BaseIndividual"],
+            "population_updater": PopulationUpdaters.type[population_updater],
+            "parent_selector": ParentSelector.type[parent_selector],
         }
 
         self.crossover_prob: float = crossover_prob
         self.mutation_prob: float = mutation_prob
+        self.penalty: float = penalty
         self.train_data: [DataCategory] = train_data
         self.max_generations: int = max_generations
-        self.population_updater: PopulationUpdaters = PopulationUpdaters.type[population_updater]
-        self.parent_selector: ParentSelector = ParentSelector.type[parent_selector]
 
         shuffle_train_data: [DataCategory] = self.__shuffle_train_data__(copy.deepcopy(train_data))
         self.population: [BaseIndividual] = PopulationGenerator.type[population_generator].generate(

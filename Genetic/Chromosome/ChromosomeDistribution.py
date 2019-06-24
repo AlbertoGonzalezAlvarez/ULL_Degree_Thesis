@@ -9,22 +9,22 @@ class ChromosomeDistribution:
     IDEAL_CHROMOSOME_DISTRIBUTION: ChromosomeDistribution = None
 
     def __init__(self, ideal_chromosome_distribution: dict):
-        self.__ideal_chromosome_distribution__: dict = ideal_chromosome_distribution
+        self.chromosome_distribution: dict = ideal_chromosome_distribution
 
     def __sub__(self, other) -> dict:
         if not isinstance(other, ChromosomeDistribution):
             raise TypeError(f"You must minus two {__name__}")
 
         diff = {}
-        for category in self.__ideal_chromosome_distribution__:
-            diff[category] = self.__ideal_chromosome_distribution__[category] - \
-                             other.__ideal_chromosome_distribution__[category]
+        for category in self.chromosome_distribution:
+            diff[category] = self.chromosome_distribution[category] - \
+                             other.chromosome_distribution[category]
         return diff
 
     def distance(self, other) -> int:
         # Take care, probably negative values are possible
-        return np.sum(np.array(list(self.__ideal_chromosome_distribution__.values())) -
-                      np.array(list(other.__ideal_chromosome_distribution__.values())))
+        return np.sum(np.array(list(self.chromosome_distribution.values())) -
+                      np.array(list(other.chromosome_distribution.values())))
 
     @staticmethod
     def __from_individual__(individual: BaseIndividual):
@@ -41,7 +41,7 @@ class ChromosomeDistribution:
         return ChromosomeDistribution(chromosome_distribution)
 
     @staticmethod
-    def distance(individual_1: BaseIndividual, individual_2: BaseIndividual) -> int:
+    def absolute_distance(individual_1: BaseIndividual, individual_2: BaseIndividual) -> int:
         chromosome_1_distribution = ChromosomeDistribution.__from_individual__(individual_1)
         chromosome_2_distribution = ChromosomeDistribution.__from_individual__(individual_2)
 

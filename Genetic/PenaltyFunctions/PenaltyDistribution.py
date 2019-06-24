@@ -6,6 +6,6 @@ from Genetic.Chromosome import  *
 class PenaltyDistribution(PenaltyFunctions):
 
     @staticmethod
-    def penalize(individual: BaseIndividual, penalty_rate: float):
+    def penalize(individual: BaseIndividual, penalty: float):
         diff: int = ChromosomeDistribution.distance_from_ideal(individual)
-        individual.score = individual.score - penalty_rate * diff
+        individual.score = individual.score - penalty * diff

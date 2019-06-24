@@ -12,12 +12,12 @@ class BaseChromosome(ChromosomeTypes):
         self.__current_gen__ = 0
         self.gens: [BaseGen] = []
         self.__update_gens__()
-        print("asd")
+
     def __iter__(self):
         return self
 
     def __next__(self) -> BaseGen:
-        if self.__current_gen__ > len(self.gens):
+        if self.__current_gen__ > len(self.gens) - 1:
             raise StopIteration
 
         self.__current_gen__ += 1
@@ -50,28 +50,39 @@ class BaseChromosome(ChromosomeTypes):
     def is_selected(self, gen: BaseGen) -> bool:
         return gen in self.__selected_gens__
 
+    def is_selected(self, index: int) -> bool:
+        return index < self.selected_gens_size
+
     def unselect(self, gen: BaseGen):
         self.__selected_gens__.pop(self.__selected_gens__.index(gen))
         self.__removed_gens__.append(gen)
-        self.__update_gens__()
+        # self.__update_gens__()
 
     def select(self, gen: BaseGen):
         # Maybe we're inserting a repeated gen?
-        self.__selected_gens__.append(self.__selected_gens__.index(gen))
-        self.__removed_gens__.pop(gen)
-        self.__update_gens__()
+        self.__selected_gens__.append(gen)
+        self.__removed_gens__.pop(self.__removed_gens__.index(gen))
+        # self.__update_gens__()
+
+    def unselect(self, gen_index: int):
+        gen: BaseGen = self.__selected_gens__.pop(gen_index)
+        self.__removed_gens__.append(gen)
+        # self.__update_gens__()
+
+    def select(self, gen_index: int):
+        gen: BaseGen = self.__removed_gens__.pop(gen_index)
+        self.__selected_gens__.append(gen)
+        # self.__update_gens__()
 
     def chromosomeDocuments(self) -> [str]:
-        categories = {gen.category for gen in self.__selected_gens__}
+        categories = self.chromosomeCategories()
 
-        map_of_documents = {}
-        for category in categories:
-            map_of_documents[category] = ""
+        map_of_documents = {category_name: "" for category_name in categories}
 
         for gen in self.__selected_gens__:
-            map_of_documents[gen.category] += gen.word
+            map_of_documents[gen.category] += gen.word + " "
 
-        return [map_of_documents.values()]
+        return list(map_of_documents.values())
 
     def chromosomeCategories(self) -> [str]:
         return list({gen.category for gen in self.__selected_gens__})
