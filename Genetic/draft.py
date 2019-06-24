@@ -221,3 +221,10 @@ vector.pop()
 # a = np.abs(np.sum(np.array(list(dic.values())) - np.array(list(dic2.values()))))
 #
 # print(a)
+
+
+animals = ['cat', 'dog', 'waffle', 'giraffe', 'turtle']
+breakfeast_foods = ['waffle', 'pancake', 'eggs']
+for index, item in enumerate(animals):
+    if index % 2 == 0:
+        animals.pop(index)

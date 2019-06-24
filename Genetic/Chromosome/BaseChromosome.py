@@ -42,6 +42,10 @@ class BaseChromosome(ChromosomeTypes):
     def selected_gens(self):
         return self.__selected_gens__
 
+    @property
+    def removed_gens(self):
+        return self.__removed_gens__
+
     def is_selected(self, gen: BaseGen) -> bool:
         return gen in self.__selected_gens__
 

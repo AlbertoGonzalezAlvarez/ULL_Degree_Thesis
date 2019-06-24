@@ -16,16 +16,18 @@ class ApproximatedSize(PopulationGenerator):
         population: [BaseIndividual] = []
 
         for _ in range(population_size):
+            selected_gens: [BaseGen] = []
+
             for category in category_lenghts:
                 gens_per_category: int = category_lenghts[category] * percentage_of_features
                 threshold = gens_per_category / category_lenghts[category]
-                selected_gens: [BaseGen] = []
-                for gen_index in range((len(list_of_gens_per_category[category]) - 1)):
-                    if random.uniform(0, 1) < threshold:
-                        selected_gens.append(list_of_gens_per_category[category].pop(gen_index))
 
-                chromosome: BaseChromosome = chromosome_type(selected_gens, list(list_of_gens_per_category.values()))
-                population.append(individual_type(chromosome))
-                selected_gens.clear()
+                for index, _ in enumerate(list_of_gens_per_category[category]):
+                    if random.uniform(0, 1) < threshold:
+                        selected_gens.append(list_of_gens_per_category[category].pop(index))
+
+            chromosome: BaseChromosome = chromosome_type(selected_gens, list(list_of_gens_per_category.values()))
+            population.append(individual_type(chromosome))
+            selected_gens.clear()
 
         return population

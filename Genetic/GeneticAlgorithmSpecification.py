@@ -4,6 +4,8 @@ from Genetic.Individual import *
 from Genetic.ParentSelector import *
 from Genetic.Chromosome import *
 from Genetic.Gen import *
+from Genetic.Crossover import *
+from Genetic.Mutation import *
 from EmailParser.DataCategory import *
 import copy
 import random
@@ -12,6 +14,12 @@ class GeneticAlgorithmSpecification:
     def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
                  population_updater: str, population_generator: str, max_generations: int,
                  parent_selector: str, population_size: int):
+
+        self.config: dict = {
+            "chromosome": BaseChromosome.types["BaseChromosome"],
+            "gen": BaseGen.type["BaseGen"],
+            "individual": BaseIndividual.types["BaseIndividual"],
+        }
 
         self.crossover_prob: float = crossover_prob
         self.mutation_prob: float = mutation_prob
@@ -30,6 +38,8 @@ class GeneticAlgorithmSpecification:
             train_data=shuffle_train_data,
             percentage_of_features=individual_max_len
         )
+
+
 
         LoggerHandler.log(__name__, f"Problem specification loaded!")
 

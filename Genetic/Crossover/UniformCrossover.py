@@ -11,7 +11,7 @@ class UniformCrossover(BaseCrossover):
     def crossover(individual_1: BaseIndividual, individual_2: BaseIndividual, individual_type: BaseIndividual,
                   crossover_prob: float) -> BaseIndividual:
 
-        if crossover_prob < random.random():
+        if random.random() < crossover_prob:
             parents_chromosomes: BaseChromosome = individual_2.chromosome + individual_1.chromosome
             parents_chromosomes: BaseChromosome = random.shuffle(parents_chromosomes)
 
