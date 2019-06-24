@@ -13,11 +13,11 @@ class BaseGen(GenTypes):
         list_of_gens: dict = {}
 
         for category in train_data:
-            list_of_gens[category] = []
+            list_of_gens[category.name] = []
 
         for category in train_data:
             for word in category.corpus:
-                list_of_gens[category].append(BaseGen(word, category))
+                list_of_gens[category.name].append(BaseGen(word, category.name))
 
         return list_of_gens
 

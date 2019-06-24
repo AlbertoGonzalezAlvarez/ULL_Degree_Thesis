@@ -20,7 +20,7 @@ class PopulationGenerator:
                      individual_type: BaseIndividual, population_size: int, train_data: [DataCategory],
                      percentage_of_features: int = -1) -> [BaseIndividual]:
 
-            if cls.LOWEST_PERCENTAGE_VALUE < percentage_of_features < cls.UPPER_PERCENTAGE_VALUE:
+            if not cls.LOWEST_PERCENTAGE_VALUE < percentage_of_features < cls.UPPER_PERCENTAGE_VALUE:
                 LoggerHandler.error(__name__, f"Percentage of features must be between [{cls.LOWEST_PERCENTAGE_VALUE} , "
                 f"{cls.UPPER_PERCENTAGE_VALUE}]")
 

@@ -26,6 +26,9 @@ class Vector:
     def __iter__(self):
         return self
 
+    def __hash__(self):
+        return hash(self.vect)
+
     def __next__(self):
         if self.current > len(self.vect) - 1:
             raise StopIteration
@@ -45,7 +48,7 @@ e = test("asdas", 4)
 vector = [a, b, c, z, e]
 
 print(vector.index(test("asdas", 9)))
-
+vector.pop(vector.index(c))
 # a = set([element.content for element in vector])
 #
 # vector = Vector(vector)
