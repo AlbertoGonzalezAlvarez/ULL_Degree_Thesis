@@ -1,7 +1,6 @@
 from Genetic.Mutation import *
 from Genetic.Individual import *
 from Genetic.Chromosome import *
-from Genetic.Gen import *
 import random
 
 

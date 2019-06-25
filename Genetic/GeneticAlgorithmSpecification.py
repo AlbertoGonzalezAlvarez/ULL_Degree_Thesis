@@ -28,7 +28,7 @@ class GeneticAlgorithmSpecification:
         }
 
         self.config["penalization_function"].RATE = penalty
-        self.config["crossover"].RATE = penalty
+        self.config["crossover"].RATE = crossover_prob
         self.config["mutation"].RATE = mutation_prob
         self.train_data: [DataCategory] = train_data
         self.max_generations: int = max_generations

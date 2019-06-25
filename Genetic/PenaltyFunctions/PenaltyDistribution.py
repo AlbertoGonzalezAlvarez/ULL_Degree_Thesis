@@ -18,5 +18,4 @@ class PenaltyDistribution(PenaltyFunctions):
                 value = value * (1 + PenaltyDistribution.RATE)
             penalization_per_category.append(value)
 
-        print(sum(penalization_per_category) * PenaltyDistribution.RATE)
         individual.score = individual.score - (sum(penalization_per_category) * PenaltyDistribution.RATE)

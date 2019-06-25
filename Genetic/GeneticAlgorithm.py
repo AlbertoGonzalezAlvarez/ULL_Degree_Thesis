@@ -42,6 +42,9 @@ class GeneticAlgorithm:
                 TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
                 Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
 
+                PenaltyDistribution.penalize(offspring_1)
+                PenaltyDistribution.penalize(offspring_2)
+
                 next_population.append(offspring_1)
                 next_population.append(offspring_2)
 

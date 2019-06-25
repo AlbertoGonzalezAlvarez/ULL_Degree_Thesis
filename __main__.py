@@ -32,14 +32,14 @@ test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['
 
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     crossover_prob=1.0,
-    mutation_prob=0.15,
+    mutation_prob=0.2,
     penalty= 0.5,
     train_data=train_data,
-    individual_max_len=0.05,
+    individual_max_len=0.03,
     population_updater="BestsIndividuals",
     population_generator="ApproximatedSize",
     parent_selector="RouletteWheel",
-    population_size=6,
+    population_size=50,
     max_generations=1200
 )
 
