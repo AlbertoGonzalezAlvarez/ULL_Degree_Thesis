@@ -23,7 +23,6 @@ class Classifier(FitnessFunctions):
 
         text_clf = Pipeline([
             ('vect', CountVectorizer()),
-            ('tfidf', TfidfTransformer()),
             ('clf', MultinomialNB()),
         ])
 

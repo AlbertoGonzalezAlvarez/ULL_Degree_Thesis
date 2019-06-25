@@ -15,7 +15,7 @@ class GeneticAlgorithm:
 
         for individual in self.population:
             TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
-            # Classifier.evaluate(individual, self.problemSpecification.train_data, 1)
+            Classifier.evaluate(individual, self.problemSpecification.train_data, 0.8)
             PenaltyDistribution.penalize(individual, self.problemSpecification.penalty)
 
         self.population = sorted(self.population)
@@ -38,9 +38,9 @@ class GeneticAlgorithm:
                 ControlledMutation.mutate(offspring_2, self.problemSpecification.mutation_prob)
 
                 TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
-                # Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 1)
+                Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)
                 TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
-                # Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 1)
+                Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
 
                 next_population.append(offspring_1)
                 next_population.append(offspring_2)

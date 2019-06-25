@@ -15,7 +15,7 @@ class UniformCrossover(BaseCrossover):
             parents_chromosomes: [] = individual_2.chromosome.selected_gens + individual_1.chromosome.selected_gens
             random.shuffle(parents_chromosomes)
 
-            offsprings_chromosome: {BaseGen} = {}
+            offsprings_chromosome: {BaseGen} = set()
             min_chromosome_size: int = min(individual_1.chromosome.selected_gens_size,
                                            individual_2.chromosome.selected_gens_size)
 
