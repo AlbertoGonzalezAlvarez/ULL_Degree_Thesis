@@ -65,12 +65,13 @@ class BaseChromosome(ChromosomeTypes):
         # self.__update_gens__()
 
     def unselect(self, gen_index: int):
+        #Can cause error
         gen: BaseGen = self.__selected_gens__.pop(gen_index)
         self.__removed_gens__.append(gen)
         # self.__update_gens__()
 
     def select(self, gen_index: int):
-        gen: BaseGen = self.__removed_gens__.pop(gen_index)
+        gen: BaseGen = self.__removed_gens__.pop(gen_index - self.selected_gens_size)
         self.__selected_gens__.append(gen)
         # self.__update_gens__()
 

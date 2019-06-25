@@ -42,7 +42,10 @@ class TFIDF(FitnessFunctions):
                 for index in set(result.nonzero()[1]):
                     feature_tfidf_map[feature_names[index]] = result[0, index]
 
-                TFIDF.__TFIDF_VALUES__[data_category.name] = feature_tfidf_map
+                max_size: int = sum(feature_tfidf_map.values())
+                tfidf_map: dict = {key: feature_tfidf_map[key]/max_size for key in feature_tfidf_map}
+
+                TFIDF.__TFIDF_VALUES__[data_category.name] = tfidf_map
 
             LoggerHandler.log(__name__, f"TFIDF computation finished!")
 

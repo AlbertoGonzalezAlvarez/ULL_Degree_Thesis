@@ -12,32 +12,39 @@ class GeneticAlgorithm:
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
     def start(self):
-        actual_generation: int = 0
 
         for individual in self.population:
             TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
             Classifier.evaluate(individual, self.problemSpecification.train_data, 0.8)
             PenaltyDistribution.penalize(individual, self.problemSpecification.penalty)
 
+        self.population = sorted(self.population)
+        LoggerHandler.log(__name__,
+                          f"0th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
 
-        parent_1: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
-        parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
+        for actual_generation in range(self.problemSpecification.max_generations):
+            next_population = []
+            actual_population = self.population[:]
+            for _ in range(int(len(self.population)/2)):
+                parent_1: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
+                parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
 
-        offspring_1: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
-                                                                 self.config['chromosome'], self.problemSpecification.crossover_prob)
-        offspring_2: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
-                                                                 self.config['chromosome'], self.problemSpecification.crossover_prob)
+                offspring_1: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
+                                                                         self.config['chromosome'], self.problemSpecification.crossover_prob)
+                offspring_2: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
+                                                                         self.config['chromosome'], self.problemSpecification.crossover_prob)
 
-        ControlledMutation.mutate(offspring_1, self.problemSpecification.mutation_prob)
-        ControlledMutation.mutate(offspring_2, self.problemSpecification.mutation_prob)
+                ControlledMutation.mutate(offspring_1, self.problemSpecification.mutation_prob)
+                ControlledMutation.mutate(offspring_2, self.problemSpecification.mutation_prob)
 
-        TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
-        Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)
-        TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
-        Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
+                TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
+                Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)
+                TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
+                Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
 
-        next_population = [offspring_1, offspring_2]
-        self.config["population_updater"].update(self.population, next_population)
+                next_population.append(offspring_1)
+                next_population.append(offspring_2)
 
-        # PenaltyDistribution.penalize(offspring_1, self.problemSpecification.penalty)
-        # SelectiveReplacement.replace(self.population, parent_1, parent_2, offspring_1, offspring_2)
+            self.population = self.config["population_updater"].update(actual_population, next_population)
+            LoggerHandler.log(__name__, f"{actual_generation}th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
+            next_population.clear()
