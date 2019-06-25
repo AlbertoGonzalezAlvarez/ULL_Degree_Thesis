@@ -7,11 +7,11 @@ import random
 
 class ControlledMutation(BaseMutation):
     @staticmethod
-    def mutate(individual: BaseIndividual, mutation_rate: float):
+    def mutate(individual: BaseIndividual):
         chromosome: BaseChromosome = individual.chromosome
 
-        prob_remove: float = mutation_rate
-        prob_insert: float = mutation_rate * chromosome.selected_gens_size / chromosome.removed_gens_size
+        prob_remove: float = ControlledMutation.RATE
+        prob_insert: float = ControlledMutation.RATE * chromosome.selected_gens_size / chromosome.removed_gens_size
 
         for index in range(len(chromosome)):
             threshold = random.random()

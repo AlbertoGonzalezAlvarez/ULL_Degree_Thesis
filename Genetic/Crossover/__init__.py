@@ -1,2 +1,2 @@
-from Genetic.Crossover.BaseCrossover import BaseCrossover
+from Genetic.Crossover.CrossoverTypes import CrossoverTypes
 from Genetic.Crossover.UniformCrossover import UniformCrossover

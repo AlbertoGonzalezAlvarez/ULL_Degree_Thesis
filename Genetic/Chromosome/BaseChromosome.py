@@ -1,9 +1,12 @@
+from __future__ import annotations
 from Genetic.Chromosome import *
 from Genetic.Gen import *
 import random
-
+import numpy as np
 
 class BaseChromosome(ChromosomeTypes):
+
+    IDEAL_CHROMOSOME_DISTRIBUTION: dict = None
 
     def __init__(self, selected_gens_by_category: [BaseGen], removed_gens_by_category: [BaseGen]):
         # Improves computation time. Gens could be sets!!
@@ -86,4 +89,27 @@ class BaseChromosome(ChromosomeTypes):
         return list(map_of_documents.values())
 
     def chromosomeCategories(self) -> [str]:
-        return list({gen.category for gen in self.__selected_gens__})
+        return sorted(list(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION.keys()))
+
+    @staticmethod
+    def __distance__(chromosome_1: [BaseChromosome], chromosome_2: [BaseChromosome]) -> int:
+        difference_array: list = np.array(list(chromosome_1.values())) - \
+                                 np.array(list(chromosome_2.values()))
+
+        return [np.abs(value) for value in difference_array]
+
+    def __compute_distribution__(self):
+        chromosome_distribution: dict = {category: 0 for category in
+                                         BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION}
+
+        for gen in self.selected_gens:
+            chromosome_distribution[gen.category] += 1
+
+        return chromosome_distribution
+
+
+    def distance_from_ideal(self) -> int:
+        chromosome_distribution = self.__compute_distribution__()
+
+        return BaseChromosome.__distance__(chromosome_distribution,
+                                                   BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION)

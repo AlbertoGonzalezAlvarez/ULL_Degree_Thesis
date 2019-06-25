@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from Log import LoggerHandler
 
 
-class TFIDF(FitnessFunctions):
+class TFIDF(FitnessTypes):
 
     __TFIDF_VALUES__: dict = {}
 

@@ -12,8 +12,9 @@ class SelectiveReplacement(BaseReplacement):
 
     @staticmethod
     def __replace__(population: [BaseIndividual], parent_1: BaseIndividual, parent_2: BaseIndividual, offspring: BaseIndividual):
-        distance_to_parent_1: int = ChromosomeDistribution.absolute_distance(offspring, parent_1)
-        distance_to_parent_2: int = ChromosomeDistribution.absolute_distance(offspring, parent_2)
+        # cambiarlo por la funcion de penalizacion por distribucion
+        distance_to_parent_1: int = BaseChromosome.absolute_distance(offspring, parent_1)
+        distance_to_parent_2: int = BaseChromosome.absolute_distance(offspring, parent_2)
 
         if parent_1.score <= offspring.score >= parent_2.score:
             if distance_to_parent_1 >= distance_to_parent_2:

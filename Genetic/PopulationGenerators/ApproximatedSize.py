@@ -10,7 +10,7 @@ class ApproximatedSize(PopulationGenerator):
 
     @staticmethod
     def generate_individuals(individual_type: BaseIndividual, chromosome_type: BaseChromosome,
-                             list_of_gens_per_category: dict,  population_size: int, category_lenghts: dict,
+                             list_of_gens_per_category: dict, population_size: int, category_lenghts: dict,
                              percentage_of_features: int = -1) -> [BaseIndividual]:
 
         population: [BaseIndividual] = []

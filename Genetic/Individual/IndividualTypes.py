@@ -1,6 +1,6 @@
 class IndividualTypes():
 
-    types = {}
+    type = {}
 
     def __init_subclass__(cls):
-        IndividualTypes.types.update({cls.__name__: cls})
+        IndividualTypes.type.update({cls.__name__: cls})

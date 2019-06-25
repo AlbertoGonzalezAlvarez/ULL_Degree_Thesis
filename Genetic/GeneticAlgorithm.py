@@ -16,7 +16,7 @@ class GeneticAlgorithm:
         for individual in self.population:
             TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
             Classifier.evaluate(individual, self.problemSpecification.train_data, 0.8)
-            PenaltyDistribution.penalize(individual, self.problemSpecification.penalty)
+            PenaltyDistribution.penalize(individual)
 
         self.population = sorted(self.population)
         LoggerHandler.log(__name__,
@@ -30,12 +30,12 @@ class GeneticAlgorithm:
                 parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
 
                 offspring_1: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
-                                                                         self.config['chromosome'], self.problemSpecification.crossover_prob)
+                                                                         self.config['chromosome'])
                 offspring_2: BaseIndividual = UniformCrossover.crossover(parent_1, parent_2, self.config['individual'],
-                                                                         self.config['chromosome'], self.problemSpecification.crossover_prob)
+                                                                         self.config['chromosome'])
 
-                ControlledMutation.mutate(offspring_1, self.problemSpecification.mutation_prob)
-                ControlledMutation.mutate(offspring_2, self.problemSpecification.mutation_prob)
+                ControlledMutation.mutate(offspring_1)
+                ControlledMutation.mutate(offspring_2)
 
                 TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
                 Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)

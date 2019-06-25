@@ -3,12 +3,12 @@ from Log import *
 from EmailParser.DataCategory import *
 
 
-class FitnessFunctions:
+class FitnessTypes:
 
     type = {}
 
     def __init_subclass__(cls):
-        FitnessFunctions.type.update({cls.__name__: cls})
+        FitnessTypes.type.update({cls.__name__: cls})
 
     @classmethod
     def evaluate(cls, individual: BaseIndividual, train_data: [DataCategory], weight: float, multiplier: int = 1):

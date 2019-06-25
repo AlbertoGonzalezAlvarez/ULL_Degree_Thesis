@@ -5,13 +5,13 @@ from Genetic.Gen import *
 import random
 
 
-class UniformCrossover(BaseCrossover):
+class UniformCrossover(CrossoverTypes):
 
     @staticmethod
     def crossover(individual_1: BaseIndividual, individual_2: BaseIndividual, individual_type: BaseIndividual,
-                  chromosome_type: BaseChromosome, crossover_prob: float) -> BaseIndividual:
+                  chromosome_type: BaseChromosome) -> BaseIndividual:
 
-        if random.random() < crossover_prob:
+        if random.random() < UniformCrossover.RATE:
             parents_chromosomes: [] = individual_2.chromosome.selected_gens + individual_1.chromosome.selected_gens
             random.shuffle(parents_chromosomes)
 

@@ -1,6 +1,6 @@
 class ChromosomeTypes():
 
-    types = {}
+    type = {}
 
     def __init_subclass__(cls):
-        ChromosomeTypes.types.update({cls.__name__: cls})
+        ChromosomeTypes.type.update({cls.__name__: cls})
