@@ -20,11 +20,11 @@ class TFIDF(FitnessFunctions):
         for gen in individual.chromosome.selected_gens:
             score_per_category[gen.category] += TFIDF.__TFIDF_VALUES__[gen.category][gen.word]
 
-        individual.score += TFIDF.__meanTFIDF__(len(individual.chromosome.chromosomeCategories()), score_per_category) * multiplier * weight
+        individual.score += TFIDF.__meanTFIDF__(score_per_category) * multiplier * weight
 
     @staticmethod
-    def __meanTFIDF__(chromosome_len: int, score_per_category: {str: int}):
-        return sum(score_per_category.values())/chromosome_len
+    def __meanTFIDF__(score_per_category: {str: int}):
+        return sum(score_per_category.values())
 
     @staticmethod
     def __calculateTFIDF__(train_data: [DataCategory]):
@@ -43,7 +43,7 @@ class TFIDF(FitnessFunctions):
                     feature_tfidf_map[feature_names[index]] = result[0, index]
 
                 max_size: int = sum(feature_tfidf_map.values())
-                tfidf_map: dict = {key: feature_tfidf_map[key]/max_size for key in feature_tfidf_map}
+                tfidf_map: dict = {key: feature_tfidf_map[key]/max_size/len(train_data) for key in feature_tfidf_map}
 
                 TFIDF.__TFIDF_VALUES__[data_category.name] = tfidf_map
 
