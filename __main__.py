@@ -36,11 +36,17 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     penalty= 0.6,
     train_data=train_data,
     individual_max_len=0.2,
-    population_updater="HybridElitism",
-    population_generator="ApproximatedSize",
-    parent_selector="Tournament",
     population_size=100,
-    max_generations=100
+    max_generations=100,
+    chromosome="BaseChromosome",
+    gen="BaseGen",
+    individual="BaseIndividual",
+    population_updater="HybridElitism",
+    parent_selector="Tournament",
+    penalization_function="PenaltyDistribution",
+    crossover="UniformCrossover",
+    mutation="ControlledMutation",
+    population_generator="ApproximatedSize"
 )
 
 ga: GeneticAlgorithm = GeneticAlgorithm(problem_spec)

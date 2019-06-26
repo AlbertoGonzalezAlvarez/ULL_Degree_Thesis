@@ -32,6 +32,6 @@ class PopulationGenerator:
                                                                                   percentage_of_features) for category
                                                                     in category_lenghts }
 
-            return PopulationGenerator.type[generator_type].generate_individuals(individual_type, chromosome_type,
+            return generator_type.generate_individuals(individual_type, chromosome_type,
                                                                                  list_of_gens_per_category, population_size,
                                                                                  category_lenghts, percentage_of_features)

@@ -13,18 +13,18 @@ import random
 
 class GeneticAlgorithmSpecification:
     def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
-                 population_updater: str, population_generator: str, max_generations: int,
-                 parent_selector: str, population_size: int, penalty: float):
+                    max_generations: int, population_size: int, penalty: float, **config):
 
         self.config: dict = {
-            "chromosome": BaseChromosome.type["BaseChromosome"],
-            "gen": BaseGen.type["BaseGen"],
-            "individual": BaseIndividual.type["BaseIndividual"],
-            "population_updater": PopulationUpdaters.type[population_updater],
-            "parent_selector": ParentSelector.type[parent_selector],
-            "penalization_function": PenaltyFunctions.type["PenaltyDistribution"],
-            "crossover": CrossoverTypes.type["UniformCrossover"],
-            "mutation": BaseMutation.type["ControlledMutation"],
+            "chromosome": BaseChromosome.type[config["chromosome"]],
+            "gen": BaseGen.type[config["gen"]],
+            "individual": BaseIndividual.type[config["individual"]],
+            "population_updater": PopulationUpdaters.type[config["population_updater"]],
+            "parent_selector": ParentSelector.type[config["parent_selector"]],
+            "penalization_function": PenaltyFunctions.type[config["penalization_function"]],
+            "crossover": CrossoverTypes.type[config["crossover"]],
+            "mutation": BaseMutation.type[config["mutation"]],
+            "population_generator": PopulationGenerator.type[config["population_generator"]]
         }
 
         self.config["penalization_function"].RATE = penalty
@@ -34,8 +34,8 @@ class GeneticAlgorithmSpecification:
         self.max_generations: int = max_generations
 
         shuffle_train_data: [DataCategory] = self.__shuffle_train_data__(copy.deepcopy(train_data))
-        self.population: [BaseIndividual] = PopulationGenerator.type[population_generator].generate(
-            generator_type=population_generator,
+        self.population: [BaseIndividual] =self.config["population_generator"].generate(
+            generator_type=self.config["population_generator"],
             chromosome_type=self.config["chromosome"],
             gen_type=self.config["gen"],
             individual_type=self.config["individual"],
@@ -43,8 +43,6 @@ class GeneticAlgorithmSpecification:
             train_data=shuffle_train_data,
             percentage_of_features=individual_max_len
         )
-
-
 
         LoggerHandler.log(__name__, f"Problem specification loaded!")
 
