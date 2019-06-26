@@ -35,12 +35,12 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     mutation_prob=0.2,
     penalty= 0.5,
     train_data=train_data,
-    individual_max_len=0.03,
-    population_updater="BestsIndividuals",
+    individual_max_len=0.2,
+    population_updater="HybridElitism",
     population_generator="ApproximatedSize",
-    parent_selector="RouletteWheel",
-    population_size=50,
-    max_generations=1200
+    parent_selector="Tournament",
+    population_size=100,
+    max_generations=100
 )
 
 ga: GeneticAlgorithm = GeneticAlgorithm(problem_spec)

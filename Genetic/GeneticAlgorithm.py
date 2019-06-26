@@ -1,7 +1,8 @@
 from Genetic import *
 from Log import LoggerHandler
 import copy
-
+import matplotlib.pyplot as plt
+import itertools
 
 class GeneticAlgorithm:
 
@@ -22,6 +23,7 @@ class GeneticAlgorithm:
         LoggerHandler.log(__name__,
                           f"0th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
 
+        plt.axis([0, self.problemSpecification.max_generations, 0, 1])
         for actual_generation in range(self.problemSpecification.max_generations):
             next_population = []
             actual_population = self.population[:]
@@ -51,4 +53,8 @@ class GeneticAlgorithm:
 
             self.population = self.config["population_updater"].update(actual_population, next_population)
             LoggerHandler.log(__name__, f"{actual_generation}th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
+            if True:
+                plt.scatter(actual_generation, (sum([individual.score for individual in self.population])/len(self.population)))
+                plt.pause(0.05)
+
             next_population.clear()

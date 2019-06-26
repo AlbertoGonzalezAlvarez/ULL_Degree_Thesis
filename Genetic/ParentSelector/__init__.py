@@ -1,3 +1,4 @@
 from Genetic.ParentSelector.ParentSelector import ParentSelector
 from Genetic.ParentSelector.RouletteWheel import RouletteWheel
 from Genetic.ParentSelector.AgeFitness import AgeFitness
+from Genetic.ParentSelector.Tournament import Tournament
