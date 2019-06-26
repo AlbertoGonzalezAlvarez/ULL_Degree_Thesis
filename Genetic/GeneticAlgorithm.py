@@ -26,6 +26,7 @@ class GeneticAlgorithm:
             next_population = []
             actual_population = self.population[:]
             for _ in range(int(len(self.population)/2)):
+                # Roulette wheel requiere que la poblacion este ordenada
                 parent_1: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
                 parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
 

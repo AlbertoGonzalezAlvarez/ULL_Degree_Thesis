@@ -1,4 +1,5 @@
 from Genetic.Gen import *
+from Genetic.Individual import *
 from Genetic.ParentSelector import *
 import random
 
@@ -7,9 +8,8 @@ class RouletteWheel(ParentSelector):
     COEFFICIENT: float = 0.25
 
     @staticmethod
-    def select_parent(population: [BaseGen]):
+    def select_parent(population: [BaseIndividual]):
         accumulative_prob: list = [0]
-        sorted_population: [BaseGen] = sorted(population)
 
         for index in range(len(population)):
             accumulative_prob.append(RouletteWheel.COEFFICIENT * (1 - RouletteWheel.COEFFICIENT) ** (index - 1))

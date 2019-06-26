@@ -12,17 +12,16 @@ class UniformCrossover(CrossoverTypes):
                   chromosome_type: BaseChromosome) -> BaseIndividual:
 
         if random.random() < UniformCrossover.RATE:
-            parents_chromosomes: [] = individual_2.chromosome.selected_gens + individual_1.chromosome.selected_gens
-            random.shuffle(parents_chromosomes)
+            parents_chromosomes: [] = individual_2.chromosome.gens + individual_1.chromosome.gens
 
             offsprings_chromosome: {BaseGen} = set()
-            min_chromosome_size: int = min(individual_1.chromosome.selected_gens_size,
-                                           individual_2.chromosome.selected_gens_size)
+            # Cromosoma con todos los genes no solo los seleccionados
+            min_size = min(individual_1.chromosome.selected_gens_size, individual_2.chromosome.selected_gens_size)
+            max_size = max(individual_1.chromosome.selected_gens_size, individual_2.chromosome.selected_gens_size)
 
-            index: int = 0
-            while len(offsprings_chromosome) != min_chromosome_size:
-                offsprings_chromosome.add(parents_chromosomes[index])
-                index += 1
+            new_size = random.randint(min_size, max_size)
+            while len(offsprings_chromosome) != new_size:
+                offsprings_chromosome.add(parents_chromosomes[random.randint(0, (len(parents_chromosomes) - 1))])
 
             removed_gens: [BaseGen] = list(set(individual_1.chromosome.gens) - offsprings_chromosome)
             return individual_type(BaseChromosome(list(offsprings_chromosome), removed_gens))

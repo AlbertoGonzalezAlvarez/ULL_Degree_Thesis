@@ -1,2 +1,3 @@
 from Genetic.ReplacementMethods.BaseReplacement import BaseReplacement
 from Genetic.ReplacementMethods.SelectiveReplacement import SelectiveReplacement
+from Genetic.ReplacementMethods.ReplaceWorst import ReplaceWorst

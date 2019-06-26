@@ -11,3 +11,4 @@ from Genetic.PopulationUpdaters import *
 from Genetic.ReplacementMethods import *
 from Genetic.GeneticAlgorithmSpecification import GeneticAlgorithmSpecification
 from Genetic.GeneticAlgorithm import GeneticAlgorithm
+from Genetic.AgeGA import AgeGA

@@ -92,7 +92,7 @@ class BaseChromosome(ChromosomeTypes):
         return sorted(list(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION.keys()))
 
     @staticmethod
-    def __distance__(chromosome_1: [BaseChromosome], chromosome_2: [BaseChromosome]) -> int:
+    def __absolut_distance__(chromosome_1: dict, chromosome_2: dict) -> int:
         difference_array: list = np.array(list(chromosome_1.values())) - \
                                  np.array(list(chromosome_2.values()))
 
@@ -111,5 +111,19 @@ class BaseChromosome(ChromosomeTypes):
     def distance_from_ideal(self) -> int:
         chromosome_distribution = self.__compute_distribution__()
 
-        return BaseChromosome.__distance__(chromosome_distribution,
+        return BaseChromosome.__absolut_distance__(chromosome_distribution,
                                                    BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION)
+
+    @staticmethod
+    def distance_between(chromosome_1: BaseChromosome, chromosome_2: BaseChromosome):
+        chromosome_distribution_1: BaseChromosome = chromosome_1.__compute_distribution__()
+        chromosome_distribution_2: BaseChromosome = chromosome_2.__compute_distribution__()
+
+        return BaseChromosome.__absolut_distance__(chromosome_distribution_1, chromosome_distribution_2)
+
+    @staticmethod
+    def __distance__(chromosome_1: dict, chromosome_2: dict) -> int:
+        difference_array: list = np.array(list(chromosome_1.values())) - \
+                                 np.array(list(chromosome_2.values()))
+
+        return difference_array

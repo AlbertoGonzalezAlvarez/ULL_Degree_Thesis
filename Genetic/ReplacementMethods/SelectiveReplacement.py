@@ -8,7 +8,7 @@ class SelectiveReplacement(BaseReplacement):
     @staticmethod
     def replace(population: [BaseIndividual], parent_1: BaseIndividual, parent_2: BaseIndividual, offspring_1: BaseIndividual, offspring_2: BaseIndividual):
         SelectiveReplacement.__replace__(population, parent_1, parent_2, offspring_1)
-        SelectiveReplacement.__replace__(population, parent_1, parent_2, offspring_1)
+        SelectiveReplacement.__replace__(population, parent_1, parent_2, offspring_2)
 
     @staticmethod
     def __replace__(population: [BaseIndividual], parent_1: BaseIndividual, parent_2: BaseIndividual, offspring: BaseIndividual):
