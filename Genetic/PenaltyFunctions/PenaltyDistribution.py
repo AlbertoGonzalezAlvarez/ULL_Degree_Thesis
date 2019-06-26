@@ -14,6 +14,11 @@ class PenaltyDistribution(PenaltyFunctions):
 
         penalization_per_category: list = []
         for value in deviation_percentage:
+            if value >= 0.05:
+                value = np.abs(1 - (1 + value) ** 2)
+            # else:
+            #     print("advantage")
+            #     value = np.abs(1 - np.sqrt(1 + value))
             penalization_per_category.append(value)
 
         individual.score = individual.score - (sum(penalization_per_category) * PenaltyDistribution.RATE)
