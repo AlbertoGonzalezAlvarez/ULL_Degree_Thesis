@@ -47,4 +47,3 @@ class ApproximatedSize(PopulationGenerator):
             selected_gens.clear()
 
         return population
-

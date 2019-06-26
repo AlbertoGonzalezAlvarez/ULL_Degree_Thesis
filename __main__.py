@@ -32,8 +32,8 @@ test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['
 
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     crossover_prob=1.0,
-    mutation_prob=0.2,
-    penalty= 0.5,
+    mutation_prob=0.05,
+    penalty= 0.6,
     train_data=train_data,
     individual_max_len=0.2,
     population_updater="HybridElitism",

@@ -52,6 +52,7 @@ class GeneticAlgorithm:
                 next_population.append(offspring_2)
 
             self.population = self.config["population_updater"].update(actual_population, next_population)
+            print(len(self.population))
             LoggerHandler.log(__name__, f"{actual_generation}th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
             if True:
                 plt.scatter(actual_generation, (sum([individual.score for individual in self.population])/len(self.population)))
