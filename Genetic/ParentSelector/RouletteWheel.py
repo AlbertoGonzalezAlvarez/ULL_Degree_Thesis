@@ -25,6 +25,6 @@ class RouletteWheel(ParentSelector):
                     index_of_parent = population.index(population_sorted[index])
                     individual = population.pop(index_of_parent)
         else:
-            individual = population_sorted.pop(0)
+            individual = population.pop(0)
 
         return individual

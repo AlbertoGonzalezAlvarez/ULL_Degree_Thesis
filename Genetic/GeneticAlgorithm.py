@@ -37,6 +37,7 @@ class GeneticAlgorithm:
             next_population = []
             actual_population = self.population[:]
             for _ in range(int(len(self.population)/2)):
+
                 parent_1: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
                 parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
 
@@ -54,15 +55,14 @@ class GeneticAlgorithm:
                     TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
                     Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
 
-                    PenaltyDistribution.penalize(offspring_1)
-                    PenaltyDistribution.penalize(offspring_2)
+                    self.config['penalization_function'].penalize(offspring_1)
+                    self.config['penalization_function'].penalize(offspring_2)
 
                     next_population.append(offspring_1)
                     next_population.append(offspring_2)
                 else:
                     next_population.append(parent_2)
                     next_population.append(parent_1)
-
 
             self.population = self.config["population_updater"].update(actual_population, next_population)
             LoggerHandler.log(__name__, f"{actual_generation}th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")

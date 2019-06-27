@@ -23,3 +23,4 @@ class PenaltyDistribution(PenaltyFunctions):
             penalization_per_category.append(value)
 
         individual.score = individual.score - (sum(penalization_per_category) * PenaltyDistribution.RATE)
+        # individual.score = individual.score - (np.abs(1 - sum(penalization_per_category)) ** 2 * PenaltyDistribution.RATE)

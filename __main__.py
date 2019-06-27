@@ -56,7 +56,6 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     mutation="ControlledMutation",
     population_generator="ApproximatedSize"
 )
-
 ga: GeneticAlgorithm = GeneticAlgorithm(problem_spec)
 ga.start()
 best_solution: dict = ga.get_solution()
