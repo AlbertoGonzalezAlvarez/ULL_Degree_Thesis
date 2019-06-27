@@ -31,23 +31,23 @@ train_data = [DataCategory.addTrainCategory(category, train_data_dict[category],
 test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['msg']) for category in test_data_dict]
 
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
-    crossover_prob=1.0,
-    mutation_prob=0.05,
-    penalty= 0.6,
+    # Esta configuracion es la mejor que hemos encontrado
+    crossover_prob=0.7,
+    mutation_prob=0.12,
+    penalty= 0.5,
     train_data=train_data,
-    individual_max_len=0.2,
-    population_size=100,
+    individual_max_len=0.16,
+    population_size=150,
     max_generations=100,
     chromosome="BaseChromosome",
     gen="BaseGen",
     individual="BaseIndividual",
     population_updater="HybridElitism",
-    parent_selector="Tournament",
+    parent_selector="RouletteWheel",
     penalization_function="PenaltyDistribution",
     crossover="UniformCrossover",
     mutation="ControlledMutation",
     population_generator="ApproximatedSize"
 )
-
 ga: GeneticAlgorithm = GeneticAlgorithm(problem_spec)
 ga.start()

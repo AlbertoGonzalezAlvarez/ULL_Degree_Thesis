@@ -11,7 +11,6 @@ class UniformCrossover(CrossoverTypes):
     def crossover(individual_1: BaseIndividual, individual_2: BaseIndividual, individual_type: BaseIndividual,
                   chromosome_type: BaseChromosome) -> BaseIndividual:
 
-        if random.random() < UniformCrossover.RATE:
             parents_chromosomes: [] = individual_2.chromosome.gens + individual_1.chromosome.gens
 
             offsprings_chromosome: {BaseGen} = set()
@@ -25,8 +24,5 @@ class UniformCrossover(CrossoverTypes):
 
             removed_gens: [BaseGen] = list(set(individual_1.chromosome.gens) - offsprings_chromosome)
             return individual_type(BaseChromosome(list(offsprings_chromosome), removed_gens))
-
-        else:
-            return None
 
 
