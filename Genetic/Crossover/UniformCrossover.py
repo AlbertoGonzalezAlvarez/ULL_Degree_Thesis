@@ -14,7 +14,6 @@ class UniformCrossover(CrossoverTypes):
             parents_chromosomes: [] = individual_2.chromosome.gens + individual_1.chromosome.gens
 
             offsprings_chromosome: {BaseGen} = set()
-            # Cromosoma con todos los genes no solo los seleccionados
             min_size = min(individual_1.chromosome.selected_gens_size, individual_2.chromosome.selected_gens_size)
             max_size = max(individual_1.chromosome.selected_gens_size, individual_2.chromosome.selected_gens_size)
 

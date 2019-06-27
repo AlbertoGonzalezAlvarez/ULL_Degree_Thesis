@@ -16,9 +16,8 @@ class GeneticAlgorithm:
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
     def start(self):
-        plt.axis([0, self.problemSpecification.max_generations, -1, 1])
+        plt.axis([0, self.problemSpecification.max_generations, 0, 1])
         for individual in self.population:
-            # TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
             Classifier.evaluate(individual, self.problemSpecification.train_data, 1.0)
             PenaltyDistribution.penalize(individual)
 
@@ -41,7 +40,7 @@ class GeneticAlgorithm:
                 parent_1: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
                 parent_2: BaseIndividual = self.config["parent_selector"].select_parent(self.population)
 
-                if random.random() < ControlledMutation.RATE:
+                if random.random() < CrossoverTypes.RATE:
                     offspring_1: BaseIndividual = self.config['crossover'].crossover(parent_1, parent_2, self.config['individual'],
                                                                              self.config['chromosome'])
                     offspring_2: BaseIndividual = self.config['crossover'].crossover(parent_1, parent_2, self.config['individual'],

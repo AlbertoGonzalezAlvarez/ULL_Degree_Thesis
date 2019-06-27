@@ -33,12 +33,12 @@ test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     # Esta configuracion es la mejor que hemos encontrado
     crossover_prob=0.7,
-    mutation_prob=0.12,
+    mutation_prob=0.07,
     penalty= 0.5,
     train_data=train_data,
     individual_max_len=0.16,
     population_size=150,
-    max_generations=100,
+    max_generations=50,
     chromosome="BaseChromosome",
     gen="BaseGen",
     individual="BaseIndividual",

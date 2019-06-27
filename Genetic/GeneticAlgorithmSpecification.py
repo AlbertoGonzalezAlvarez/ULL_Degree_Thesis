@@ -13,7 +13,7 @@ import random
 
 class GeneticAlgorithmSpecification:
     def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
-                    max_generations: int, population_size: int, penalty: float, parents_offsprings:int, **config):
+                    max_generations: int, population_size: int, penalty: float, **config):
 
         self.config: dict = {
             "chromosome": BaseChromosome.type[config["chromosome"]],
@@ -27,10 +27,10 @@ class GeneticAlgorithmSpecification:
             "population_generator": PopulationGenerator.type[config["population_generator"]]
         }
 
-        self.config["penalization_function"].RATE = penalty
+        PenaltyFunctions.RATE = penalty
         CrossoverTypes.RATE = crossover_prob
-        self.config["mutation"].RATE = mutation_prob
-        self.parents_offsprings: int = parents_offsprings
+        BaseMutation.RATE = mutation_prob
+
         self.train_data: [DataCategory] = train_data
         self.max_generations: int = max_generations
 
