@@ -27,6 +27,14 @@ class GeneticAlgorithmSpecification:
             "population_generator": PopulationGenerator.type[config["population_generator"]]
         }
 
+        self.params: dict = config
+        self.params["crossover_prob"] = crossover_prob
+        self.params["mutation_prob"] = mutation_prob
+        self.params["individual_max_len"] = individual_max_len
+        self.params["max_generations"] = max_generations
+        self.params["population_size"] = population_size
+        self.params["penalty_rate"] = penalty
+
         PenaltyFunctions.RATE = penalty
         CrossoverTypes.RATE = crossover_prob
         BaseMutation.RATE = mutation_prob

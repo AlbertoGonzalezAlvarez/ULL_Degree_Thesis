@@ -15,7 +15,7 @@ class FileUtilities:
 
     @staticmethod
     def writeToFile(content: object, fileName: str, directory: str = DEFAULT_DIR, encoder = json.JSONEncoder) -> None:
-        fileName = os.path.join(FileUtilities.DEFAULT_DIR, fileName)
+        fileName = os.path.join(directory, fileName)
         FileUtilities.FILE_REGISTER.append(fileName)
         LoggerHandler.log(__name__, f"Writing data to '{fileName}'")
 

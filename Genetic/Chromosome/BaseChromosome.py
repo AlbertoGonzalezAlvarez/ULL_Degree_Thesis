@@ -143,6 +143,7 @@ class BaseChromosome(ChromosomeTypes):
 
         return difference_array
 
+
 class BaseChromosomeEncoder(json.JSONEncoder):
     def default(self, object):
         if isinstance(object, BaseChromosome):
