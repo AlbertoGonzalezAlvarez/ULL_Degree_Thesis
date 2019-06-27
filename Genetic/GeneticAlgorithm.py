@@ -15,11 +15,11 @@ class GeneticAlgorithm:
         self.population: [BaseGen] = problemSpecification.population
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
 
-    def start(self):
-        plt.axis([0, self.problemSpecification.max_generations, -1, 1])
+    def start(self) -> dict:
+        plt.axis([0, self.problemSpecification.max_generations, 0, 1])
         for individual in self.population:
-            # TFIDF.evaluate(individual, self.problemSpecification.train_data, 1)
-            Classifier.evaluate(individual, self.problemSpecification.train_data, 1.0)
+            TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
+            Classifier.evaluate(individual, self.problemSpecification.train_data, 0.8)
             PenaltyDistribution.penalize(individual)
 
         self.population = sorted(self.population, reverse=True)
@@ -49,10 +49,10 @@ class GeneticAlgorithm:
                     self.config['mutation'].mutate(offspring_1)
                     self.config['mutation'].mutate(offspring_2)
 
-                    # TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
-                    Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 1.0)
-                    # TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
-                    Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 1.0)
+                    TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
+                    Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)
+                    TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
+                    Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
 
                     PenaltyDistribution.penalize(offspring_1)
                     PenaltyDistribution.penalize(offspring_2)
@@ -74,8 +74,13 @@ class GeneticAlgorithm:
 
             next_population.clear()
 
-        dic = {"last_generation": self.population,
-               "average_punctuation": (
-                           sum([individual.score for individual in self.population]) / len(self.population)),
-               "average_size":  sum([len(individual.chromosome.selected_gens) for individual in self.population]) / len(self.population)}
-        Utilities.FileUtilities.writeToFile(dic, "result.json", encoder=BaseIndividualEncoder)
+        # dic = {"last_generation": self.population,
+        #        "average_punctuation": (
+        #                    sum([individual.score for individual in self.population]) / len(self.population)),
+        #        "average_size":  sum([len(individual.chromosome.selected_gens) for individual in self.population]) / len(self.population)}
+        # Utilities.FileUtilities.writeToFile(dic, "result.json", encoder=BaseIndividualEncoder)
+
+    def get_solution(self) -> dict:
+        self.population = sorted(self.population, reverse=True)
+        best_solution: BaseIndividual = self.population[0]
+        return best_solution.chromosome.chromosome_distribution()

@@ -102,7 +102,7 @@ class BaseChromosome(ChromosomeTypes):
                                          BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION}
 
         for gen in self.selected_gens:
-            chromosome_distribution[gen.category].append(gen)
+            chromosome_distribution[gen.category].append(gen.word)
 
         return chromosome_distribution
 
