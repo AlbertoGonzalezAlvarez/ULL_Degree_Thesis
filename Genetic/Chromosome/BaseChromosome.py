@@ -3,10 +3,13 @@ from Genetic.Chromosome import *
 from Genetic.Gen import *
 import random
 import numpy as np
+import json
+
 
 class BaseChromosome(ChromosomeTypes):
 
     IDEAL_CHROMOSOME_DISTRIBUTION: dict = None
+    LIST_OF_GENS: dict = None
 
     def __init__(self, selected_gens_by_category: [BaseGen], removed_gens_by_category: [BaseGen]):
         # Improves computation time. Gens could be sets!!
@@ -28,6 +31,9 @@ class BaseChromosome(ChromosomeTypes):
 
     def __len__(self):
         return len(self.gens)
+
+    def __repr__(self):
+        return str(self.__selected_gens__)
 
     def __update_gens__(self):
         self.gens.clear()
@@ -91,6 +97,15 @@ class BaseChromosome(ChromosomeTypes):
     def chromosomeCategories(self) -> [str]:
         return sorted(list(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION.keys()))
 
+    def chromosome_distribution(self):
+        chromosome_distribution: dict = {category: [] for category in
+                                         BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION}
+
+        for gen in self.selected_gens:
+            chromosome_distribution[gen.category].append(gen)
+
+        return chromosome_distribution
+
     @staticmethod
     def __absolut_distance__(chromosome_1: dict, chromosome_2: dict) -> int:
         difference_array: list = np.array(list(chromosome_1.values())) - \
@@ -127,3 +142,10 @@ class BaseChromosome(ChromosomeTypes):
                                  np.array(list(chromosome_2.values()))
 
         return difference_array
+
+class BaseChromosomeEncoder(json.JSONEncoder):
+    def default(self, object):
+        if isinstance(object, BaseChromosome):
+            return BaseGenEncoder(self, object.selected_gens)
+        else:
+            return json.JSONEncoder.default(self, object)

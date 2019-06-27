@@ -1,6 +1,6 @@
 from Genetic.Gen import BaseGen, GenTypes
 from EmailParser.DataCategory import *
-
+import json
 
 class BaseGen(GenTypes):
 
@@ -29,3 +29,13 @@ class BaseGen(GenTypes):
 
     def __hash__(self):
         return hash(self.word) + hash(self.category)
+
+class BaseGenEncoder(json.JSONEncoder):
+    def default(self, object):
+        if isinstance(object, BaseGen):
+            return {
+                "category": str(object.category),
+                "word": str(object.word)
+            }
+        else:
+            return json.JSONEncoder.default(self, object)

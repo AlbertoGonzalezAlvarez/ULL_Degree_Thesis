@@ -1,2 +1,2 @@
 from Genetic.Chromosome.ChromosomeTypes import ChromosomeTypes
-from Genetic.Chromosome.BaseChromosome import BaseChromosome
+from Genetic.Chromosome.BaseChromosome import BaseChromosome, BaseChromosomeEncoder

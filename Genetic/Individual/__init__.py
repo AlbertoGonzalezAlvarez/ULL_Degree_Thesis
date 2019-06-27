@@ -1,3 +1,3 @@
 from Genetic.Individual.IndividualTypes import IndividualTypes
-from Genetic.Individual.BaseIndividual import BaseIndividual
+from Genetic.Individual.BaseIndividual import BaseIndividual, BaseIndividualEncoder
 from Genetic.Individual.AgedIndividual import AgedIndividual
