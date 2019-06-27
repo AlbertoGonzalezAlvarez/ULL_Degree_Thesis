@@ -9,6 +9,7 @@ import os
 import re
 import json
 import numpy as np
+import time
 
 TEST_PREFIX = "test_"
 TEST_DIR = "./Data/"
@@ -26,7 +27,7 @@ class GeneticAlgorithm:
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
         self.__register_params__()
 
-    def start(self) -> dict:
+    def start(self, start_time) -> dict:
 
         for individual in self.population:
             Classifier.evaluate(individual, self.problemSpecification.train_data, 1.0)
@@ -82,10 +83,14 @@ class GeneticAlgorithm:
                 plt.pause(0.05)
 
         plt.savefig(CURRENT_DIR + '/graph.png')
-        file = open(CURRENT_DIR + "/results.json", "w+")
-        file.write(json.dumps(RESULTS, indent=5))
         self.population = sorted(self.population, reverse=True)
         self.__save_individual__(self.population[0])
+        RESULTS['elapsed_time'] = int((time.time() - start_time))
+        file = open(CURRENT_DIR + "/results.json", "w+")
+        file.write(json.dumps(RESULTS, indent=5))
+
+    def current_dir(self):
+        return CURRENT_DIR
 
     def __save_individual__(self, individual: BaseIndividual):
         file = open(CURRENT_DIR + "/best_individual.json", "w+")

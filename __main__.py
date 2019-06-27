@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from Genetic import *
 from sklearn.multiclass import *
 from sklearn.svm import *
-
+import time
 
 FileUtilities.startService()
 
@@ -41,14 +41,15 @@ test_data_dict = FileUtilities.readJSON("test_data.json")
 train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['msg']) for category in train_data_dict]
 test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['msg']) for category in test_data_dict]
 
+START_TIME = time.time()
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     crossover_prob=0.7,
-    mutation_prob=0.12,
-    penalty=0.5, #irrelevante
+    mutation_prob=0.08,
+    penalty=0.8,
     train_data=train_data,
-    individual_max_len=0.005,
-    population_size=2,
-    max_generations=6,
+    individual_max_len=0.2,
+    population_size=8,
+    max_generations=70,
     parents_offsprings=2,
     chromosome="BaseChromosome",
     gen="BaseGen",
@@ -61,52 +62,56 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     population_generator="ApproximatedSize"
 )
 ga: GeneticAlgorithm = GeneticAlgorithm(problem_spec)
-ga.start()
-# best_solution: dict = ga.get_solution()
-# train_labels_: list = []
-#
-# for category in best_solution:
-#     train_labels_ += [category] * len(best_solution[category])
-#
-# train_docs: list = []
-# for words in list(best_solution.values()):
-#     train_docs += words
-#
-# test_labels = []
-# test_documents = []
-#
-# for category in test_data:
-#     test_labels += [category.name] * category.documents_len()
-#
-# for index in range(len(test_data)):
-#     test_documents += test_data[index].documents
-#
-# text_clf = Pipeline([
-#             ('vect', CountVectorizer()),
-#             ('tfidf', TfidfTransformer()),
-#             ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
-#         ])
-#
-# text_clf.fit(train_docs, train_labels_)
-# predicted = text_clf.predict(test_documents)
-#
-# print(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
-#
-#
-# #####joined
-# train_documents = []
-# train_labels_: list = ['soc.religion.christian', 'talk.politics.guns', 'talk.politics.mideast']
-#
-# for words in list(best_solution.values()):
-#     train_documents.append(" ".join(words))
-#
-# text_clf = Pipeline([
-#             ('vect', CountVectorizer()),
-#             ('tfidf', TfidfTransformer()),
-#             ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
-#         ])
-#
-# text_clf.fit(train_documents, train_labels_)
-# predicted = text_clf.predict(test_documents)
-#
-# print(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
+ga.start(START_TIME)
+
+best_solution: dict = ga.get_solution()
+train_labels_: list = []
+
+for category in best_solution:
+    train_labels_ += [category] * len(best_solution[category])
+
+train_docs: list = []
+for words in list(best_solution.values()):
+    train_docs += words
+
+test_labels = []
+test_documents = []
+
+for category in test_data:
+    test_labels += [category.name] * category.documents_len()
+
+for index in range(len(test_data)):
+    test_documents += test_data[index].documents
+
+text_clf = Pipeline([
+            ('vect', CountVectorizer()),
+            ('tfidf', TfidfTransformer()),
+            ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
+        ])
+
+text_clf.fit(train_docs, train_labels_)
+predicted = text_clf.predict(test_documents)
+
+print(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
+
+
+#####joined
+train_documents = []
+train_labels_: list = ['soc.religion.christian', 'talk.politics.guns', 'talk.politics.mideast']
+
+for words in list(best_solution.values()):
+    train_documents.append(" ".join(words))
+
+text_clf = Pipeline([
+            ('vect', CountVectorizer()),
+            ('tfidf', TfidfTransformer()),
+            ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
+        ])
+
+text_clf.fit(train_documents, train_labels_)
+predicted = text_clf.predict(test_documents)
+
+print(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
+
+file = open(ga.current_dir() + "/evaluation_results.json", "w+")
+file.write(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
