@@ -18,8 +18,8 @@ class GeneticAlgorithm:
     def start(self) -> dict:
         plt.axis([0, self.problemSpecification.max_generations, 0, 1])
         for individual in self.population:
-            TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
-            Classifier.evaluate(individual, self.problemSpecification.train_data, 0.8)
+            # TFIDF.evaluate(individual, self.problemSpecification.train_data, 0.2)
+            Classifier.evaluate(individual, self.problemSpecification.train_data, 1.0)
             PenaltyDistribution.penalize(individual)
 
         self.population = sorted(self.population, reverse=True)
@@ -50,10 +50,10 @@ class GeneticAlgorithm:
                     self.config['mutation'].mutate(offspring_1)
                     self.config['mutation'].mutate(offspring_2)
 
-                    TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
-                    Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 0.8)
-                    TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
-                    Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 0.8)
+                    # TFIDF.evaluate(offspring_1, self.problemSpecification.train_data, 0.2)
+                    Classifier.evaluate(offspring_1, self.problemSpecification.train_data, 1.0)
+                    # TFIDF.evaluate(offspring_2, self.problemSpecification.train_data, 0.2)
+                    Classifier.evaluate(offspring_2, self.problemSpecification.train_data, 1.0)
 
                     self.config['penalization_function'].penalize(offspring_1)
                     self.config['penalization_function'].penalize(offspring_2)

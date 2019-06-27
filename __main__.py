@@ -9,6 +9,9 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.feature_extraction.text import TfidfTransformer
 from Genetic import *
+from sklearn.multiclass import *
+from sklearn.svm import *
+
 
 FileUtilities.startService()
 
@@ -42,9 +45,9 @@ problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
     mutation_prob=0.12,
     penalty=0.5, #irrelevante
     train_data=train_data,
-    individual_max_len=0.16,
-    population_size=150,
-    max_generations=35,
+    individual_max_len=0.35,
+    population_size=80,
+    max_generations=20,
     parents_offsprings=2,
     chromosome="BaseChromosome",
     gen="BaseGen",
@@ -80,7 +83,7 @@ for index in range(len(test_data)):
 text_clf = Pipeline([
             ('vect', CountVectorizer()),
             ('tfidf', TfidfTransformer()),
-            ('clf', MultinomialNB()),
+            ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
         ])
 
 text_clf.fit(train_docs, train_labels_)
@@ -99,7 +102,7 @@ for words in list(best_solution.values()):
 text_clf = Pipeline([
             ('vect', CountVectorizer()),
             ('tfidf', TfidfTransformer()),
-            ('clf', MultinomialNB()),
+            ('clf', OneVsRestClassifier(LinearSVC(class_weight="balanced")))
         ])
 
 text_clf.fit(train_documents, train_labels_)
