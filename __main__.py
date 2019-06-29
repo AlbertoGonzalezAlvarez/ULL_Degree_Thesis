@@ -54,8 +54,8 @@ else:
 train_data_dict = FileUtilities.readJSON("train_data.json")
 test_data_dict = FileUtilities.readJSON("test_data.json")
 
-train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['msg']) for category in train_data_dict]
-test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['msg']) for category in test_data_dict]
+train_data = [DataCategory.addTrainCategory(category, train_data_dict[category], ['from_', 'subject', 'msg']) for category in train_data_dict]
+test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['from_', 'subject', 'msg']) for category in test_data_dict]
 
 for execution_id  in range(execution_times):
     problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(train_data, **config_to_run)
