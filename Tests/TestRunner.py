@@ -5,7 +5,7 @@ import copy
 
 class TestRunner:
                             # Ind_len        #Mutation       #Crossover      #Population
-    POSIBLE_CONFIGS: list = [[0.1, 0.16],     [0.05, 0.1],      [0.6, 0.7],     [20, 30]]
+    POSIBLE_CONFIGS: list = [[0.3, 0.2],     [0.1, 0.05],      [0.8, 1.0],     [30, 50]]
     N_OF_EXECUTIONS: int = 10
     CONFIG_DIR: str = "Tests/Config.json"
     BASE_CONFIG: dict = {
@@ -16,12 +16,12 @@ class TestRunner:
         "population_size": 0,
         # Fixed params
         "penalty_rate": 0.5,
-        "max_generations": 300,
+        "max_generations": 150,
         "parents_offsprings": 2,
         "chromosome": "BaseChromosome",
         "gen": "BaseGen",
         "individual": "BaseIndividual",
-        "population_updater": "HybridElitism",
+        "population_updater": "BestsIndividuals",
         "parent_selector": "Tournament",
         "penalization_function": "PenaltyDistribution",
         "crossover": "UniformCrossover",
