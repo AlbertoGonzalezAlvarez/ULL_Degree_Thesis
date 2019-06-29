@@ -43,18 +43,18 @@ test_data = [DataCategory.addTestCategory(category, test_data_dict[category], ['
 
 START_TIME = time.time()
 problem_spec: GeneticAlgorithmSpecification = GeneticAlgorithmSpecification(
-    crossover_prob=0.7,
-    mutation_prob=0.08,
-    penalty=0.8,
+    crossover_prob=0.8,
+    mutation_prob=0.05,
+    penalty=0.5,
     train_data=train_data,
-    individual_max_len=0.2,
-    population_size=8,
-    max_generations=70,
+    individual_max_len=0.35,
+    population_size=20,
+    max_generations=160,
     parents_offsprings=2,
     chromosome="BaseChromosome",
     gen="BaseGen",
     individual="BaseIndividual",
-    population_updater="HybridElitism",
+    population_updater="BestsIndividuals",
     parent_selector="Tournament",
     penalization_function="PenaltyDistribution",
     crossover="UniformCrossover",
@@ -113,5 +113,5 @@ predicted = text_clf.predict(test_documents)
 
 print(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))
 
-file = open(ga.current_dir() + "/evaluation_results.json", "w+")
+file = open(ga.current_dir() + "/params.json", "a")
 file.write(classification_report(test_labels, predicted, target_names=['c', 'g', 'm']))

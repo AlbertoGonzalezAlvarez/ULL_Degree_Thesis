@@ -19,3 +19,4 @@ class ControlledMutation(BaseMutation):
             elif threshold < prob_insert and not chromosome.is_selected(index):
                 chromosome.select(index)
 
+        chromosome.update_gens()

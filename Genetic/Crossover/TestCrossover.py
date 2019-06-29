@@ -5,7 +5,7 @@ from Genetic.Gen import *
 import random
 
 
-class UniformCrossover(CrossoverTypes):
+class TestCrossover(CrossoverTypes):
 
     @staticmethod
     def crossover(individual_1: BaseIndividual, individual_2: BaseIndividual, individual_type: BaseIndividual,

@@ -17,7 +17,7 @@ class BaseChromosome(ChromosomeTypes):
         self.__removed_gens__: [BaseGen] = removed_gens_by_category
         self.__current_gen__ = 0
         self.gens: [BaseGen] = []
-        self.__update_gens__()
+        self.update_gens()
 
     def __iter__(self):
         return self
@@ -35,7 +35,7 @@ class BaseChromosome(ChromosomeTypes):
     def __repr__(self):
         return str(self.__selected_gens__)
 
-    def __update_gens__(self):
+    def update_gens(self):
         self.gens.clear()
         self.gens = self.__selected_gens__ + self.__removed_gens__
         random.shuffle(self.gens)
