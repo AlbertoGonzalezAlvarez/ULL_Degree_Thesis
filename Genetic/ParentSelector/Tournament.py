@@ -5,7 +5,7 @@ import random
 
 class Tournament(ParentSelector):
 
-    N_CANDIDATES = 3
+    N_CANDIDATES = 2
 
     @staticmethod
     def select_parent(population: [BaseIndividual]):

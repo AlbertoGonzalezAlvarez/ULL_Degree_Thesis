@@ -28,6 +28,7 @@ class PopulationGenerator:
             list_of_gens_per_category: dict = gen_type.generate_gens_from_data(train_data_copy)
 
             category_lenghts = {category.name: len(category) for category in train_data}
+            BaseChromosome.LIST_OF_GENS = list_of_gens_per_category
             BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION = {category: int(category_lenghts[category] *
                                                                                   percentage_of_features) for category
                                                                     in category_lenghts }

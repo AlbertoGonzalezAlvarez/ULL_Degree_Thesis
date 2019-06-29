@@ -1,0 +1,53 @@
+{
+    "genetic_algorithm_config": {
+        "parents_offsprings": 2,
+        "chromosome": "BaseChromosome",
+        "gen": "BaseGen",
+        "individual": "BaseIndividual",
+        "population_updater": "HybridElitism",
+        "parent_selector": "Tournament",
+        "penalization_function": "PenaltyDistribution",
+        "crossover": "UniformCrossover",
+        "mutation": "ControlledMutation",
+        "population_generator": "ApproximatedSize",
+        "crossover_prob": 1.0,
+        "mutation_prob": 0.1,
+        "individual_max_len": 0.6,
+        "max_generations": 40,
+        "population_size": 10,
+        "penalty_rate": 0.5
+    },
+    "final_classifier": {
+        "f1_score": [0.6, 0.2, 0.8],
+        "recall": [0.6, 0.2, 0.8],
+        "precision": [0.6, 0.2, 0.8]
+    },
+    "elapsed_time": 4033,
+    "evolution": [{
+        "generation_0": {
+            "average_score": 0.23246930686434525,
+            "average_individual_size": 7616.4,
+            "average_distribution": [
+                23832.666666666668,
+                22761.333333333332,
+                29570.0
+            ],
+            "best_individual_score": 0.32758800325541465,
+            "best_individual_distribution": {
+                "soc.religion.christian": 2422,
+                "talk.politics.guns": 2274,
+                "talk.politics.mideast": 2913
+            }
+        }
+    }],
+    "best_individual": [{
+            "category": "soc.religion.christian",
+            "word": "hatch"
+        },
+        {
+            "category": "talk.politics.mideast",
+            "word": "honest"
+        }
+    ]
+
+}

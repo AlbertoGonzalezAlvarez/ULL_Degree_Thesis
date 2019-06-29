@@ -44,8 +44,8 @@ class Classifier(FitnessTypes):
         text_clf.fit(train_documents, train_labels)
         predicted = text_clf.predict(test_documents)
 
-        score_for_category = precision_score(test_labels, predicted, average=None)
-        individual.score += (sum(score_for_category) / len(individual.chromosome.chromosomeCategories())) * weight * multiplier
+        score_for_category = accuracy_score(test_labels, predicted)
+        individual.score += score_for_category * weight * multiplier
 
         # print(classification_report(test_labels, predicted, target_names=list(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION.keys())))
         # print(confusion_matrix(test_labels, predicted))
