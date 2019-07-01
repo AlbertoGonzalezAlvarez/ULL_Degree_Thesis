@@ -100,7 +100,6 @@ class GeneticAlgorithm:
             chromosome_distribution.append(list(individual.chromosome.__compute_distribution__().values()))
 
         chromosome_distribution = np.sum(chromosome_distribution, axis=0) / len(chromosome_distribution)
-        chromosome_distribution = list(np.true_divide(chromosome_distribution, len(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION)))
 
         generation_info: dict = {
             "generation_" + str(generation): {
