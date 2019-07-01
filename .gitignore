@@ -265,5 +265,8 @@ dmypy.json
 Data/result.json
 Data/result.json
 Data/test*/
-Data/GROUP*/
 Data/prev_test*/
+Data/GROUP*/
+*.iml
+.idea/misc.xml
+.idea/TFGCode.iml

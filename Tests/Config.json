@@ -1,0 +1,341 @@
+{
+     "n_of_executions": 10,
+     "test_to_execute": [
+          {
+               "test_id": 0,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.3,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 1,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.3,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 2,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.3,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 3,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.3,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 4,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.3,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 5,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.3,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 6,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.3,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 7,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.3,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 8,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.2,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 9,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.2,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 10,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.2,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 11,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.1,
+                    "individual_max_len": 0.2,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 12,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.2,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 13,
+               "test_description": {
+                    "crossover_prob": 0.8,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.2,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 14,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.2,
+                    "population_size": 30,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          },
+          {
+               "test_id": 15,
+               "test_description": {
+                    "crossover_prob": 1.0,
+                    "mutation_prob": 0.05,
+                    "individual_max_len": 0.2,
+                    "population_size": 50,
+                    "penalty_rate": 0.5,
+                    "max_generations": 150,
+                    "parents_offsprings": 2,
+                    "chromosome": "BaseChromosome",
+                    "gen": "BaseGen",
+                    "individual": "BaseIndividual",
+                    "population_updater": "BestsIndividuals",
+                    "parent_selector": "Tournament",
+                    "penalization_function": "PenaltyDistribution",
+                    "crossover": "UniformCrossover",
+                    "mutation": "ControlledMutation",
+                    "population_generator": "ApproximatedSize"
+               }
+          }
+     ]
+}

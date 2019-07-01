@@ -11,23 +11,22 @@ import json
 import numpy as np
 import time
 
-TEST_PREFIX = "test_"
-TEST_DIR = "./Data/"
-CURRENT_DIR = None
-RESULTS:dict = {"results": []}
-GRAPHIC: bool = True
-
 
 class GeneticAlgorithm:
 
-    def __init__(self, problemSpecification: GeneticAlgorithmSpecification):
+    def __init__(self, problemSpecification: GeneticAlgorithmSpecification, TEST_DIR: str, execution_id: int):
         self.problemSpecification: GeneticAlgorithmSpecification = problemSpecification
         self.config: dict = problemSpecification.config
         self.population: [BaseGen] = problemSpecification.population
         LoggerHandler.log(__name__, "Problem specification loaded, ready to start!")
-        self.__register_params__()
 
-    def start(self, start_time) -> dict:
+        # TEST_INFORMATION
+        self.BEST_INDIVIDUAL = None
+        self.TEST_DIR = TEST_DIR
+        self.EXECUTION_ID = execution_id
+        self.RESULTS: dict = {"results": []}
+
+    def start(self, start_time, graphic_mode: bool = False) -> tuple:
 
         for individual in self.population:
             Classifier.evaluate(individual, self.problemSpecification.train_data, 1.0)
@@ -37,7 +36,7 @@ class GeneticAlgorithm:
         LoggerHandler.log(__name__,
                           f"0th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
 
-        if GRAPHIC:
+        if graphic_mode:
             plt.axis([0, self.problemSpecification.max_generations, 0, 1])
             plt.scatter(0, (sum([individual.score for individual in self.population]) / len(self.population)))
             plt.pause(0.05)
@@ -78,42 +77,21 @@ class GeneticAlgorithm:
             LoggerHandler.log(__name__, f"{actual_generation}th generation: Best individual => [{self.population[0].score}: {self.population[0].chromosome.selected_gens_size}]")
             LoggerHandler.log(__name__,
                               f"{actual_generation}th generation: Average individual size => [{sum([len(individual.chromosome.selected_gens) for individual in self.population])/len(self.population)}]")
-            if GRAPHIC:
+            if graphic_mode:
                 plt.scatter(actual_generation, (sum([individual.score for individual in self.population])/len(self.population)))
                 plt.pause(0.05)
 
-        plt.savefig(CURRENT_DIR + '/graph.png')
-        self.population = sorted(self.population, reverse=True)
-        self.__save_individual__(self.population[0])
-        RESULTS['elapsed_time'] = int((time.time() - start_time))
-        file = open(CURRENT_DIR + "/results.json", "w+")
-        file.write(json.dumps(RESULTS, indent=5))
+        if graphic_mode:
+            plt.savefig(self.TEST_DIR + '/graph_' + str(self.EXECUTION_ID) + '.png')
+            plt.clf()
 
-    def current_dir(self):
-        return CURRENT_DIR
-
-    def __save_individual__(self, individual: BaseIndividual):
-        file = open(CURRENT_DIR + "/best_individual.json", "w+")
-        file.write(json.dumps(individual, indent=5, cls=BaseIndividualEncoder))
+        self.BEST_INDIVIDUAL = json.dumps(individual, indent=5, cls=BaseIndividualEncoder)
+        return (int((time.time() - start_time)), self.RESULTS['results'])
 
     def get_solution(self) -> dict:
         self.population = sorted(self.population, reverse=True)
         best_solution: BaseIndividual = self.population[0]
         return best_solution.chromosome.chromosome_distribution()
-
-    def __register_params__(self):
-        test_numbers = sorted([int(re.search('\d+', dir).group()) for dir in os.listdir(TEST_DIR) if not '.' in dir])
-
-        if len(test_numbers) != 0:
-            next_test_number = test_numbers[-1] + 1
-        else:
-            next_test_number = 0
-
-        global CURRENT_DIR
-        CURRENT_DIR = TEST_DIR + TEST_PREFIX + str(next_test_number)
-        os.mkdir(CURRENT_DIR)
-        file = open(CURRENT_DIR + "/params.json", "w+")
-        file.write(json.dumps(self.problemSpecification.params, indent = 5))
 
     def __save_generation__(self, generation: int):
         chromosome_distribution: list = []
@@ -121,7 +99,7 @@ class GeneticAlgorithm:
         for individual in self.population:
             chromosome_distribution.append(list(individual.chromosome.__compute_distribution__().values()))
 
-        chromosome_distribution = np.sum(chromosome_distribution, axis=0)
+        chromosome_distribution = np.sum(chromosome_distribution, axis=0) / len(chromosome_distribution)
         chromosome_distribution = list(np.true_divide(chromosome_distribution, len(BaseChromosome.IDEAL_CHROMOSOME_DISTRIBUTION)))
 
         generation_info: dict = {
@@ -130,9 +108,9 @@ class GeneticAlgorithm:
                 "average_individual_size": sum([len(individual.chromosome.selected_gens) for individual in self.population]) / len(self.population),
                 "average_distribution": chromosome_distribution,
                 "best_individual_score": self.population[0].score,
-                "best_individual_distribution": self.population[0].chromosome.__compute_distribution__()
+                "best_individual_distribution": self.population[0].chromosome.__compute_distribution__(),
+                "best_individual_size": self.population[0].chromosome.selected_gens_size
             }
         }
 
-        RESULTS['results'].append(generation_info)
-
+        self.RESULTS['results'].append(generation_info)

@@ -9,6 +9,7 @@ class LoggerHandler:
     @staticmethod
     def log(className: str = "", msg: str = "") -> None:
         print(f"> {time.strftime('%H:%M:%S')} [{className}][INFO] -> {msg}")
+        sys.stdout.flush()
 
     @staticmethod
     def error(className: str = "", msg: str = "") -> None:

@@ -12,8 +12,7 @@ import copy
 import random
 
 class GeneticAlgorithmSpecification:
-    def __init__(self, crossover_prob: float, mutation_prob: float, train_data: [DataCategory], individual_max_len: int,
-                    max_generations: int, population_size: int, penalty: float, **config):
+    def __init__(self, train_data, **config):
 
         self.config: dict = {
             "chromosome": BaseChromosome.type[config["chromosome"]],
@@ -28,19 +27,19 @@ class GeneticAlgorithmSpecification:
         }
 
         self.params: dict = config
-        self.params["crossover_prob"] = crossover_prob
-        self.params["mutation_prob"] = mutation_prob
-        self.params["individual_max_len"] = individual_max_len
-        self.params["max_generations"] = max_generations
-        self.params["population_size"] = population_size
-        self.params["penalty_rate"] = penalty
+        self.params["crossover_prob"] = config["crossover_prob"]
+        self.params["mutation_prob"] = config["mutation_prob"]
+        self.params["individual_max_len"] = config["individual_max_len"]
+        self.params["max_generations"] = config["max_generations"]
+        self.params["population_size"] = config["population_size"]
+        self.params["penalty_rate"] = config["penalty_rate"]
 
-        PenaltyFunctions.RATE = penalty
-        CrossoverTypes.RATE = crossover_prob
-        BaseMutation.RATE = mutation_prob
+        PenaltyFunctions.RATE = config["penalty_rate"]
+        CrossoverTypes.RATE = config["crossover_prob"]
+        BaseMutation.RATE = config["mutation_prob"]
 
         self.train_data: [DataCategory] = train_data
-        self.max_generations: int = max_generations
+        self.max_generations: int = config["max_generations"]
 
         shuffle_train_data: [DataCategory] = self.__shuffle_train_data__(copy.deepcopy(train_data))
         self.population: [BaseIndividual] =self.config["population_generator"].generate(
@@ -48,9 +47,9 @@ class GeneticAlgorithmSpecification:
             chromosome_type=self.config["chromosome"],
             gen_type=self.config["gen"],
             individual_type=self.config["individual"],
-            population_size=population_size,
+            population_size=config["population_size"],
             train_data=shuffle_train_data,
-            percentage_of_features=individual_max_len
+            percentage_of_features=config["individual_max_len"]
         )
 
         LoggerHandler.log(__name__, f"Problem specification loaded!")
