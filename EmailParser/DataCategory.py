@@ -25,7 +25,7 @@ class DataCategory():
 
     def getWorsdAt(self, indexs) -> str:
         if isinstance(indexs, int):
-            return self.corpus[index]
+            return self.corpus[indexs]
 
         elif isinstance(indexs, list):
             return [self.corpus[index] for index in indexs]
